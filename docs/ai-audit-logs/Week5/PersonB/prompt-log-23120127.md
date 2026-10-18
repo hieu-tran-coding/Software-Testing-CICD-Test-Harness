@@ -175,15 +175,36 @@ Nhật ký này ghi lại đầy đủ và chi tiết toàn bộ chuỗi tương
 
 ---
 
+### 📌 Phiên 10: Xử lý lỗi `npm run build-dev` (exit code: 1) trong Dockerfile
+
+#### Yêu cầu (Prompt):
+> *"Khắc phục lỗi 'npm run build-dev && chown -R node:node /app' trả về exit code 1 khi chạy job Docker Image Build trên GitHub Actions."*
+
+#### Phản hồi & Xử lý của AI:
+1. **Phân tích nguyên nhân:**
+   - Để thỏa mãn quy tắc bảo mật SonarCloud (tránh `COPY . .`), Dockerfile đã chuyển sang copy có chọn lọc các thư mục.
+   - Tuy nhiên, lệnh copy ban đầu bị thiếu:
+     - Thư mục `back/` (chứa `IndexPage.ts`, `ArticlePage.ts` mà `pages/index.tsx` và các trang Next.js import trực tiếp).
+     - Thư mục `migrations/` và file `.sequelizerc` (cần thiết cho `./bin/sync-db.js` khởi tạo DB).
+     - File `demo.productionready.io.main.css` (được import trong `pages/_app.tsx`).
+     - Quyền thực thi (`chmod +x`) cho các file trong `./bin/*.js`.
+2. **Khắc phục:**
+   - Cập nhật chỉ thị `COPY` trong `Dockerfile` bổ sung đầy đủ `back`, `migrations`, `demo.productionready.io.main.css`, `.sequelizerc`.
+   - Thêm lệnh `RUN chmod +x ./bin/*.js` trước khi thực hiện build Next.js.
+   - Commit và push `04ea3bb` lên nhánh `ci-github-actions`. Quá trình build Docker hoàn tất thành công.
+
+---
+
 ## Tổng kết kỹ thuật (Technical Summary)
 
-- **Các commit đã tạo:**
+- **Các commit đã tạo trên repository realworld:**
   1. `47de242`: B-2: Configure ESLint (npm run lint) and add .eslintrc.js
   2. `bab1af9`: B-1: Create CI workflow file with 10 jobs
   3. `7067bb0`: fix(security): resolve SonarCloud security ratings for GitHub Actions and Dockerfile
   4. `61e0c5f`: fix(ci): fix cache action SHA, add ignore-scripts and merge Docker RUN instructions
   5. `9991068`: fix(docker): use node:14.21.3-bullseye with preinstalled build tools
   6. `d995ac4`: fix(docker): set NODE_ENV=development for SQLite standalone smoke test
+  7. `04ea3bb`: fix(docker): copy back, migrations, sequelizerc, demo css and chmod bin scripts
 - **Kết quả nghiệm thu:** 
   - Toàn bộ 10 jobs CI được xây dựng hoàn chỉnh và chạy kiểm thử tự động.
   - Cấu hình ESLint chuẩn hóa và loại bỏ hoàn toàn cảnh báo lỗi.
