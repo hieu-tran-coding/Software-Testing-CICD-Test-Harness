@@ -125,9 +125,18 @@ jobs:
   - Lines: $\ge 90\%$
 
 ### 5.2. Ảnh minh chứng Pipeline
-*(Người dùng truy cập tab Actions trên GitHub, chụp ảnh màn hình xanh của run pipeline và lưu vào thư mục `screenshots/`)*:
-- `screenshots/github-actions-overview.png`: Tổng quan pipeline pass trên GitHub Actions.
-- `screenshots/test-coverage-summary.png`: Chi tiết bước chạy Jest và bảng Coverage $\ge 80\%$.
+
+#### Minh chứng 1 - Tổng quan Pipeline GitHub Actions chạy thành công toàn bộ các bước
+
+![GitHub Actions Pipeline Success Overview](./screenshots/github-actions-overview.png)
+
+*Ảnh minh chứng pipeline "CI Pipeline - Build & Automated Tests" thực thi thành công toàn bộ các stage (Checkout, Setup Node, Install, Jest Unit Tests, SuperTest API Tests, Upload Artifacts).*
+
+#### Minh chứng 2 - Chi tiết kết quả kiểm thử Jest và bảng độ bao phủ Code Coverage (>= 80%)
+
+![Jest Test & Coverage Summary](./screenshots/test-coverage-summary.png)
+
+*Ảnh minh chứng bảng thống kê kiểm thử tự động đạt độ bao phủ code vượt ngưỡng 80% (Statements 100%, Lines 100%, Branches 83.33%).*
 
 ---
 
