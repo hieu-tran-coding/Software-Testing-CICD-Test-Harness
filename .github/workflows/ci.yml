@@ -1,0 +1,58 @@
+name: CI Pipeline - Build & Automated Tests
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - docs-and-reports
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+      - master
+      - docs-and-reports
+
+jobs:
+  build-and-test:
+    name: Build, Lint & Automated Test Harness
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1️⃣ Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 2️⃣ Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: 3️⃣ Install Dependencies
+        run: npm install
+
+      - name: 4️⃣ Run Task C-1: Jest Unit Tests (Coverage >= 80%)
+        run: npm run test:unit
+
+      - name: 5️⃣ Run Task C-2: SuperTest API Integration Tests
+        run: npm run test:api
+
+      - name: 6️⃣ Run Full Test Suite with CI Reporters
+        if: always()
+        run: npm run test:ci
+
+      - name: 7️⃣ Upload Coverage Report Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-report
+          path: coverage/
+          retention-days: 14
+
+      - name: 8️⃣ Upload JUnit Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-test-results
+          path: junit.xml
+          retention-days: 14
