@@ -1,0 +1,391 @@
+[
+  {
+    "number": 1,
+    "url": "http://localhost:18080/job/ci-cd-demo-integration/1/",
+    "result": "SUCCESS",
+    "duration_ms": 15819,
+    "artifact_count": 5,
+    "parameters": {
+      "RUN_MODE": "image",
+      "IMAGE_REPO": "ghcr.io/thu2005/realworld",
+      "IMAGE_TAG": "0a3ab4d3a1b3e3b319e006f1bff260ec1cb0d3ed",
+      "PULL_IMAGE": false,
+      "SMOKE_TIMEOUT_SECONDS": "120",
+      "SMOKE_PATH": "/api/tags",
+      "SUT_REF": "next"
+    },
+    "lifecycle": {
+      "owner": "145ecdeeeef57485",
+      "container": "realworld-sut-145ecdeeeef57485",
+      "network": "realworld-net-145ecdeeeef57485",
+      "probe": "realworld-probe-145ecdeeeef57485",
+      "build_url": "http://localhost:18080/job/ci-cd-demo-integration/1/",
+      "checks": [
+        {
+          "phase": "validate",
+          "ok": true,
+          "error": "",
+          "seconds": 0.001
+        },
+        {
+          "phase": "pull",
+          "ok": true,
+          "error": "",
+          "seconds": 0.078
+        },
+        {
+          "phase": "start",
+          "ok": true,
+          "error": "",
+          "seconds": 0.382
+        },
+        {
+          "phase": "smoke",
+          "ok": true,
+          "error": "",
+          "seconds": 7.713
+        },
+        {
+          "phase": "finalize",
+          "ok": true,
+          "error": "",
+          "seconds": 0.81
+        }
+      ],
+      "image": "ghcr.io/thu2005/realworld:0a3ab4d3a1b3e3b319e006f1bff260ec1cb0d3ed",
+      "source_sha": "0a3ab4d3a1b3e3b319e006f1bff260ec1cb0d3ed",
+      "timeout": 120,
+      "smoke_path": "/api/tags",
+      "pull_image": false,
+      "result": "SUCCESS",
+      "image_id": "sha256:e97076fe53119718083006d6ad56c4f42ef012d7e7afb34527a7f1597f2c2283",
+      "repo_digests": [
+        "ghcr.io/thu2005/realworld@sha256:e97076fe53119718083006d6ad56c4f42ef012d7e7afb34527a7f1597f2c2283"
+      ],
+      "input_origin": "local-only",
+      "jenkins_result_before_cleanup": "SUCCESS",
+      "cleanup_complete": true
+    }
+  },
+  {
+    "number": 2,
+    "url": "http://localhost:18080/job/ci-cd-demo-integration/2/",
+    "result": "FAILURE",
+    "duration_ms": 5239,
+    "artifact_count": 2,
+    "parameters": {
+      "RUN_MODE": "image",
+      "IMAGE_REPO": "ghcr.io/thu2005/realworld",
+      "IMAGE_TAG": "ffffffffffffffffffffffffffffffffffffffff",
+      "PULL_IMAGE": true,
+      "SMOKE_TIMEOUT_SECONDS": "120",
+      "SMOKE_PATH": "/api/tags",
+      "SUT_REF": "next"
+    },
+    "lifecycle": {
+      "owner": "ffb25f99797c3b7c",
+      "container": "realworld-sut-ffb25f99797c3b7c",
+      "network": "realworld-net-ffb25f99797c3b7c",
+      "probe": "realworld-probe-ffb25f99797c3b7c",
+      "build_url": "http://localhost:18080/job/ci-cd-demo-integration/2/",
+      "checks": [
+        {
+          "phase": "validate",
+          "ok": true,
+          "error": "",
+          "seconds": 0.0
+        },
+        {
+          "phase": "pull",
+          "ok": false,
+          "error": "docker pull: Error response from daemon: failed to resolve reference \"ghcr.io/thu2005/realworld:ffffffffffffffffffffffffffffffffffffffff\": ghcr.io/thu2005/realworld:ffffffffffffffffffffffffffffffffffffffff: not found",
+          "seconds": 1.188
+        },
+        {
+          "phase": "finalize",
+          "ok": true,
+          "error": "",
+          "seconds": 0.07
+        }
+      ],
+      "image": "ghcr.io/thu2005/realworld:ffffffffffffffffffffffffffffffffffffffff",
+      "source_sha": "ffffffffffffffffffffffffffffffffffffffff",
+      "timeout": 120,
+      "smoke_path": "/api/tags",
+      "pull_image": true,
+      "result": "FAILURE",
+      "jenkins_result_before_cleanup": "FAILURE",
+      "cleanup_complete": true
+    }
+  },
+  {
+    "number": 3,
+    "url": "http://localhost:18080/job/ci-cd-demo-integration/3/",
+    "result": "FAILURE",
+    "duration_ms": 2865,
+    "artifact_count": 2,
+    "parameters": {
+      "RUN_MODE": "image",
+      "IMAGE_REPO": "ghcr.io/thu2005/realworld",
+      "IMAGE_TAG": "latest",
+      "PULL_IMAGE": true,
+      "SMOKE_TIMEOUT_SECONDS": "120",
+      "SMOKE_PATH": "/api/tags",
+      "SUT_REF": "next"
+    },
+    "lifecycle": {
+      "owner": "4b749c02f5c1febc",
+      "container": "realworld-sut-4b749c02f5c1febc",
+      "network": "realworld-net-4b749c02f5c1febc",
+      "probe": "realworld-probe-4b749c02f5c1febc",
+      "build_url": "http://localhost:18080/job/ci-cd-demo-integration/3/",
+      "checks": [
+        {
+          "phase": "validate",
+          "ok": false,
+          "error": "IMAGE_TAG must be a lowercase full 40-character commit SHA",
+          "seconds": 0.0
+        },
+        {
+          "phase": "finalize",
+          "ok": true,
+          "error": "",
+          "seconds": 0.065
+        }
+      ],
+      "result": "FAILURE",
+      "jenkins_result_before_cleanup": "FAILURE",
+      "cleanup_complete": true
+    }
+  },
+  {
+    "number": 4,
+    "url": "http://localhost:18080/job/ci-cd-demo-integration/4/",
+    "result": "FAILURE",
+    "duration_ms": 11645,
+    "artifact_count": 5,
+    "parameters": {
+      "RUN_MODE": "image",
+      "IMAGE_REPO": "ghcr.io/thu2005/realworld",
+      "IMAGE_TAG": "0a3ab4d3a1b3e3b319e006f1bff260ec1cb0d3ed",
+      "PULL_IMAGE": false,
+      "SMOKE_TIMEOUT_SECONDS": "5",
+      "SMOKE_PATH": "/api/does-not-exist",
+      "SUT_REF": "next"
+    },
+    "lifecycle": {
+      "owner": "bcbf105f787ec5ad",
+      "container": "realworld-sut-bcbf105f787ec5ad",
+      "network": "realworld-net-bcbf105f787ec5ad",
+      "probe": "realworld-probe-bcbf105f787ec5ad",
+      "build_url": "http://localhost:18080/job/ci-cd-demo-integration/4/",
+      "checks": [
+        {
+          "phase": "validate",
+          "ok": true,
+          "error": "",
+          "seconds": 0.001
+        },
+        {
+          "phase": "pull",
+          "ok": true,
+          "error": "",
+          "seconds": 0.077
+        },
+        {
+          "phase": "start",
+          "ok": true,
+          "error": "",
+          "seconds": 0.407
+        },
+        {
+          "phase": "smoke",
+          "ok": false,
+          "error": "Smoke failed: {\"ok\":false,\"detail\":\"connect ECONNREFUSED 172.20.0.2:3000\"}",
+          "seconds": 5.69
+        },
+        {
+          "phase": "finalize",
+          "ok": true,
+          "error": "",
+          "seconds": 0.8
+        }
+      ],
+      "image": "ghcr.io/thu2005/realworld:0a3ab4d3a1b3e3b319e006f1bff260ec1cb0d3ed",
+      "source_sha": "0a3ab4d3a1b3e3b319e006f1bff260ec1cb0d3ed",
+      "timeout": 5,
+      "smoke_path": "/api/does-not-exist",
+      "pull_image": false,
+      "result": "FAILURE",
+      "image_id": "sha256:e97076fe53119718083006d6ad56c4f42ef012d7e7afb34527a7f1597f2c2283",
+      "repo_digests": [
+        "ghcr.io/thu2005/realworld@sha256:e97076fe53119718083006d6ad56c4f42ef012d7e7afb34527a7f1597f2c2283"
+      ],
+      "input_origin": "local-only",
+      "jenkins_result_before_cleanup": "FAILURE",
+      "cleanup_complete": true
+    }
+  },
+  {
+    "number": 5,
+    "url": "http://localhost:18080/job/ci-cd-demo-integration/5/",
+    "result": "SUCCESS",
+    "duration_ms": 127350,
+    "artifact_count": 1,
+    "parameters": {
+      "RUN_MODE": "source",
+      "IMAGE_REPO": "ghcr.io/thu2005/realworld",
+      "IMAGE_TAG": "",
+      "PULL_IMAGE": true,
+      "SMOKE_TIMEOUT_SECONDS": "120",
+      "SMOKE_PATH": "/api/tags",
+      "SUT_REF": "next"
+    },
+    "mocha_results": {
+      "name": "Mocha Tests",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "Sun, 18 Oct 2026 15:35:44 GMT",
+      "time": "0.98"
+    },
+    "checked_out_sha": "3b85475aac4dd99c3c5b1d95edc1734c7afc21d3"
+  },
+  {
+    "number": 6,
+    "url": "http://localhost:18080/job/ci-cd-demo-integration/6/",
+    "result": "SUCCESS",
+    "duration_ms": 13225,
+    "artifact_count": 5,
+    "parameters": {
+      "RUN_MODE": "image",
+      "IMAGE_REPO": "ghcr.io/thu2005/realworld",
+      "IMAGE_TAG": "0a3ab4d3a1b3e3b319e006f1bff260ec1cb0d3ed",
+      "PULL_IMAGE": false,
+      "SMOKE_TIMEOUT_SECONDS": "120",
+      "SMOKE_PATH": "/api/tags",
+      "SUT_REF": "next"
+    },
+    "lifecycle": {
+      "owner": "23604df62d891846",
+      "container": "realworld-sut-23604df62d891846",
+      "network": "realworld-net-23604df62d891846",
+      "probe": "realworld-probe-23604df62d891846",
+      "build_url": "http://localhost:18080/job/ci-cd-demo-integration/6/",
+      "checks": [
+        {
+          "phase": "validate",
+          "ok": true,
+          "error": "",
+          "seconds": 0.0
+        },
+        {
+          "phase": "pull",
+          "ok": true,
+          "error": "",
+          "seconds": 0.065
+        },
+        {
+          "phase": "start",
+          "ok": true,
+          "error": "",
+          "seconds": 0.392
+        },
+        {
+          "phase": "smoke",
+          "ok": true,
+          "error": "",
+          "seconds": 5.67
+        },
+        {
+          "phase": "finalize",
+          "ok": true,
+          "error": "",
+          "seconds": 0.805
+        }
+      ],
+      "image": "ghcr.io/thu2005/realworld:0a3ab4d3a1b3e3b319e006f1bff260ec1cb0d3ed",
+      "source_sha": "0a3ab4d3a1b3e3b319e006f1bff260ec1cb0d3ed",
+      "timeout": 120,
+      "smoke_path": "/api/tags",
+      "pull_image": false,
+      "result": "SUCCESS",
+      "image_id": "sha256:e97076fe53119718083006d6ad56c4f42ef012d7e7afb34527a7f1597f2c2283",
+      "repo_digests": [
+        "ghcr.io/thu2005/realworld@sha256:e97076fe53119718083006d6ad56c4f42ef012d7e7afb34527a7f1597f2c2283"
+      ],
+      "input_origin": "local-only",
+      "jenkins_result_before_cleanup": "SUCCESS",
+      "cleanup_complete": true
+    }
+  },
+  {
+    "number": 7,
+    "url": "http://localhost:18080/job/ci-cd-demo-integration/7/",
+    "result": "SUCCESS",
+    "duration_ms": 110212,
+    "artifact_count": 6,
+    "parameters": {
+      "RUN_MODE": "image",
+      "IMAGE_REPO": "ghcr.io/thu2005/realworld",
+      "IMAGE_TAG": "3b85475aac4dd99c3c5b1d95edc1734c7afc21d3",
+      "PULL_IMAGE": true,
+      "SMOKE_TIMEOUT_SECONDS": "120",
+      "SMOKE_PATH": "/api/tags",
+      "SUT_REF": "3b85475aac4dd99c3c5b1d95edc1734c7afc21d3"
+    },
+    "lifecycle": {
+      "owner": "39c3e390b72dacd6",
+      "container": "realworld-sut-39c3e390b72dacd6",
+      "network": "realworld-net-39c3e390b72dacd6",
+      "probe": "realworld-probe-39c3e390b72dacd6",
+      "build_url": "http://localhost:18080/job/ci-cd-demo-integration/7/",
+      "checks": [
+        {
+          "phase": "validate",
+          "ok": true,
+          "error": "",
+          "seconds": 0.001
+        },
+        {
+          "phase": "pull",
+          "ok": true,
+          "error": "",
+          "seconds": 82.56
+        },
+        {
+          "phase": "start",
+          "ok": true,
+          "error": "",
+          "seconds": 0.9
+        },
+        {
+          "phase": "smoke",
+          "ok": true,
+          "error": "",
+          "seconds": 6.764
+        },
+        {
+          "phase": "finalize",
+          "ok": true,
+          "error": "",
+          "seconds": 0.875
+        }
+      ],
+      "image": "ghcr.io/thu2005/realworld:3b85475aac4dd99c3c5b1d95edc1734c7afc21d3",
+      "source_sha": "3b85475aac4dd99c3c5b1d95edc1734c7afc21d3",
+      "timeout": 120,
+      "smoke_path": "/api/tags",
+      "pull_image": true,
+      "result": "SUCCESS",
+      "image_id": "sha256:ff2fa9face2425245e917d628b5e66c11be413b13b91772e60efcc2403e79446",
+      "repo_digests": [
+        "ghcr.io/thu2005/realworld@sha256:ff2fa9face2425245e917d628b5e66c11be413b13b91772e60efcc2403e79446"
+      ],
+      "input_origin": "registry",
+      "jenkins_result_before_cleanup": "SUCCESS",
+      "cleanup_complete": true
+    }
+  }
+]
