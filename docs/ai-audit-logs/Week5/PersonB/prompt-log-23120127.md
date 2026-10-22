@@ -19,7 +19,7 @@ Nhật ký này ghi lại đầy đủ và chi tiết toàn bộ chuỗi tương
 ### 📌 Phiên 1: Khảo sát dự án RealWorld và đối chiếu trạng thái Git
 
 #### Yêu cầu (Prompt):
-> *"Khảo sát toàn bộ kiến trúc dự án RealWorld (Conduit) bao gồm backend, frontend, testing framework và hợp đồng CI/CD tích hợp hiện hữu. Đồng thời kiểm tra trạng thái Git cục bộ so với remote repository https://github.com/thu2005/realworld.git để xác định nhánh làm việc và đảm bảo đồng bộ mới nhất."*
+> *"Khảo sát toàn bộ kiến trúc dự án RealWorld (Conduit) bao gồm backend, frontend, testing framework và hợp đồng CI/CD. Đồng thời kiểm tra trạng thái Git cục bộ so với remote repository https://github.com/thu2005/realworld.git để xác định nhánh làm việc và đảm bảo đồng bộ mới nhất."*
 
 #### Phản hồi & Xử lý của AI:
 1. **Kiểm tra trạng thái Git:**
