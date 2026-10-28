@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">Kiến trúc CI/CD và Test Harness của seminar</title>
+  <desc id="desc">Luồng từ thay đổi mã nguồn qua GitHub Actions, GHCR và Jenkins đến báo cáo kiểm thử.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#334155"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.14"/>
+    </filter>
+    <style>
+      .title { font: 700 28px 'Segoe UI', Arial, sans-serif; fill: #0f172a; }
+      .heading { font: 700 20px 'Segoe UI', Arial, sans-serif; fill: #0f172a; }
+      .body { font: 16px 'Segoe UI', Arial, sans-serif; fill: #334155; }
+      .small { font: 14px 'Segoe UI', Arial, sans-serif; fill: #475569; }
+      .label { font: 600 14px 'Segoe UI', Arial, sans-serif; fill: #1e293b; }
+      .line { stroke: #334155; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      .dash { stroke: #64748b; stroke-width: 2.5; stroke-dasharray: 9 7; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1400" height="760" fill="#f8fafc"/>
+  <text x="700" y="48" text-anchor="middle" class="title">Kiến trúc CI/CD và Test Harness</text>
+
+  <g filter="url(#shadow)">
+    <rect x="50" y="135" width="190" height="130" rx="18" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+    <circle cx="145" cy="178" r="25" fill="#e2e8f0"/>
+    <circle cx="145" cy="171" r="8" fill="#475569"/>
+    <path d="M128 198 Q145 181 162 198" stroke="#475569" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <text x="145" y="230" text-anchor="middle" class="heading">Thành viên</text>
+    <text x="145" y="253" text-anchor="middle" class="small">push / pull request</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="315" y="95" width="430" height="430" rx="22" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="530" y="132" text-anchor="middle" class="heading">GitHub Actions</text>
+    <text x="530" y="158" text-anchor="middle" class="small">CI Pipeline — 11 job</text>
+
+    <rect x="345" y="185" width="175" height="72" rx="12" fill="#ffffff" stroke="#60a5fa"/>
+    <text x="432" y="214" text-anchor="middle" class="label">Chuẩn bị</text>
+    <text x="432" y="238" text-anchor="middle" class="small">Checkout · Runtime · Install</text>
+
+    <rect x="540" y="185" width="175" height="72" rx="12" fill="#ffffff" stroke="#60a5fa"/>
+    <text x="627" y="214" text-anchor="middle" class="label">Kiểm tra mã nguồn</text>
+    <text x="627" y="238" text-anchor="middle" class="small">ESLint · npm audit</text>
+
+    <rect x="345" y="278" width="175" height="88" rx="12" fill="#ffffff" stroke="#60a5fa"/>
+    <text x="432" y="307" text-anchor="middle" class="label">Kiểm thử</text>
+    <text x="432" y="331" text-anchor="middle" class="small">Mocha · Jest</text>
+    <text x="432" y="351" text-anchor="middle" class="small">Newman · SuperTest</text>
+
+    <rect x="540" y="278" width="175" height="88" rx="12" fill="#ffffff" stroke="#60a5fa"/>
+    <text x="627" y="307" text-anchor="middle" class="label">Đóng gói</text>
+    <text x="627" y="331" text-anchor="middle" class="small">Docker build · smoke</text>
+    <text x="627" y="351" text-anchor="middle" class="small">Push image theo SHA</text>
+
+    <rect x="345" y="387" width="175" height="91" rx="12" fill="#ffffff" stroke="#60a5fa"/>
+    <text x="432" y="418" text-anchor="middle" class="label">Báo cáo</text>
+    <text x="432" y="442" text-anchor="middle" class="small">JUnit · Coverage</text>
+    <text x="432" y="462" text-anchor="middle" class="small">Allure artifact</text>
+
+    <rect x="540" y="387" width="175" height="91" rx="12" fill="#fefce8" stroke="#eab308"/>
+    <text x="627" y="418" text-anchor="middle" class="label">CodeQL SAST</text>
+    <text x="627" y="442" text-anchor="middle" class="small">JavaScript / TypeScript</text>
+    <text x="627" y="462" text-anchor="middle" class="small">Security &amp; quality queries</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="810" y="125" width="220" height="150" rx="20" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
+    <path d="M855 176 h130 v54 h-130 z" fill="#dcfce7" stroke="#16a34a"/>
+    <path d="M875 159 h90 l20 17 h-130 z" fill="#bbf7d0" stroke="#16a34a"/>
+    <text x="920" y="244" text-anchor="middle" class="heading">GHCR</text>
+    <text x="920" y="266" text-anchor="middle" class="small">Image gắn full Git SHA</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="810" y="330" width="530" height="310" rx="22" fill="#fff7ed" stroke="#ea580c" stroke-width="2.5"/>
+    <text x="1075" y="370" text-anchor="middle" class="heading">Jenkins Test Harness</text>
+    <text x="1075" y="396" text-anchor="middle" class="small">Source mode hoặc Image mode</text>
+
+    <rect x="840" y="425" width="145" height="86" rx="12" fill="#ffffff" stroke="#fb923c"/>
+    <text x="912" y="455" text-anchor="middle" class="label">Nhận đầu vào</text>
+    <text x="912" y="479" text-anchor="middle" class="small">Source / GHCR</text>
+    <text x="912" y="499" text-anchor="middle" class="small">Xác thực tham số</text>
+
+    <rect x="1002" y="425" width="145" height="86" rx="12" fill="#ffffff" stroke="#fb923c"/>
+    <text x="1074" y="455" text-anchor="middle" class="label">Khởi chạy SUT</text>
+    <text x="1074" y="479" text-anchor="middle" class="small">Docker network</text>
+    <text x="1074" y="499" text-anchor="middle" class="small">GET /api/tags</text>
+
+    <rect x="1164" y="425" width="145" height="86" rx="12" fill="#ffffff" stroke="#fb923c"/>
+    <text x="1236" y="455" text-anchor="middle" class="label">UI test</text>
+    <text x="1236" y="479" text-anchor="middle" class="small">Cypress headless</text>
+    <text x="1236" y="499" text-anchor="middle" class="small">5 test cases</text>
+
+    <rect x="900" y="545" width="350" height="60" rx="12" fill="#ffffff" stroke="#fb923c"/>
+    <text x="1075" y="571" text-anchor="middle" class="label">JUnit · Allure · Video · Log · Cleanup</text>
+    <text x="1075" y="593" text-anchor="middle" class="small">Lưu bằng chứng và dọn tài nguyên tạm</text>
+  </g>
+
+  <path d="M240 200 H315" class="line"/>
+  <text x="278" y="188" text-anchor="middle" class="small">Git</text>
+  <path d="M745 200 H810" class="line"/>
+  <text x="778" y="188" text-anchor="middle" class="small">push</text>
+  <path d="M920 275 V330" class="line"/>
+  <text x="935" y="310" class="small">pull</text>
+  <path d="M745 465 C775 465 775 485 810 485" class="dash"/>
+  <text x="780" y="455" text-anchor="middle" class="small">tham số</text>
+
+  <text x="700" y="714" text-anchor="middle" class="body">Mỗi kết quả được đối chiếu với revision mã nguồn và image tag tương ứng.</text>
+</svg>
