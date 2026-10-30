@@ -33,6 +33,14 @@ function Figure(figure)
   return figure
 end
 
+function Code(code)
+  -- Cho phép SHA, digest và mã định danh dài xuống dòng trong bản PDF.
+  if #code.text >= 32 and not code.text:match("%s") then
+    return pandoc.RawInline("latex", "\\nolinkurl{" .. code.text .. "}")
+  end
+  return code
+end
+
 function Table(tbl)
   local columns = #tbl.colspecs
   local widths

@@ -14,8 +14,9 @@ date: "Tháng 10 năm 2026"
 **System Under Test:** RealWorld Conduit — Node.js, Express, Next.js, Sequelize và SQLite  
 **Repository mã nguồn:** <https://github.com/thu2005/realworld>  
 **Các nhánh hiện thực được khảo sát:** `next`, `ci-github-actions`  
-**Revision Jenkins và Cypress:** `42e263e196a494180112d41535b706db590dac66`  
-**Revision GitHub Actions và kiểm tra bảo mật:** `19c70a91e325bc22c1c80f363b18b7c278095602`
+**Revision `next` được rà soát:** `38ffa797962d00cdd0f8d81b07102849700b63df`  
+**Revision kiểm chứng Jenkins qua SCM và image:** `ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3`  
+**Revision `ci-github-actions` được rà soát:** `40da1fea5610f5bbf26ccbc9c191abc693d61cfc`
 
 | Thành viên | MSSV | Trách nhiệm chính trong phần hiện thực |
 |---|---:|---|
@@ -25,7 +26,7 @@ date: "Tháng 10 năm 2026"
 | Nguyễn Đoàn Xuân Thu | 23120170 | Hạ tầng Jenkins, Cypress, Allure và thông tin xác thực |
 | Trần Trọng Trí | 20120221 | Vòng đời Docker image trên Jenkins, smoke test và dọn dẹp tài nguyên |
 
-\newpage
+
 
 # TÓM TẮT
 
@@ -33,7 +34,7 @@ Báo cáo trình bày quá trình xây dựng một **test harness tự động*
 
 Giải pháp sử dụng GitHub Actions để tự động kiểm tra mã nguồn mỗi khi có thay đổi. Workflow thiết lập đúng phiên bản Node.js, cài dependency, chạy lint, các bộ kiểm thử Mocha, Jest, Newman và SuperTest, kiểm tra lỗ hổng dependency, phân tích mã nguồn bằng CodeQL, sau đó build Docker image và đẩy image lên GitHub Container Registry. Jenkins tiếp nhận mã nguồn hoặc Docker image để thực hiện một vòng kiểm chứng độc lập. Với chế độ kiểm tra image, Jenkins khởi tạo container trong mạng Docker tạm, kiểm tra `GET /api/tags`, chạy Cypress ở chế độ headless, xuất JUnit XML và Allure Report, rồi dọn các tài nguyên tạm.
 
-Kết quả hiện thực gồm 31 ca kiểm thử đơn vị bằng Jest, 15 ca kiểm thử API bằng SuperTest, bộ API collection chạy bởi Newman, 4 ca Mocha có sẵn và 5 ca Cypress. Trên phạm vi hai mô-đun `lib.js` và `auth.js`, Jest ghi nhận 100% statements, lines và functions, cùng 94,73% branches. Workflow GitHub Actions được mở rộng thành 11 job và một workflow CodeQL độc lập; bằng chứng thực nghiệm trước đó ghi nhận 10 checks của pipeline nền tảng thành công. Jenkins đã kiểm chứng thành công quá trình nhận image từ GHCR, smoke test, Cypress, xuất báo cáo và dọn dẹp tài nguyên. Kết quả cho thấy việc chuẩn hóa runtime, tham số bàn giao, đường dẫn report và quy tắc định danh artifact là điều kiện quan trọng để các công cụ độc lập có thể hợp thành một quy trình kiểm thử có khả năng tái hiện.
+Kết quả hiện thực gồm 38 ca kiểm thử đơn vị bằng Jest, trong đó có 7 trường hợp tham số hóa bằng `test.each`; 15 ca kiểm thử API bằng SuperTest; bộ API collection chạy bởi Newman; 4 ca Mocha có sẵn và 5 ca Cypress. Trên phạm vi hai mô-đun `lib.js` và `auth.js`, lần chạy có bằng chứng ghi nhận 100% statements, lines và functions, cùng 94,73% branches. Workflow GitHub Actions được mở rộng thành 11 job và một workflow CodeQL độc lập; bằng chứng thực nghiệm trước đó ghi nhận 10 checks của pipeline nền tảng thành công. Jenkins đã kiểm chứng thành công quá trình nhận image từ GHCR, smoke test, 5/5 Cypress tests, 11/11 JUnit checks, xuất Allure Report và dọn dẹp tài nguyên. Hai ca lỗi có chủ đích cũng xác nhận tag không hợp lệ và endpoint smoke sai bị chặn đúng giai đoạn, sau đó pipeline có thể chạy lại thành công. Kết quả cho thấy việc chuẩn hóa runtime, tham số bàn giao, đường dẫn report và quy tắc định danh artifact là điều kiện quan trọng để các công cụ độc lập có thể hợp thành một quy trình kiểm thử có khả năng tái hiện.
 
 **Từ khóa:** CI/CD, Continuous Integration, Test Harness, GitHub Actions, Jenkins, Jest, SuperTest, Cypress, Allure, Docker.
 
@@ -165,7 +166,7 @@ Việc sử dụng cả GitHub Actions và Jenkins không nhằm chạy trùng c
 | SuperTest | Gửi request trực tiếp đến REST API trong bộ Jest API tests |
 | Newman | Chạy Postman collection của dự án RealWorld |
 | Cypress | Điều khiển trình duyệt headless và kiểm tra luồng UI/API |
-| npm audit | Phát hiện lỗ hổng đã biết trong cây dependency và chặn mức High/Critical |
+| npm audit | Phát hiện lỗ hổng đã biết trong cây dependency và xuất báo cáo theo mức độ |
 | CodeQL | Phân tích tĩnh mã nguồn JavaScript/TypeScript theo các mẫu truy vấn bảo mật |
 | JUnit XML | Định dạng kết quả để CI đọc và vẽ test trend |
 | Allure | Tổng hợp raw result thành báo cáo HTML |
@@ -208,7 +209,7 @@ Workflow `CI Pipeline` có 11 job. CodeQL được tách thành một workflow r
 | 4 | Lint Code | ESLint pass |
 | 5 | Unit Tests | Mocha XML và Jest coverage |
 | 6 | API Tests | Newman XML, server log và SuperTest result |
-| 7 | Security Vulnerability Scan | Lưu `security-audit.json`; dừng pipeline nếu có mức High/Critical |
+| 7 | Security Vulnerability Scan | Lưu `security-audit.json` và thống kê theo mức độ; hiện chưa chặn pipeline |
 | 8 | Docker Image Build | Image theo SHA và smoke test container pass |
 | 9 | Docker Image Push | Image được đẩy lên GHCR đối với sự kiện tin cậy |
 | 10 | Trigger Jenkins Pipeline | Bàn giao thông tin image cho Jenkins |
@@ -292,9 +293,12 @@ Mã nguồn chỉ chứa tên credential, không chứa giá trị bí mật. Th
 | `jenkins/plugins.txt` | Danh sách plugin Jenkins tối thiểu |
 | `jenkins/image_smoke.py` | Quản lý vòng đời SUT container và smoke test |
 | `jenkins/trigger_jenkins.py` | Client gọi Jenkins API và theo dõi kết quả |
+| `jenkins/demo.py` | Chạy các kịch bản pass/fail phục vụ mini-demo Jenkins |
+| `jenkins/test_demo.py` | Kiểm thử hành vi của script demo và API client |
 | `tests/unit/` | Jest unit test suites |
 | `tests/api/` | SuperTest API integration suite |
 | `cypress/e2e/` | Cypress UI/system tests |
+| `docs/person-e-handoff.md` | Hướng dẫn chạy lại, kiểm chứng và bàn giao Jenkins |
 | `CI_INTEGRATION_CONTRACT.md` | Quy ước tích hợp giữa các phân hệ |
 
 ## 5.2. Môi trường Jenkins tái lập bằng Docker
@@ -313,11 +317,11 @@ Compose ánh xạ Jenkins tới `127.0.0.1:18080`, gắn named volume vào `/var
 
 ## 5.3. Unit test bằng Jest
 
-Bộ unit test gồm 31 ca:
+Bộ unit test tại revision `40da1fe` gồm 38 ca:
 
 | Suite | Số ca | Nội dung chính |
 |---|---:|---|
-| `lib.test.js` | 16 | Validate số nguyên/tham số, lỗi validation, client IP, tag và cleanup dữ liệu demo |
+| `lib.test.js` | 23 | Validate số nguyên/tham số, lỗi validation, client IP, tag và cleanup dữ liệu demo; gồm 7 trường hợp tham số hóa bằng `test.each` |
 | `auth.test.js` | 6 | Middleware bắt buộc/tùy chọn, header Token/Bearer và trường hợp thiếu token |
 | `models.test.js` | 9 | Hash mật khẩu, JWT, chuẩn hóa user, validation và slug bài viết |
 
@@ -350,17 +354,17 @@ Các case chạy trên trình duyệt headless với viewport `1280x720`. Test d
 
 Sau khi image được kéo về, harness lưu image ID/digest, tạo một network riêng và chạy SUT bằng image ID đã xác định. Một probe container gọi `GET /api/tags` với số lần thử và timeout hữu hạn. Phép kiểm tra chỉ pass khi nhận HTTP `200` và body JSON có mảng `tags`.
 
-Post action thu thập `container.log`, `container-inspect.json`, `smoke-response.json`, `integration-summary.json` và `smoke.xml`. Cuối cùng, Jenkins ngắt kết nối khỏi network rồi xóa app container, probe container và network mang label của build. Cleanup được đặt trong hậu xử lý để vẫn chạy khi smoke test hoặc Cypress thất bại.
+Post action thu thập `container.log`, `container-inspect.json`, `smoke-response.json`, `integration-summary.json` và `smoke.xml`. Ở một lần chạy thành công, `smoke.xml` ghi sáu kiểm tra vòng đời gồm validate, pull, start, smoke, connect-agent và finalize. Cuối cùng, Jenkins ngắt kết nối khỏi network rồi xóa app container, probe container và network mang label của build. Cleanup được đặt trong hậu xử lý để vẫn chạy khi validation, smoke test hoặc Cypress thất bại.
 
 ## 5.7. Báo cáo kiểm thử và kiểm tra bảo mật trên GitHub Actions
 
-Phần hiện thực GitHub Actions tại revision `19c70a9` mở rộng pipeline theo ba hướng.
+Phần hiện thực GitHub Actions được rà soát tại revision `40da1fe` mở rộng pipeline theo ba hướng.
 
 Thứ nhất, `jest-junit` được cấu hình làm reporter của Jest. Unit tests ghi `jest-unit.xml`, API tests ghi `jest-api.xml`; coverage được xuất ở ba dạng `text`, `lcov` và `json-summary`. Workflow đọc `coverage-summary.json` để tạo bảng statements, branches, functions và lines ngay trong GitHub Actions Job Summary. Các tệp XML và thư mục coverage đồng thời được lưu thành artifact.
 
-Thứ hai, job `security-scan` tạo `security-audit.json`, trình bày số lỗ hổng theo năm mức độ và thực thi `npm audit --audit-level=high`. Lệnh này trả trạng thái thất bại khi cây dependency còn lỗ hổng High hoặc Critical, vì vậy kết quả kiểm tra bảo mật tham gia trực tiếp vào quyết định có cho phép `docker-build` chạy hay không.
+Thứ hai, job `security-scan` tạo `security-audit.json`, trình bày số lỗ hổng theo năm mức độ và thực thi `npm audit --audit-level=high`. Trong cấu hình hiện tại, lệnh được nối với `|| true`; do đó bước này cung cấp dữ liệu quan sát và artifact nhưng chưa làm pipeline thất bại khi có lỗ hổng High hoặc Critical.
 
-Thứ ba, workflow `CodeQL SAST Analysis` phân tích tĩnh mã JavaScript/TypeScript bằng các bộ truy vấn mở rộng về bảo mật và chất lượng. Workflow chạy khi có thay đổi mã nguồn, trên pull request, theo lịch hằng tuần và khi được kích hoạt thủ công. Bên cạnh đó, job `allure-report` tải artifact của unit/API tests, tổng hợp dữ liệu đầu vào và tạo artifact HTML `allure-report-dashboard` với thời gian lưu 7 ngày. README của nhánh cũng hiển thị trạng thái pipeline, số unit/API tests và coverage để người xem nhận biết nhanh trạng thái kiểm thử gần nhất.
+Thứ ba, workflow `CodeQL SAST Analysis` phân tích tĩnh mã JavaScript/TypeScript bằng các bộ truy vấn mở rộng về bảo mật và chất lượng. Workflow chạy khi có thay đổi mã nguồn, trên pull request, theo lịch hằng tuần và khi được kích hoạt thủ công. Bên cạnh đó, job `allure-report` tải artifact của unit/API tests, tổng hợp dữ liệu đầu vào và tạo artifact `allure-report-dashboard` với thời gian lưu 7 ngày. Job này được đặt `continue-on-error`, nên có vai trò công bố báo cáo theo cơ chế best-effort chứ không phải quality gate. README của nhánh cũng hiển thị trạng thái pipeline và các chỉ số kiểm thử để người xem nhận biết nhanh trạng thái gần nhất.
 
 # 6. TRIỂN KHAI HẠ TẦNG VÀ TÁI HIỆN THỰC NGHIỆM
 
@@ -475,12 +479,12 @@ Có thể kiểm tra không còn tài nguyên tạm bằng `docker ps -a` và `d
 | Mức/loại kiểm thử | Công cụ | Số ca đếm trực tiếp | Mục tiêu |
 |---|---|---:|---|
 | Regression có sẵn | Mocha | 4 | Xác nhận hành vi nền của ứng dụng |
-| Unit | Jest | 31 | Helper, auth middleware và model |
+| Unit | Jest | 38 | Helper, auth middleware và model; gồm 7 trường hợp dữ liệu tham số hóa |
 | API integration | SuperTest | 15 | Các API REST và luồng dữ liệu |
 | API contract collection | Newman | Theo collection | Kiểm tra RealWorld API contract |
 | UI/system | Cypress | 5 | Điều hướng và validation qua giao diện |
 
-Nếu chỉ tính các case được khai báo trực tiếp trong source của repository, hệ thống có 55 test cases. Newman được báo cáo riêng vì số iteration/request do collection và script của submodule quyết định; cộng nó vào một tổng tĩnh dễ tạo số liệu sai.
+Nếu tính các case do source của repository sinh ra khi chạy, hệ thống có 62 test cases. Trong số này, 7 case của `test.each` dùng chung một thân kiểm thử nhưng được Jest thực thi riêng cho từng hàng dữ liệu. Newman được báo cáo riêng vì số iteration/request do collection và script của submodule quyết định; cộng nó vào một tổng tĩnh dễ tạo số liệu sai.
 
 ## 7.2. Mức độ bao phủ hành vi
 
@@ -531,35 +535,37 @@ Tại merge commit `4f9a9405b2baebc42969d40f638501e8debfd20e`, GitHub hiển th�
 
 ## 8.3. Kết quả kiểm tra phần hiện thực GitHub Actions mở rộng
 
-Qua kiểm tra workflow tại revision `19c70a9`, pipeline chính có 11 job và workflow CodeQL có một job phân tích riêng. Các thay đổi có thể đối chiếu trực tiếp trong cấu hình như sau:
+Qua kiểm tra workflow tại revision `40da1fe`, pipeline chính có 11 job và workflow CodeQL có một job phân tích riêng. Các thay đổi có thể đối chiếu trực tiếp trong cấu hình như sau:
 
 | Nội dung | Dấu hiệu trong mã nguồn | Kết quả mong đợi khi chạy |
 |---|---|---|
 | JUnit cho Jest | Reporter `jest-junit`; `jest-unit.xml`, `jest-api.xml` | GitHub/Jenkins có thể đọc kết quả unit và API theo cùng định dạng |
 | Coverage artifact | `text`, `lcov`, `json-summary` | Có báo cáo HTML, JSON summary và bảng trong Job Summary |
-| Dependency security gate | `npm audit --audit-level=high` | Pipeline dừng khi phát hiện mức High/Critical |
+| Dependency security report | `npm audit --audit-level=high || true` | Thống kê và lưu artifact; chưa chặn pipeline theo mức độ |
 | CodeQL SAST | `codeql.yml`, query `security-extended,security-and-quality` | Kết quả được gửi đến GitHub Code Scanning |
-| Allure trên GitHub Actions | Job `allure-report`, artifact `allure-report-dashboard` | Có báo cáo HTML tải từ workflow run |
+| Allure trên GitHub Actions | Job `allure-report`, artifact `allure-report-dashboard` | Tạo artifact theo cơ chế best-effort; không chặn pipeline nếu bước tạo report lỗi |
 
 ## 8.4. Kết quả unit test và coverage
 
-GitHub Actions ghi nhận 3/3 Jest suites pass. Bảng coverage cho hai mô-đun mục tiêu đạt 100% statements, functions và lines; branch coverage đạt 94,73%, vượt threshold 80%.
+Ảnh bằng chứng của lần chạy trước khi bổ sung `test.each` ghi nhận 31/31 tests thuộc 3/3 Jest suites đều pass. Bảng coverage cho hai mô-đun mục tiêu đạt 100% statements, functions và lines; branch coverage đạt 94,73%, vượt threshold 80%. Revision `40da1fe` bổ sung 7 hàng dữ liệu vào `lib.test.js`, đưa số case hiện có trong source lên 38; báo cáo không dùng ảnh 31 tests để suy diễn trạng thái thực thi của 7 case mới.
 
 ![Hình 7. Unit test và coverage trong GitHub Actions](../weekly-docs/Week6/PersonC/screenshots/unit-tests-coverage-step.png)
 
 ## 8.5. Kết quả Jenkins image pipeline
 
-Jenkins Stage View cho thấy các bước prepare, validate, pull image, run image, smoke test, kết nối UI runner và Cypress UI tests đều thành công. Test Result Trend của build mới hơn hiển thị 6 kết quả pass, gồm 1 smoke test và 5 Cypress tests. Artifact list chứa JUnit, Allure raw data, video, log và integration summary.
+Lần kiểm chứng Week 7 sử dụng job `ci-cd-demo-person-e` loại **Pipeline script from SCM**, lấy `Jenkinsfile`, lifecycle runner và Cypress tests trực tiếp từ nhánh `next`. Build `#1` dùng cùng revision cho SCM và image là `ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3`, sau đó hoàn tất chuỗi validate, pull, start, smoke, kết nối UI runner, Cypress, công bố report và cleanup. Image được đối chiếu thêm bằng digest `sha256:b1afd0dddf5a722f668b851da686ed28ba5e0c942c00476fcfbdb9b45d67f0d2`.
 
-![Hình 8. Jenkins image pipeline, test trend và artifacts](../weekly-docs/Week6/PersonD/screenshots/02-jenkins-cypress-stage-view-success.jpeg)
+![Hình 8. Jenkins lấy pipeline từ SCM và chạy image mode thành công](../weekly-docs/Week7/PersonE/screenshots/jenkins-scm-build1-success.png)
 
-Một lần kiểm chứng tích hợp Allure trước khi suite được mở rộng đã công bố thành công 2/2 ca của `RealWorld public UI`. Bằng chứng này xác nhận đường truyền dữ liệu Cypress → Allure raw results → Jenkins Allure plugin hoạt động đúng.
+Allure của build thành công ghi nhận 5/5 UI tests, gồm 2 ca `RealWorld public UI` và 3 ca `RealWorld account validation`. Jenkins đồng thời đọc 11/11 JUnit checks: 5 Cypress tests và 6 kiểm tra vòng đời từ `smoke.xml`. Artifact lưu Allure raw data, hai video Cypress, JUnit XML, container log, image inspection, smoke response và integration summary.
 
-![Hình 9. Allure Report được công bố từ Jenkins](../weekly-docs/Week6/PersonD/screenshots/03-allure-report-2-tests-passed.jpeg)
+![Hình 9. Allure Report ghi nhận năm UI tests thành công](../weekly-docs/Week7/PersonE/screenshots/jenkins-scm-allure-five-passed.png)
 
-Build `#9` kiểm chứng secure pull với `GHCR_PRIVATE=true`, revision `4f9a9405…`, test không lỗi và danh sách artifact đầy đủ. Token không xuất hiện trên trang build.
+Hai ca lỗi có chủ đích xác nhận fail-fast và khả năng chẩn đoán. Build `#2` dùng tag `latest` nên dừng đúng tại **Validate image input** vì pipeline yêu cầu full 40-character SHA. Build `#3` dùng endpoint smoke sai nên thất bại với HTTP 404. Build `#4` chạy lại kịch bản hợp lệ và thành công với 5/5 UI tests, 11/11 JUnit checks. Cả bốn build đều ghi `cleanup_complete=true`, vì vậy hai failure là bằng chứng kiểm thử âm chứ không phải lỗi còn tồn đọng.
 
-![Hình 10. Jenkins build thành công với revision và artifacts có thể truy vết](../weekly-docs/Week6/PersonD/screenshots/04-jenkins-next-build-9-success.jpeg)
+![Hình 10. Tag không hợp lệ bị chặn trước khi pull và chạy image](../weekly-docs/Week7/PersonE/screenshots/jenkins-invalid-tag-console.png)
+
+Revision `next` hiện tại là `38ffa797962d00cdd0f8d81b07102849700b63df`, bao gồm phần bàn giao và script demo đã merge sau lần kiểm chứng trên. Báo cáo ghi riêng revision thực nghiệm `ef0684e…` để không suy diễn rằng image ở một commit khác đã được chạy.
 
 ## 8.6. Tổng hợp kết quả
 
@@ -567,16 +573,17 @@ Build `#9` kiểm chứng secure pull với `GHCR_PRIVATE=true`, revision `4f9a9
 |---|---|---|
 | GitHub Actions nền tảng | 10 checks thành công trên lần chạy có bằng chứng | Đạt |
 | GitHub Actions mở rộng | Cấu hình 11 job, JUnit, coverage summary và Allure artifact | Đã hiện thực |
-| Dependency security gate | Chặn mức High/Critical bằng `npm audit --audit-level=high` | Đã hiện thực |
+| Dependency security report | Thống kê mức độ và lưu `security-audit.json`; chưa chặn theo ngưỡng | Đã hiện thực ở chế độ quan sát |
 | CodeQL SAST | Workflow JavaScript/TypeScript với bộ truy vấn mở rộng | Đã hiện thực |
-| Jest unit tests | 31 tests, 3 suites pass | Đạt |
+| Jest unit tests | Source hiện có 38 tests; bằng chứng trước đó ghi nhận 31/31 tests, 3 suites pass | Đã hiện thực; 7 case mới chưa có ảnh đối chiếu trong báo cáo |
 | Coverage mục tiêu | 100/94,73/100/100, threshold 80% | Đạt |
 | SuperTest API | 15 test cases được tích hợp vào CI | Đạt |
 | Docker build/smoke | Image build và `/api/tags` pass | Đạt |
 | GHCR traceability | Image tag là full Git SHA | Đạt |
-| Jenkins image lifecycle | Pull, run, smoke, Cypress và cleanup pass | Đạt |
-| Cypress hiện tại | 5 UI tests; Jenkins trend ghi 6 kết quả gồm smoke | Đạt |
-| Allure publication | Jenkins công bố report thành công | Đạt |
+| Jenkins image lifecycle | Hai build pass, hai ca lỗi có chủ đích và cleanup hoàn tất | Đạt |
+| Cypress hiện tại | 5/5 UI tests; JUnit tổng hợp 5 UI và 6 lifecycle checks | Đạt |
+| Allure publication | Jenkins công bố report 5/5 test thành công | Đạt |
+| Fail-fast và recovery | Tag `latest` và smoke 404 bị chặn; lượt chạy lại thành công | Đạt |
 | Secret handling | Credential lấy qua Jenkins/GitHub secret store | Đạt |
 
 # 9. THẢO LUẬN
@@ -605,13 +612,13 @@ Nhóm ưu tiên khả năng tái hiện và truy vết hơn việc tối ưu th�
 
 Jenkins chạy trên máy local tại `127.0.0.1:18080`; GitHub-hosted runner không thể truy cập địa chỉ localhost này. Vì vậy, khả năng tự động trigger đã được hiện thực ở mức client và contract, nhưng các lần kiểm chứng local sử dụng **Build with Parameters** sau khi image được push. Việc đưa Jenkins ra Internet chỉ để demo sẽ tạo rủi ro lớn hơn lợi ích.
 
-Quá trình tích hợp qua nhiều nhánh làm bằng chứng được tạo ở các mốc khác nhau. Ảnh Allure xác nhận 2 test ban đầu, trong khi source hiện tại đã mở rộng lên 5 Cypress tests và Jenkins Test Trend ghi nhận 5 UI tests cộng 1 smoke test. Báo cáo phân biệt rõ hai mốc thay vì dùng ảnh cũ để suy diễn kết quả mới.
+Quá trình tích hợp qua nhiều nhánh làm revision hiện tại và revision thực nghiệm không phải lúc nào cũng trùng nhau. Các Jenkins build có bằng chứng dùng SCM và image ở `ef0684e…`; nhánh `next` hiện tại ở `38ffa79…` sau khi merge phần bàn giao và script demo. Báo cáo ghi riêng hai mốc để không dùng kết quả của một image nhằm suy diễn cho commit khác.
 
 ## 10.2. Giới hạn
 
 - Coverage mới được thu thập có chủ đích cho `lib.js` và `auth.js`, chưa đại diện toàn bộ ứng dụng.
 - UI suite tập trung vào public navigation và validation, chưa bao phủ toàn bộ luồng người dùng đã xác thực.
-- Cổng `npm audit` chặn lỗ hổng mức High/Critical, nhưng cây dependency cũ có thể làm pipeline dừng cho đến khi nhóm nâng cấp hoặc thay thế các gói liên quan.
+- `npm audit` hiện chạy ở chế độ quan sát vì có `|| true`; pipeline chưa thực thi chính sách chặn theo mức độ High/Critical.
 - Phần Allure trên GitHub Actions đã có cấu hình tạo artifact, nhưng báo cáo thực nghiệm hiện có chủ yếu chứng minh Allure trên Jenkins.
 - Jenkins chạy test trên controller để đơn giản hóa seminar; mô hình vận hành thực tế nên dùng agent cô lập.
 - Kết nối GitHub Actions → Jenkins chưa được chứng minh qua một địa chỉ Jenkins có thể truy cập từ Internet hoặc self-hosted runner trong lần demo local.
@@ -625,17 +632,18 @@ Hệ thống có thể được hoàn thiện theo thứ tự ưu tiên sau:
 3. Bổ sung UI tests cho đăng nhập thành công, tạo bài viết, bình luận và đăng xuất bằng dữ liệu kiểm thử cô lập.
 4. Dùng self-hosted runner hoặc một địa chỉ Jenkins được bảo vệ để kiểm chứng quá trình kích hoạt tự động từ đầu đến cuối mà không công khai tùy tiện máy local.
 5. Chuyển Jenkins workload sang agent tạm thời, giới hạn quyền Docker và tách controller khỏi test execution.
-6. Duy trì việc xử lý cảnh báo từ `npm audit` và CodeQL, đồng thời bổ sung bằng chứng thực nghiệm cho Allure artifact trên GitHub Actions.
+6. Thống nhất ngưỡng chấp nhận lỗ hổng, bỏ `|| true` khi cây dependency đã được xử lý đủ để dùng `npm audit` làm quality gate; đồng thời bổ sung bằng chứng thực nghiệm cho Allure artifact trên GitHub Actions.
 
-# 11. VIDEO DEMO
+# 11. VIDEO DEMO VÀ SLIDE TRÌNH BÀY
 
-Ba video của seminar được tổ chức theo ba nội dung độc lập. Liên kết sẽ được điền vào bản Markdown sau khi nhóm xuất bản video và trước khi tạo PDF chính thức.
+Nhóm chuẩn bị ba video và một bộ slide để trình bày nội dung seminar:
 
-| Video | Nội dung | Liên kết |
+| Tài liệu | Nội dung | Liên kết |
 |---:|---|---|
-| 1 | Cơ sở lý thuyết và kiến trúc tổng thể của giải pháp | _Chờ nhóm cung cấp URL_ |
-| 2 | GitHub Actions: pipeline 11 job, CodeQL, kiểm thử, Docker build và GHCR push | _Chờ nhóm cung cấp URL_ |
-| 3 | Jenkins: image mode, smoke test, Cypress, Allure và cleanup | _Chờ nhóm cung cấp URL_ |
+| Video 1 | Demo GitHub Actions | [Xem video GitHub Actions](https://drive.google.com/file/d/1OO2DmSEiVwyk-Jcb2RpwqcTHhs9janmp/view?usp=sharing) |
+| Video 2 | Demo Jenkins pipeline | [Xem video Jenkins](https://drive.google.com/drive/folders/1sEgVaQWbD3vBH5v1CqjRAnmRobgyLsJD?usp=sharing) |
+| Video 3 | Video thuyết trình seminar | [Xem video thuyết trình](https://drive.google.com/file/d/13pjwDisbNMdks_shLDick7uwYZ4-8C1q/view?usp=sharing) |
+| Slide | Slide thuyết trình | [Mở slide seminar](../weekly-docs/Week7/PersonA/slideshow.html) |
 
 # 12. KẾT LUẬN
 
