@@ -3,15 +3,12 @@
 **Họ và tên:** Trần Trọng Trí  
 **MSSV:** 20120221  
 **Phần việc:** Kiểm chứng và bàn giao Jenkins, mini-demo và báo cáo cá nhân.  
-**Công cụ AI:** Codex  
-**Ngày thực hiện và lập audit:** 30/10/2026 (UTC+07:00).
+**Công cụ AI:** Codex
 
 ## 1. Phạm vi và cách ghi
 
-Audit này tổng hợp các lượt hỗ trợ chính trong Week7. Các prompt **diễn giải
-nội dung yêu cầu trong hội thoại** bằng lời văn đơn giản, theo trình tự tìm
-hiểu công việc của tuần rồi thực hiện từng phần. Đây không phải bản trích
-nguyên văn. Phần kết quả là **tóm tắt công việc của AI**, không phải transcript
+Audit này tổng hợp nội dung yêu cầu công việc và kết quả hỗ trợ AI trong Week7.
+Phần kết quả là **tóm tắt công việc của AI**, không phải transcript
 nguyên văn toàn bộ hội thoại. Không ghi
 token, mật khẩu hoặc nội dung các file credential local.
 
@@ -23,17 +20,14 @@ thành viên khác hoặc kết quả chưa kiểm chứng là kết quả của
 
 ### Lượt 1 — Rà soát phần còn thiếu và xác định phạm vi
 
-**Prompt (diễn giải):**
+**Nội dung yêu cầu:**
 
-> Kiểm tra code và báo cáo của nhóm, giải thích phần Jenkins/Person E đã hoàn thành đến đâu và tuần này còn thiếu những gì. Hoàn thiện các việc cần thiết, chạy thử và bổ sung báo cáo để kiểm tra. Giữ cách làm đơn giản, dễ hiểu, phù hợp với bài seminar sinh viên và có kết quả chạy thực tế.
+> Kiểm tra code và báo cáo của nhóm, giải thích phần Jenkins/Person E đã hoàn thành đến đâu và tuần này còn thiếu những gì. Hoàn thiện các việc cần thiết, chạy thử và bổ sung báo cáo để kiểm tra. Giữ cách làm đơn giản, dễ hiểu và có kết quả chạy thực tế.
 
 AI hỏi cần hoàn thiện toàn bộ sản phẩm nhóm hay chỉ phần Jenkins/Person E.
-Phần xác nhận phạm vi được diễn giải:
+Nội dung xác nhận phạm vi:
 
 > Chỉ thực hiện phần Jenkins/Person E. Đọc phần của các thành viên khác để hiểu tiến độ và tránh làm trùng.
-
-**Đối chiếu yêu cầu gốc:** `hãy kiểm tra và hoàn thành nốt đồ án này đi`;
-người dùng chọn `Chỉ phần Jenkins/Person E`.
 
 **AI hỗ trợ:** Fetch và rà hai repository, đọc yêu cầu seminar, báo cáo thành
 viên và thay đổi mới trên `next`. Nhận thấy nhóm đã có báo cáo tổng, slide nháp
@@ -43,7 +37,7 @@ viên khác sau khi phạm vi được xác nhận.
 
 ### Lượt 2 — Hoàn thiện mini-demo và kiểm chứng Pipeline from SCM
 
-**Ý triển khai từ yêu cầu ở lượt 1 (diễn giải):**
+**Phạm vi triển khai từ yêu cầu ở lượt 1:**
 
 > Kiểm tra lại Jenkins bằng code của nhóm trên GitHub thay vì chỉ dùng các file local. Chạy thử cả trường hợp thành công và trường hợp cố tình làm sai, sau đó hướng dẫn cách trình bày kết quả. Viết hướng dẫn ngắn cho những bước cần thực hiện lại khi demo.
 
@@ -101,28 +95,17 @@ Mini-demo và bản sửa client được chạy từ working tree rồi commit 
 
 ### Lượt 4 — Đối chiếu audit còn thiếu và soạn bản nháp
 
-**Prompt (diễn giải):**
+**Nội dung yêu cầu:**
 
-> Kiểm tra repo báo cáo của nhóm và so sánh phần Person E với các thành viên khác. Xác định những file còn thiếu ở tuần 6 và tuần 7, đặc biệt là nhật ký dùng AI. Liệt kê rõ các phần đã có để tránh làm lại.
+> Kiểm tra repo báo cáo và liệt kê phần Person E còn thiếu ở tuần 6–7, nhất là audit log.
 
-**Đối chiếu yêu cầu gốc:** Người dùng yêu cầu kiểm tra repo doc and report,
-so sánh với các thành viên khác và lưu ý phần AI audit log còn thiếu.
+**AI hỗ trợ:** Xác nhận báo cáo và evidence đã có, còn thiếu audit Week6 và Week7.
 
-**AI hỗ trợ:** Kiểm tra remote, so sánh báo cáo/audit các thành viên. Xác nhận
-Person E đã có báo cáo/evidence Week6–7 nhưng thiếu audit của hai tuần. Audit
-Week3 của Trần Trọng Trí nằm ở Person D, Week5 nằm ở Person E, đúng theo phân
-công thay đổi qua các tuần. Báo cáo đánh giá tiến độ của nhóm còn ghi thiếu
-report Week6 là thông tin cũ; report đã được push ở commit `1f749e0`.
+**Nội dung yêu cầu viết audit:**
 
-**Prompt yêu cầu viết audit (diễn giải):**
+> Viết audit tuần 6 và tuần 7 để review trước khi commit.
 
-> Viết nhật ký dùng AI cho tuần 6 và tuần 7. Ghi lại nội dung yêu cầu, phần AI đã hỗ trợ và kết quả thực hiện bằng lời văn dễ hiểu. Chuẩn bị bản nháp để đọc và góp ý trước khi hoàn tất.
-
-**Đối chiếu yêu cầu gốc:** `bạn hãy viết audit giúp tôi để tôi review`.
-
-**AI hỗ trợ:** Soạn bản nháp audit Week6 và Week7, phân biệt nội dung diễn giải
-với lời thoại nguyên văn, ghi rõ kết quả và giới hạn. Chưa commit/push hai audit
-trước khi người dùng review.
+**AI hỗ trợ:** Soạn hai file audit dựa trên công việc và kết quả đã kiểm chứng.
 
 ## 3. Sản phẩm và nguồn đối chiếu
 

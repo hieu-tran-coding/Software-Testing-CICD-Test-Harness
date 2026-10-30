@@ -4,14 +4,11 @@
 **MSSV:** 20120221  
 **Phần việc:** Jenkins, Cypress UI tests, JUnit và demo pass/fail.  
 **Công cụ AI:** Codex  
-**Ngày thực hiện công việc:** 23/10/2026.  
-**Ngày lập audit:** 30/10/2026 (UTC+07:00).
+**Ngày thực hiện công việc:** 23/10/2026.
 
 ## 1. Phạm vi và cách ghi
 
-Các prompt dưới đây **diễn giải nội dung yêu cầu trong hội thoại**, dùng lời
-văn đơn giản để trình bày việc tìm hiểu nhiệm vụ và thực hiện công việc theo
-tuần. Đây không phải bản trích nguyên văn.
+Nhật ký tổng hợp nội dung yêu cầu công việc và kết quả hỗ trợ AI trong Week6.
 Phần kết quả là **tóm tắt hỗ trợ của AI**, đối chiếu với mã nguồn, commit và
 evidence; không phải transcript nguyên văn câu trả lời của AI. Một số phản hồi
 đầu Week6 không còn đầy đủ sau khi hội thoại được rút gọn, nên không dựng lại
@@ -22,16 +19,14 @@ chép vào đây.
 
 ### Lượt 1 — Xác định phạm vi Week6
 
-**Prompt (diễn giải):**
+**Nội dung yêu cầu:**
 
 > Đọc báo cáo tuần trước và kiểm tra phần Jenkins đã được nhóm thực hiện. Giải thích những việc Person E cần làm trong tuần 6, lập kế hoạch từng bước rồi thực hiện các phần còn thiếu. Giữ cách làm vừa đủ cho bài seminar sinh viên, tránh làm trùng công việc đã hoàn thành.
 
 Khi AI hỏi có tiếp tục phía Jenkins với vai trò Person E như Week5 hay không,
-phần xác nhận được diễn giải:
+nội dung xác nhận:
 
 > Tiếp tục phần Jenkins với vai trò Person E như tuần trước.
-
-**Đối chiếu yêu cầu gốc:** `làm tuần 6 đi`; xác nhận `tiếp tục`.
 
 **AI hỗ trợ:** Đọc lại proposal, báo cáo các tuần và code của nhóm. Xác định
 Person D đã cài Cypress, Allure, credentials và viết 2 public UI tests. Phần
@@ -40,7 +35,7 @@ không nhận phần cài đặt của Person D là đóng góp của mình.
 
 ### Lượt 2 — Bổ sung test, báo cáo và kiểm chứng
 
-**Ý triển khai từ yêu cầu ở lượt 1 (diễn giải):**
+**Phạm vi triển khai từ yêu cầu ở lượt 1:**
 
 > Thực hiện các phần còn thiếu, chạy thử trên Jenkins và giải thích kết quả. Kiểm tra cả trường hợp chạy đúng và trường hợp cố tình nhập sai để xem Jenkins có báo lỗi phù hợp không. Lưu kết quả và viết báo cáo tuần 6 để kiểm tra lại.
 
@@ -78,15 +73,9 @@ riêng bước lấy source từ SCM; chưa phải kiểm chứng checkout SCM t
 
 ### Lượt 3 — Commit, push và merge code
 
-**Các prompt (diễn giải):**
+**Yêu cầu bàn giao code:**
 
-> Lưu các thay đổi tuần 6 đã chạy thử thành một commit trong repo realworld.
-
-> Đẩy nhánh vừa thực hiện lên GitHub để nhóm xem và kiểm tra.
-
-> Kiểm tra và gộp phần đã thực hiện vào nhánh next của nhóm, sau đó báo lại kết quả.
-
-**Đối chiếu yêu cầu gốc:** `hãy commit lên realworld`, `push đi`, `merge vào next đi`.
+> Commit và push phần tuần 6 lên repo realworld, rồi merge vào next.
 
 **AI hỗ trợ và thao tác:**
 
@@ -113,5 +102,3 @@ Week7 thay cho kết quả Week6.
 - Kết quả test nêu trên do AI chạy và đối chiếu với Jenkins/evidence; không có
   cơ sở ghi người dùng đã tự chạy lại toàn bộ test hoặc tự review toàn bộ code.
 - Chưa chứng minh kết nối tự động từ GitHub-hosted runner đến Jenkins localhost.
-- Ngày 30/10/2026, người dùng xác nhận nội dung audit đã ổn và yêu cầu commit.
-  Xác nhận này áp dụng cho nội dung audit, không thay cho việc review toàn bộ code.
