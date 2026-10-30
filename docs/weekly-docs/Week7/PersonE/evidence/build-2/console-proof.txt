@@ -1,0 +1,6 @@
+Checking out Revision ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3 (refs/remotes/origin/next)
+Checking out Revision ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3 (refs/remotes/origin/next)
+IMAGE_TAG must be a lowercase full 40-character commit SHA
+validate: FAILURE
+finalize: SUCCESS
+Finished: FAILURE

@@ -1,0 +1,169 @@
+{
+  "verified_date": "2026-10-30",
+  "job": "ci-cd-demo-person-e",
+  "pipeline_source": "Pipeline script from SCM; public Git repository next; no local file injection.",
+  "sut_repository": "https://github.com/thu2005/realworld",
+  "scope": "Local Jenkins API client -> real SCM pipeline -> GHCR -> Cypress/Allure. GitHub-hosted runner connectivity is not verified.",
+  "demo_exit_semantics": "0 means the expected scenario and cleanup were verified, including deliberate Jenkins FAILURE. Production trigger client keeps failure semantics.",
+  "builds": [
+    {
+      "job": "ci-cd-demo-person-e",
+      "build_url": "http://localhost:18080/job/ci-cd-demo-person-e/1/",
+      "result": "SUCCESS",
+      "image": "ghcr.io/thu2005/realworld:ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3",
+      "source_ref": "ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3",
+      "scenario": "pass",
+      "number": 1,
+      "scm_revisions": [
+        "ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3"
+      ],
+      "duration_ms": 265594,
+      "junit_cases": 11,
+      "allure": {
+        "failed": 0,
+        "broken": 0,
+        "skipped": 0,
+        "passed": 5,
+        "unknown": 0,
+        "total": 5
+      },
+      "cleanup_complete": true,
+      "repo_digests": [
+        "ghcr.io/thu2005/realworld@sha256:b1afd0dddf5a722f668b851da686ed28ba5e0c942c00476fcfbdb9b45d67f0d2"
+      ],
+      "demo_exit_code": 0,
+      "artifacts": [
+        "allure-report.zip",
+        "allure-summary.json",
+        "test-reports/allure-results/04562086-b3e5-4314-bba2-e480c2246ef0-result.json",
+        "test-reports/allure-results/099de70d-da3d-4dd7-96ed-53b7ad555b57-result.json",
+        "test-reports/allure-results/0d0cefc4-9675-4ff5-9ddf-5080425cbc2f-container.json",
+        "test-reports/allure-results/1692b098-be16-41e0-a5b9-afedbaa16c1e-attachment.mp4",
+        "test-reports/allure-results/54487de0-53dc-456d-882c-f409e6b0a716-result.json",
+        "test-reports/allure-results/76aae0e5-63d5-4ca5-90fc-0b4b91d4f9bf-result.json",
+        "test-reports/allure-results/846c98a6-56c4-4028-a97b-e30f8ad64348-container.json",
+        "test-reports/allure-results/a5ce6e34-ff1f-477b-82bd-5f1b4a366463-result.json",
+        "test-reports/allure-results/ca10e088-ecdd-4c5d-b2dd-6f5cd94c9ecf-attachment.mp4",
+        "test-reports/allure-results/executor.json",
+        "test-reports/allure-results/testrun.json",
+        "test-reports/cypress/videos/account-validation.spec.js.mp4",
+        "test-reports/cypress/videos/public-ui.spec.js.mp4",
+        "test-reports/junit/cypress-94148d7dd099e6598846413b297659a7.xml",
+        "test-reports/junit/cypress-b032d8030711178918ca8a2eda55aafa.xml",
+        "test-reports/junit/smoke.xml",
+        "test-reports/logs/container-inspect.json",
+        "test-reports/logs/container.log",
+        "test-reports/logs/integration-summary.json",
+        "test-reports/logs/pull.log",
+        "test-reports/logs/smoke-response.json"
+      ]
+    },
+    {
+      "job": "ci-cd-demo-person-e",
+      "build_url": "http://localhost:18080/job/ci-cd-demo-person-e/2/",
+      "result": "FAILURE",
+      "image": "ghcr.io/thu2005/realworld:latest",
+      "source_ref": "ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3",
+      "scenario": "invalid-tag",
+      "number": 2,
+      "scm_revisions": [
+        "ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3"
+      ],
+      "duration_ms": 6293,
+      "junit_cases": 2,
+      "allure": null,
+      "cleanup_complete": true,
+      "repo_digests": [],
+      "demo_exit_code": 0,
+      "artifacts": [
+        "test-reports/junit/smoke.xml",
+        "test-reports/logs/integration-summary.json"
+      ]
+    },
+    {
+      "job": "ci-cd-demo-person-e",
+      "build_url": "http://localhost:18080/job/ci-cd-demo-person-e/3/",
+      "result": "FAILURE",
+      "image": "ghcr.io/thu2005/realworld:ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3",
+      "source_ref": "ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3",
+      "scenario": "bad-smoke",
+      "number": 3,
+      "scm_revisions": [
+        "ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3"
+      ],
+      "duration_ms": 45830,
+      "junit_cases": 5,
+      "allure": null,
+      "cleanup_complete": true,
+      "repo_digests": [
+        "ghcr.io/thu2005/realworld@sha256:b1afd0dddf5a722f668b851da686ed28ba5e0c942c00476fcfbdb9b45d67f0d2"
+      ],
+      "demo_exit_code": 0,
+      "artifacts": [
+        "test-reports/junit/smoke.xml",
+        "test-reports/logs/container-inspect.json",
+        "test-reports/logs/container.log",
+        "test-reports/logs/integration-summary.json",
+        "test-reports/logs/pull.log",
+        "test-reports/logs/smoke-response.json"
+      ]
+    },
+    {
+      "job": "ci-cd-demo-person-e",
+      "build_url": "http://localhost:18080/job/ci-cd-demo-person-e/4/",
+      "result": "SUCCESS",
+      "image": "ghcr.io/thu2005/realworld:ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3",
+      "source_ref": "ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3",
+      "scenario": "recovery",
+      "number": 4,
+      "scm_revisions": [
+        "ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3"
+      ],
+      "duration_ms": 83281,
+      "junit_cases": 11,
+      "allure": {
+        "failed": 0,
+        "broken": 0,
+        "skipped": 0,
+        "passed": 5,
+        "unknown": 0,
+        "total": 5
+      },
+      "cleanup_complete": true,
+      "repo_digests": [
+        "ghcr.io/thu2005/realworld@sha256:b1afd0dddf5a722f668b851da686ed28ba5e0c942c00476fcfbdb9b45d67f0d2"
+      ],
+      "demo_exit_code": 0,
+      "artifacts": [
+        "allure-report.zip",
+        "allure-summary.json",
+        "test-reports/allure-results/18b3d0d1-0cf1-465c-885d-f5bb4691e578-result.json",
+        "test-reports/allure-results/21f3a129-53ba-43e7-8d95-627e8f6450fd-result.json",
+        "test-reports/allure-results/452f9174-550e-42ec-878c-c8da5fe59961-result.json",
+        "test-reports/allure-results/48ba1147-5cca-4b98-9e02-c339e9aa6a59-result.json",
+        "test-reports/allure-results/87b53f6e-d27a-418c-92e0-1d9b4b3efa08-result.json",
+        "test-reports/allure-results/cc493335-52c0-40e8-a8fa-6531696d1625-attachment.mp4",
+        "test-reports/allure-results/d1c62181-5499-4741-bd80-83b6f99bc4a8-container.json",
+        "test-reports/allure-results/executor.json",
+        "test-reports/allure-results/f516a59f-4abe-4ead-9ba1-987b38d9036d-container.json",
+        "test-reports/allure-results/f7eb75cf-62c0-454a-93cb-c24e8fbf15c5-attachment.mp4",
+        "test-reports/allure-results/history/categories-trend.json",
+        "test-reports/allure-results/history/duration-trend.json",
+        "test-reports/allure-results/history/history-trend.json",
+        "test-reports/allure-results/history/history.json",
+        "test-reports/allure-results/history/retry-trend.json",
+        "test-reports/allure-results/testrun.json",
+        "test-reports/cypress/videos/account-validation.spec.js.mp4",
+        "test-reports/cypress/videos/public-ui.spec.js.mp4",
+        "test-reports/junit/cypress-0b5cdd875a7e2ad28053f736093603bc.xml",
+        "test-reports/junit/cypress-ecbb7e0492797180bba3e126ad68bfe2.xml",
+        "test-reports/junit/smoke.xml",
+        "test-reports/logs/container-inspect.json",
+        "test-reports/logs/container.log",
+        "test-reports/logs/integration-summary.json",
+        "test-reports/logs/pull.log",
+        "test-reports/logs/smoke-response.json"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "owner": "d4a6c90be03b9095",
+  "container": "realworld-sut-d4a6c90be03b9095",
+  "network": "realworld-net-d4a6c90be03b9095",
+  "probe": "realworld-probe-d4a6c90be03b9095",
+  "build_url": "http://localhost:18080/job/ci-cd-demo-person-e/1/",
+  "checks": [
+    {
+      "phase": "validate",
+      "ok": true,
+      "error": "",
+      "seconds": 0.001
+    },
+    {
+      "phase": "pull",
+      "ok": true,
+      "error": "",
+      "seconds": 148.281
+    },
+    {
+      "phase": "start",
+      "ok": true,
+      "error": "",
+      "seconds": 2.577
+    },
+    {
+      "phase": "smoke",
+      "ok": true,
+      "error": "",
+      "seconds": 17.98
+    },
+    {
+      "phase": "connect-agent",
+      "ok": true,
+      "error": "",
+      "seconds": 0.723
+    },
+    {
+      "phase": "finalize",
+      "ok": true,
+      "error": "",
+      "seconds": 1.359
+    }
+  ],
+  "image": "ghcr.io/thu2005/realworld:ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3",
+  "source_sha": "ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3",
+  "timeout": 120,
+  "smoke_path": "/api/tags",
+  "pull_image": true,
+  "result": "SUCCESS",
+  "image_id": "sha256:b1afd0dddf5a722f668b851da686ed28ba5e0c942c00476fcfbdb9b45d67f0d2",
+  "repo_digests": [
+    "ghcr.io/thu2005/realworld@sha256:b1afd0dddf5a722f668b851da686ed28ba5e0c942c00476fcfbdb9b45d67f0d2"
+  ],
+  "input_origin": "registry",
+  "jenkins_container": "70b77e384e0c",
+  "base_url": "http://realworld-sut-d4a6c90be03b9095:3000",
+  "jenkins_result_before_cleanup": "SUCCESS",
+  "cleanup_complete": true
+}

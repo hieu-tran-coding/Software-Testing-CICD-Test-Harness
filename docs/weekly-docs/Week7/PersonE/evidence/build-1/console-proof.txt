@@ -1,0 +1,10 @@
+Checking out Revision ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3 (refs/remotes/origin/next)
+Checking out Revision ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3 (refs/remotes/origin/next)
+validate: SUCCESS
+pull: SUCCESS
+start: SUCCESS
+smoke: SUCCESS
+connect-agent: SUCCESS
+finalize: SUCCESS
+Allure report was successfully generated.
+Finished: SUCCESS

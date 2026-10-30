@@ -1,0 +1,52 @@
+{
+  "owner": "e0dbe6234d73bc2d",
+  "container": "realworld-sut-e0dbe6234d73bc2d",
+  "network": "realworld-net-e0dbe6234d73bc2d",
+  "probe": "realworld-probe-e0dbe6234d73bc2d",
+  "build_url": "http://localhost:18080/job/ci-cd-demo-person-e/3/",
+  "checks": [
+    {
+      "phase": "validate",
+      "ok": true,
+      "error": "",
+      "seconds": 0.0
+    },
+    {
+      "phase": "pull",
+      "ok": true,
+      "error": "",
+      "seconds": 1.692
+    },
+    {
+      "phase": "start",
+      "ok": true,
+      "error": "",
+      "seconds": 0.588
+    },
+    {
+      "phase": "smoke",
+      "ok": false,
+      "error": "Smoke failed: {\"ok\":false,\"detail\":{\"status\":404,\"body\":\"\\\"error: 404 Not Found\\\"\"}}",
+      "seconds": 31.157
+    },
+    {
+      "phase": "finalize",
+      "ok": true,
+      "error": "",
+      "seconds": 1.007
+    }
+  ],
+  "image": "ghcr.io/thu2005/realworld:ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3",
+  "source_sha": "ef0684e72c2c2f4c35a42b468ce03a35e0ad48f3",
+  "timeout": 30,
+  "smoke_path": "/api/person-e-deliberately-missing",
+  "pull_image": true,
+  "result": "FAILURE",
+  "image_id": "sha256:b1afd0dddf5a722f668b851da686ed28ba5e0c942c00476fcfbdb9b45d67f0d2",
+  "repo_digests": [
+    "ghcr.io/thu2005/realworld@sha256:b1afd0dddf5a722f668b851da686ed28ba5e0c942c00476fcfbdb9b45d67f0d2"
+  ],
+  "input_origin": "registry",
+  "jenkins_result_before_cleanup": "FAILURE",
+  "cleanup_complete": true
+}
