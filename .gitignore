@@ -16,3 +16,10 @@ test-reports/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Large media files (videos should be stored externally or via LFS)
+*.mp4
+*.mkv
+*.avi
+*.mov
+*.webm
