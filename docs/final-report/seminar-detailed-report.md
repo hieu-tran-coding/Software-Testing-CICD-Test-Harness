@@ -643,7 +643,7 @@ Nhóm chuẩn bị ba video và một bộ slide để trình bày nội dung se
 | Video 1 | Demo GitHub Actions | [Xem video GitHub Actions](https://drive.google.com/file/d/1OO2DmSEiVwyk-Jcb2RpwqcTHhs9janmp/view?usp=sharing) |
 | Video 2 | Demo Jenkins pipeline | [Xem video Jenkins](https://drive.google.com/drive/folders/1sEgVaQWbD3vBH5v1CqjRAnmRobgyLsJD?usp=sharing) |
 | Video 3 | Video thuyết trình seminar | [Xem video thuyết trình](https://drive.google.com/file/d/13pjwDisbNMdks_shLDick7uwYZ4-8C1q/view?usp=sharing) |
-| Slide | Slide thuyết trình | [Mở slide seminar](../weekly-docs/Week7/PersonA/slideshow.html) |
+| Slide | Slide thuyết trình | [Mở slide seminar](../slideshows/theory_presentation.html) |
 
 # 12. KẾT LUẬN
 
