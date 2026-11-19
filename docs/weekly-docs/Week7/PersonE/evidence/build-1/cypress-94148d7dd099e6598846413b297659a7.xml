@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="13.4660" tests="3" failures="0">
+  <testsuite name="Root Suite" timestamp="2026-10-30T06:27:16" tests="0" file="cypress/e2e/account-validation.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="RealWorld account validation" timestamp="2026-10-30T06:27:16" tests="3" time="13.4660" failures="0">
+    <testcase name="RealWorld account validation shows the API error when signing in without a password" time="3.7650" classname="shows the API error when signing in without a password">
+    </testcase>
+    <testcase name="RealWorld account validation rejects invalid credentials and keeps the user signed out" time="5.2320" classname="rejects invalid credentials and keeps the user signed out">
+    </testcase>
+    <testcase name="RealWorld account validation opens registration and rejects a missing password" time="4.4690" classname="opens registration and rejects a missing password">
+    </testcase>
+  </testsuite>
+</testsuites>

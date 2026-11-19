@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="6.0190" tests="2" failures="0">
+  <testsuite name="Root Suite" timestamp="2026-10-30T06:27:35" tests="0" file="cypress/e2e/public-ui.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="RealWorld public UI" timestamp="2026-10-30T06:27:35" tests="2" time="6.0190" failures="0">
+    <testcase name="RealWorld public UI loads the home page and public navigation" time="3.3320" classname="loads the home page and public navigation">
+    </testcase>
+    <testcase name="RealWorld public UI opens the sign-in form from the navigation" time="2.6870" classname="opens the sign-in form from the navigation">
+    </testcase>
+  </testsuite>
+</testsuites>

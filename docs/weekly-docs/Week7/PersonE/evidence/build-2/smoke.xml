@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="RealWorld image integration" tests="2" failures="1"><testcase classname="jenkins.image" name="validate" time="0.0"><failure message="IMAGE_TAG must be a lowercase full 40-character commit SHA">IMAGE_TAG must be a lowercase full 40-character commit SHA</failure></testcase><testcase classname="jenkins.image" name="finalize" time="0.082" /></testsuite>

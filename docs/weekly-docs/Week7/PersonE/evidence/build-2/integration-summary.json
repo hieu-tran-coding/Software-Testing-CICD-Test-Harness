@@ -1,0 +1,24 @@
+{
+  "owner": "55173d525a27d71e",
+  "container": "realworld-sut-55173d525a27d71e",
+  "network": "realworld-net-55173d525a27d71e",
+  "probe": "realworld-probe-55173d525a27d71e",
+  "build_url": "http://localhost:18080/job/ci-cd-demo-person-e/2/",
+  "checks": [
+    {
+      "phase": "validate",
+      "ok": false,
+      "error": "IMAGE_TAG must be a lowercase full 40-character commit SHA",
+      "seconds": 0.0
+    },
+    {
+      "phase": "finalize",
+      "ok": true,
+      "error": "",
+      "seconds": 0.082
+    }
+  ],
+  "result": "FAILURE",
+  "jenkins_result_before_cleanup": "FAILURE",
+  "cleanup_complete": true
+}

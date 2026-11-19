@@ -1,0 +1,217 @@
+{
+  "verified_at": "2026-10-23",
+  "pipeline_base_commit": "4f9a9405b2baebc42969d40f638501e8debfd20e",
+  "pipeline_source": "Local working-tree Jenkinsfile and Cypress files; SCM acquisition replaced with writeFile for unpublished verification.",
+  "scope": "Local API trigger only; GitHub-hosted runner connectivity not verified.",
+  "builds": [
+    {
+      "job": "ci-cd-demo-week6",
+      "build_url": "http://localhost:18080/job/ci-cd-demo-week6/1/",
+      "result": "FAILURE",
+      "image": "ghcr.io/thu2005/realworld:latest",
+      "source_ref": "3b85475aac4dd99c3c5b1d95edc1734c7afc21d3",
+      "scenario": "invalid-tag",
+      "build_number": 1,
+      "duration_ms": 7654,
+      "client_exit_code": 1,
+      "cleanup_complete": true,
+      "smoke_path": null,
+      "smoke_timeout_seconds": null,
+      "image_id": null,
+      "repo_digests": [],
+      "junit_cases": [
+        {
+          "name": "validate",
+          "passed": false,
+          "skipped": false
+        },
+        {
+          "name": "finalize",
+          "passed": true,
+          "skipped": false
+        }
+      ],
+      "allure_tests": [],
+      "artifact_paths": [
+        "test-reports/junit/smoke.xml",
+        "test-reports/logs/integration-summary.json"
+      ]
+    },
+    {
+      "job": "ci-cd-demo-week6",
+      "build_url": "http://localhost:18080/job/ci-cd-demo-week6/2/",
+      "result": "FAILURE",
+      "image": "ghcr.io/thu2005/realworld:4f9a9405b2baebc42969d40f638501e8debfd20e",
+      "source_ref": "4f9a9405b2baebc42969d40f638501e8debfd20e",
+      "scenario": "bad-smoke",
+      "build_number": 2,
+      "duration_ms": 39211,
+      "client_exit_code": 1,
+      "cleanup_complete": true,
+      "smoke_path": "/api/week6-deliberately-missing",
+      "smoke_timeout_seconds": 30,
+      "image_id": "sha256:c2ccecabf07e307b0e65144d767a573d5632732c18b130f3c1d92149400c5e8d",
+      "repo_digests": [
+        "ghcr.io/thu2005/realworld@sha256:c2ccecabf07e307b0e65144d767a573d5632732c18b130f3c1d92149400c5e8d"
+      ],
+      "junit_cases": [
+        {
+          "name": "validate",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "pull",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "start",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "smoke",
+          "passed": false,
+          "skipped": false
+        },
+        {
+          "name": "finalize",
+          "passed": true,
+          "skipped": false
+        }
+      ],
+      "allure_tests": [],
+      "artifact_paths": [
+        "test-reports/junit/smoke.xml",
+        "test-reports/logs/container-inspect.json",
+        "test-reports/logs/container.log",
+        "test-reports/logs/integration-summary.json",
+        "test-reports/logs/pull.log",
+        "test-reports/logs/smoke-response.json"
+      ]
+    },
+    {
+      "job": "ci-cd-demo-week6",
+      "build_url": "http://localhost:18080/job/ci-cd-demo-week6/3/",
+      "result": "SUCCESS",
+      "image": "ghcr.io/thu2005/realworld:4f9a9405b2baebc42969d40f638501e8debfd20e",
+      "source_ref": "4f9a9405b2baebc42969d40f638501e8debfd20e",
+      "scenario": "pass",
+      "build_number": 3,
+      "duration_ms": 47688,
+      "client_exit_code": 0,
+      "cleanup_complete": true,
+      "smoke_path": "/api/tags",
+      "smoke_timeout_seconds": 120,
+      "image_id": "sha256:c2ccecabf07e307b0e65144d767a573d5632732c18b130f3c1d92149400c5e8d",
+      "repo_digests": [
+        "ghcr.io/thu2005/realworld@sha256:c2ccecabf07e307b0e65144d767a573d5632732c18b130f3c1d92149400c5e8d"
+      ],
+      "junit_cases": [
+        {
+          "name": "RealWorld public UI loads the home page and public navigation",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "RealWorld public UI opens the sign-in form from the navigation",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "RealWorld account validation shows the API error when signing in without a password",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "RealWorld account validation rejects invalid credentials and keeps the user signed out",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "RealWorld account validation opens registration and rejects a missing password",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "validate",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "pull",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "start",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "smoke",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "connect-agent",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "finalize",
+          "passed": true,
+          "skipped": false
+        }
+      ],
+      "allure_tests": [
+        {
+          "name": "rejects invalid credentials and keeps the user signed out",
+          "status": "passed"
+        },
+        {
+          "name": "opens the sign-in form from the navigation",
+          "status": "passed"
+        },
+        {
+          "name": "opens registration and rejects a missing password",
+          "status": "passed"
+        },
+        {
+          "name": "shows the API error when signing in without a password",
+          "status": "passed"
+        },
+        {
+          "name": "loads the home page and public navigation",
+          "status": "passed"
+        }
+      ],
+      "artifact_paths": [
+        "allure-report.zip",
+        "allure-summary.json",
+        "test-reports/allure-results/009f4cc5-4cbd-48be-8e6d-c488c9cce5cc-result.json",
+        "test-reports/allure-results/07b346c1-0cdf-43ee-93b0-16f2b996cd04-container.json",
+        "test-reports/allure-results/3ad2f7ed-d22b-4842-bcdd-4f7c43318163-container.json",
+        "test-reports/allure-results/63a4e444-197b-4823-a344-631c0f4c5d1a-attachment.mp4",
+        "test-reports/allure-results/9903abb0-2ccd-4138-ac4a-1231be5d238a-result.json",
+        "test-reports/allure-results/a6b7948b-f7bc-48a8-ba73-a33e9c67be5b-result.json",
+        "test-reports/allure-results/ac0878dd-9f5a-43d9-8159-aaed17957305-result.json",
+        "test-reports/allure-results/bcbbaf4c-2ab1-4a57-980b-6cf46ad626f4-attachment.mp4",
+        "test-reports/allure-results/executor.json",
+        "test-reports/allure-results/f0079c47-def4-4bbf-9228-c60c6aa2780d-result.json",
+        "test-reports/allure-results/testrun.json",
+        "test-reports/cypress/videos/account-validation.spec.js.mp4",
+        "test-reports/cypress/videos/public-ui.spec.js.mp4",
+        "test-reports/junit/cypress-2f0b400993a63a8a93513e51c0c4e787.xml",
+        "test-reports/junit/cypress-c2cf1fe593809b7c1c4a81f8524e8399.xml",
+        "test-reports/junit/smoke.xml",
+        "test-reports/logs/container-inspect.json",
+        "test-reports/logs/container.log",
+        "test-reports/logs/integration-summary.json",
+        "test-reports/logs/pull.log",
+        "test-reports/logs/smoke-response.json"
+      ]
+    }
+  ]
+}

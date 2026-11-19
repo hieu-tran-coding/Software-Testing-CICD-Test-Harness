@@ -1,0 +1,2214 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CI/CD & Test-Harness Engineering - Nhóm 06</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap');
+
+    :root {
+      --bg-cream: #F5F4EE;
+      --bg-card: #FFFFFF;
+      --navy-primary: #1842B6;
+      --navy-dark: #0F2D82;
+      --navy-light: #EBF1FD;
+      --navy-border: #C8D8FA;
+      --text-dark: #121826;
+      --text-muted: #4B5565;
+      --text-light: #F8FAFC;
+      --accent-orange: #F97316;
+      --accent-green: #10B981;
+      --accent-red: #EF4444;
+      --pill-blue: #1E4BB8;
+      --slide-width: 1920px;
+      --slide-height: 1080px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #0d1117;
+      color: var(--text-dark);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Presentation viewport wrapper */
+    #deck-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #0b0f19;
+    }
+
+    .slide {
+      position: absolute;
+      width: 1920px;
+      height: 1080px;
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(0.98);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      background-color: var(--bg-cream);
+      padding: 70px 90px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+      z-index: 10;
+    }
+
+    /* Blue theme slides */
+    .slide.theme-blue {
+      background-color: var(--navy-primary);
+      color: #FFFFFF;
+    }
+
+    .slide.theme-blue h1,
+    .slide.theme-blue h2,
+    .slide.theme-blue h3,
+    .slide.theme-blue strong {
+      color: #FFFFFF;
+    }
+
+    .slide.theme-blue .slide-header-badge {
+      border-color: rgba(255, 255, 255, 0.4);
+      color: #FFFFFF;
+    }
+
+    .slide.theme-blue .slide-number {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Slide Header */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 35px;
+      position: relative;
+    }
+
+    .slide-title-area {
+      flex: 1;
+    }
+
+    .slide-title {
+      font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+      font-size: 56px;
+      font-weight: 800;
+      color: var(--navy-dark);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .slide-subtitle {
+      font-size: 24px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    .slide-header-badges {
+      display: flex;
+      gap: 12px;
+    }
+
+    .slide-header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border: 1.5px solid #1E4BB8;
+      border-radius: 9999px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--navy-dark);
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(4px);
+    }
+
+    .slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Footer */
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 25px;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      margin-top: auto;
+    }
+
+    .slide.theme-blue .slide-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .slide-number {
+      font-weight: 700;
+      color: var(--navy-primary);
+    }
+
+    /* Card Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 35px;
+      height: 100%;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      height: 100%;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      height: 100%;
+    }
+
+    /* Standard Cards */
+    .card {
+      background: var(--bg-card);
+      border-radius: 24px;
+      padding: 35px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card.blue-card {
+      background: var(--pill-blue);
+      color: #FFFFFF;
+      box-shadow: 0 12px 30px rgba(24, 66, 182, 0.25);
+    }
+
+    .card.blue-card h3, .card.blue-card h4 {
+      color: #FFFFFF;
+    }
+
+    .card.white-card-on-blue {
+      background: #FFFFFF;
+      color: var(--text-dark);
+      border-radius: 22px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+    }
+
+    /* Pill Badges from slide.pdf */
+    .pill-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .pill-item {
+      background: var(--pill-blue);
+      color: #FFFFFF;
+      border-radius: 9999px;
+      padding: 20px 32px;
+      font-size: 22px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 6px 16px rgba(24, 66, 182, 0.2);
+    }
+
+    .pill-item.white-pill {
+      background: #FFFFFF;
+      color: var(--navy-dark);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    }
+
+    .pill-item .badge-num {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .pill-item.white-pill .badge-num {
+      background: var(--navy-primary);
+      color: #FFFFFF;
+    }
+
+    .pill-item .badge-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Tables */
+    .custom-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      font-size: 21px;
+      background: #FFFFFF;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .custom-table th {
+      background: var(--navy-primary);
+      color: #FFFFFF;
+      padding: 22px 28px;
+      font-weight: 700;
+      text-align: left;
+      font-size: 22px;
+      letter-spacing: 0.01em;
+    }
+
+    .custom-table td {
+      padding: 20px 28px;
+      border-bottom: 1px solid #E5E7EB;
+      color: #1F2937;
+      line-height: 1.5;
+    }
+
+    .custom-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .custom-table tr:nth-child(even) td {
+      background-color: #F8FAFD;
+    }
+
+    .custom-table.theme-blue-table {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .custom-table.theme-blue-table th {
+      background: rgba(15, 45, 130, 0.8);
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .custom-table.theme-blue-table td {
+      color: #FFFFFF;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .custom-table.theme-blue-table tr:nth-child(even) td {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    /* Code blocks */
+    .code-box {
+      background: #1E222D;
+      color: #E6EDF3;
+      border-radius: 16px;
+      padding: 26px;
+      font-family: 'Fira Code', Consolas, monospace;
+      font-size: 17px;
+      line-height: 1.6;
+      overflow-x: auto;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+      border: 1px solid #30363D;
+    }
+
+    .code-box .kw { color: #FF7B72; font-weight: 600; }
+    .code-box .fn { color: #D2A8FF; }
+    .code-box .str { color: #A5D6FF; }
+    .code-box .cm { color: #8B949E; font-style: italic; }
+    .code-box .hl { background: rgba(56, 139, 253, 0.25); padding: 2px 4px; border-radius: 4px; }
+    .code-box .key { color: #7EE787; font-weight: 600; }
+
+    /* Bullet items with circle icons */
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      font-size: 21px;
+      line-height: 1.55;
+    }
+
+    .feature-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--navy-light);
+      color: var(--navy-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: bold;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .slide.theme-blue .feature-icon {
+      background: rgba(255, 255, 255, 0.2);
+      color: #FFFFFF;
+    }
+
+    /* Image display container */
+    .image-preview {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      border: 1px solid #E2E8F0;
+      overflow: hidden;
+    }
+
+    .image-preview img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    /* Title Slide Specifics */
+    .title-slide {
+      background: var(--bg-cream);
+      justify-content: space-between;
+      padding: 100px 120px;
+      position: relative;
+    }
+
+    .title-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--navy-dark);
+    }
+
+    .title-main {
+      margin: auto 0;
+    }
+
+    .title-main h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 96px;
+      font-weight: 900;
+      color: #111827;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 25px;
+    }
+
+    .title-main .sub-badge {
+      display: inline-block;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--navy-primary);
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+
+    .title-main p {
+      font-size: 26px;
+      color: #4B5565;
+      max-width: 1200px;
+      line-height: 1.5;
+    }
+
+    .title-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 22px;
+      font-weight: 600;
+      color: #4B5565;
+      border-top: 2px solid #D1D5DB;
+      padding-top: 30px;
+    }
+
+    /* Agenda Slide */
+    .agenda-nav-card {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      padding: 30px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+
+    .agenda-nav-card.active-topic {
+      background: #FFFFFF;
+      color: var(--navy-dark);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    }
+
+    .agenda-nav-card.active-topic h3,
+    .agenda-nav-card.active-topic p {
+      color: var(--navy-dark);
+    }
+
+    /* Stat Cards */
+    .stat-badge {
+      font-size: 54px;
+      font-weight: 800;
+      color: var(--navy-primary);
+      font-family: 'Outfit', sans-serif;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    /* Control Bar */
+    #nav-controls {
+      position: fixed;
+      bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      background: rgba(18, 24, 38, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 10px 24px;
+      border-radius: 9999px;
+      z-index: 1000;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #FFFFFF;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: #FFFFFF;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 6px 14px;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    #slide-indicator {
+      font-size: 15px;
+      font-weight: 600;
+      min-width: 80px;
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+
+    /* Print Styles for PDF export */
+    @media print {
+      body {
+        background: none;
+        overflow: visible;
+        height: auto;
+      }
+      #deck-container {
+        display: block;
+        height: auto;
+        width: 100%;
+        background: none;
+      }
+      #nav-controls {
+        display: none !important;
+      }
+      .slide {
+        position: relative !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        page-break-after: always;
+        break-after: page;
+        width: 100vw !important;
+        height: 100vh !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="deck-container">
+
+  <!-- ==================== SLIDE 1: COVER ==================== -->
+  <div class="slide title-slide active" data-slide="1">
+    <div class="title-top">
+      <div>Đại học Khoa học Tự nhiên, ĐHQG-HCM &bull; Khoa CNTT</div>
+      <div>30 October, 2026 &rarr;</div>
+    </div>
+    <div class="title-main">
+      <div class="sub-badge">SEMINAR KIỂM THỬ PHẦN MỀM</div>
+      <h1>CI/CD & Test-Harness<br>Engineering</h1>
+      <p>Xây dựng hệ thống Kiểm thử tự động đa tầng kết hợp kiến trúc phân phối liên tục (CI/CD) cho ứng dụng RealWorld Conduit với GitHub Actions & Jenkins</p>
+    </div>
+    <div class="title-footer">
+      <div><strong>Nhóm 06</strong> &bull; Lớp 23KTPM3</div>
+      <div>Trần Trung Hiếu (Lead) &bull; Dương Trọng Hòa &bull; Nguyễn Lê Hữu Điền &bull; Nguyễn Đoàn Xuân Thu &bull; Trần Trọng Trí</div>
+      <div class="slide-number">1</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 2: AGENDA ==================== -->
+  <div class="slide theme-blue" data-slide="2">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Nội dung báo cáo</h2>
+        <div class="slide-subtitle" style="color: rgba(255,255,255,0.8);">Hành trình từ cơ sở lý thuyết đến hiện thực kiểm thử thực tế trên 2 repository</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Nhóm 06</div>
+        <div class="slide-header-badge">Presentation</div>
+      </div>
+    </div>
+    <div class="slide-content" style="justify-content: center; gap: 20px;">
+      <div class="agenda-nav-card active-topic">
+        <div>
+          <h3 style="font-size: 28px; font-weight: 800;">01. Tổng quan & System Under Test (SUT)</h3>
+          <p style="font-size: 19px; margin-top: 4px;">Khái niệm CI/CD, Test Harness, đối tượng RealWorld Conduit & Thách thức</p>
+        </div>
+        <div style="font-size: 32px; font-weight: 800;">&rarr;</div>
+      </div>
+      <div class="agenda-nav-card">
+        <div>
+          <h3 style="font-size: 28px; font-weight: 800;">02. Hiện thực Test Harness Đa Tầng</h3>
+          <p style="font-size: 19px; margin-top: 4px; color: rgba(255,255,255,0.8);">Bộ 31 Jest Unit, 15 SuperTest API, Newman Contract, 5 Cypress E2E & CodeQL</p>
+        </div>
+        <div style="font-size: 32px; font-weight: 800;">&rarr;</div>
+      </div>
+      <div class="agenda-nav-card">
+        <div>
+          <h3 style="font-size: 28px; font-weight: 800;">03. Kiến trúc CI/CD Phối Hợp: GitHub Actions + Jenkins</h3>
+          <p style="font-size: 19px; margin-top: 4px; color: rgba(255,255,255,0.8);">Pipeline 11 job, GHCR Image Handoff, Jenkins Container Lifecycle & Cleanup</p>
+        </div>
+        <div style="font-size: 32px; font-weight: 800;">&rarr;</div>
+      </div>
+      <div class="agenda-nav-card">
+        <div>
+          <h3 style="font-size: 28px; font-weight: 800;">04. Thực Nghiệm, Kết Quả & Đánh Giá</h3>
+          <p style="font-size: 19px; margin-top: 4px; color: rgba(255,255,255,0.8);">10 checks xanh, Coverage 100%, Jenkins Build #9, Allure Dashboard & Hands-on</p>
+        </div>
+        <div style="font-size: 32px; font-weight: 800;">&rarr;</div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; CI/CD & Test Harness</div>
+      <div class="slide-number">2</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 3: KHÁI NIỆM CI/CD ==================== -->
+  <div class="slide" data-slide="3">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Khái niệm CI/CD</h2>
+        <div class="slide-subtitle">Bản chất của các giai đoạn tự động hóa trong vòng đời phần mềm</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Nhóm 06</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3">
+        <!-- CI -->
+        <div class="card blue-card">
+          <div style="font-size: 26px; font-weight: 800; margin-bottom: 15px; border-bottom: 2px solid rgba(255,255,255,0.3); padding-bottom: 12px;">Continuous Integration</div>
+          <ul class="feature-list" style="gap: 20px;">
+            <li class="feature-item">
+              <div class="feature-icon" style="background: rgba(255,255,255,0.25); color: #FFF;">&bull;</div>
+              <div>Developer push code lên nhánh chung liên tục (ít nhất hàng ngày).</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon" style="background: rgba(255,255,255,0.25); color: #FFF;">&bull;</div>
+              <div>Tự động Biên dịch (Build), Lint và Kiểm thử (Test) ngay lập tức.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon" style="background: rgba(255,255,255,0.25); color: #FFF;">&bull;</div>
+              <div><strong>Mục tiêu cốt lõi:</strong> Phát hiện sớm xung đột code, lỗi cú pháp và regression test.</div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- CD Delivery -->
+        <div class="card" style="border: 2px solid var(--navy-primary); background: #FFFFFF;">
+          <div style="font-size: 26px; font-weight: 800; color: var(--navy-dark); margin-bottom: 15px; border-bottom: 2px solid var(--navy-light); padding-bottom: 12px;">Continuous Delivery</div>
+          <ul class="feature-list" style="gap: 20px;">
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div>Mã nguồn và artifact đóng gói luôn ở trạng thái <strong>100% sẵn sàng để release</strong>.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div>Tự động kiểm chứng toàn diện trên môi trường Staging/Testing độc lập.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div><strong>Đặc điểm:</strong> Việc đưa lên Production có thể cần phê duyệt thủ công (Manual Gate).</div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- CD Deployment -->
+        <div class="card" style="background: #FFFFFF;">
+          <div style="font-size: 26px; font-weight: 800; color: var(--navy-dark); margin-bottom: 15px; border-bottom: 2px solid #E5E7EB; padding-bottom: 12px;">Continuous Deployment</div>
+          <ul class="feature-list" style="gap: 20px;">
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div>Tự động hóa hoàn toàn mọi bước từ commit đến Production thật.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div>Code vượt qua bộ test là tự động release mà không cần phê duyệt thủ công.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div><strong>Yêu cầu:</strong> Bộ test tự động phải có độ tin cậy cực cao và có hệ thống rollback tức thì.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Seminar Kiểm thử phần mềm</div>
+      <div class="slide-number">3</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 4: SO SÁNH NHANH GIỮA CI/CD ==================== -->
+  <div class="slide theme-blue" data-slide="4">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">So sánh nhanh giữa CI / CD và Vị trí Đề tài</h2>
+        <div class="slide-subtitle" style="color: rgba(255,255,255,0.8);">Xác định ranh giới kỹ thuật đã hiện thực trong đồ án môn học</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Nhóm 06</div>
+      </div>
+    </div>
+    <div class="slide-content" style="justify-content: center;">
+      <table class="custom-table theme-blue-table">
+        <thead>
+          <tr>
+            <th style="width: 22%;">Khía cạnh</th>
+            <th style="width: 26%;">Continuous Integration (CI)</th>
+            <th style="width: 26%;">Continuous Delivery (CDel)</th>
+            <th style="width: 26%;">Continuous Deployment (CDep)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Deploy Production</strong></td>
+            <td>Không (chỉ xác minh mã nguồn)</td>
+            <td>Sẵn sàng (cần phê duyệt thủ công)</td>
+            <td>Tự động 100% không qua con người</td>
+          </tr>
+          <tr>
+            <td><strong>Sản phẩm đầu ra</strong></td>
+            <td>Test logs, Test reports, Exit code</td>
+            <td><strong>Docker Image đã kiểm chứng</strong></td>
+            <td>Live Production Service</td>
+          </tr>
+          <tr>
+            <td><strong>Tần suất thực hiện</strong></td>
+            <td>Vài lần đến hàng chục lần / ngày</td>
+            <td>Theo chu kỳ build release / sprint</td>
+            <td>Liên tục mỗi khi merge main</td>
+          </tr>
+          <tr>
+            <td><strong>Hiện thực Đề tài</strong></td>
+            <td><span style="color: #6EE7B7; font-weight: 700;">&check; GitHub Actions 11 Jobs</span></td>
+            <td><span style="color: #6EE7B7; font-weight: 700;">&check; Đóng gói Docker & Jenkins Test</span></td>
+            <td><span style="color: #FCA5A5;">&cross; Dừng ở mức CDeliverable</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top: 25px; padding: 18px 26px; background: rgba(0,0,0,0.25); border-radius: 14px; font-size: 20px; line-height: 1.5;">
+        <strong>Lưu ý kiến trúc:</strong> Đề tài của Nhóm 06 tập trung tối đa vào <strong>Continuous Integration và Continuous Delivery</strong>: tự động test mã nguồn, đóng gói Docker image, push GHCR và kiểm chứng độc lập trên Jenkins; không tự ý đẩy lên production thương mại.
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; So sánh CI/CD</div>
+      <div class="slide-number">4</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 5: SYSTEM UNDER TEST ==================== -->
+  <div class="slide" data-slide="5">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">System Under Test (SUT): RealWorld Conduit</h2>
+        <div class="slide-subtitle">Ứng dụng thực tế được lựa chọn làm đối tượng nghiên cứu và xây dựng Test Harness</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">thu2005/realworld</div>
+        <div class="slide-header-badge">Nhóm 06</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="font-size: 28px; color: var(--navy-dark); margin-bottom: 20px;">Kiến trúc Fullstack Conduit</h3>
+          <ul class="feature-list" style="gap: 18px;">
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div><strong>Frontend:</strong> Next.js 12 (React 17), CSS ProductionReady, render SSR và Client-side.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div><strong>Backend REST API:</strong> Express.js, JWT Authentication (Header <code>Token</code> / <code>Bearer</code>), Passport.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div><strong>Database:</strong> Sequelize ORM 6.5.1 kết hợp SQLite (file/memory) cho môi trường test và CI.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div><strong>Nghiệp vụ phong phú:</strong> Quản lý người dùng, Follow tác giả, Đăng bài viết, Tagging, Bình luận, Favorite.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card" style="background: #FFFBEB; border-color: #FDE68A;">
+          <h3 style="font-size: 28px; color: #92400E; margin-bottom: 20px;">Thách thức kỹ thuật đặt ra</h3>
+          <div class="pill-list">
+            <div class="pill-item" style="background: #D97706; padding: 18px 24px; font-size: 20px;">
+              <span class="badge-num" style="background: rgba(255,255,255,0.25);">01</span>
+              <span><strong>Cố định Runtime:</strong> Yêu cầu nghiêm ngặt Node.js 14.21.3 & npm 6.14.18 (dependency cũ, tương thích Sequelize/node:path).</span>
+            </div>
+            <div class="pill-item" style="background: #D97706; padding: 18px 24px; font-size: 20px;">
+              <span class="badge-num" style="background: rgba(255,255,255,0.25);">02</span>
+              <span><strong>Không có Lockfile:</strong> Repository không commit lockfile &rarr; Cần dùng <code>npm install</code> chuẩn hóa thay cho <code>npm ci</code>.</span>
+            </div>
+            <div class="pill-item" style="background: #D97706; padding: 18px 24px; font-size: 20px;">
+              <span class="badge-num" style="background: rgba(255,255,255,0.25);">03</span>
+              <span><strong>Tách biệt môi trường:</strong> Cần cô lập DB giữa các lần chạy test; tránh xung đột port 3000 trên Docker host.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; SUT RealWorld Conduit</div>
+      <div class="slide-number">5</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 6: KHÁI NIỆM TEST HARNESS ==================== -->
+  <div class="slide" data-slide="6">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Test Harness: Định nghĩa & 4 Trách nhiệm Cốt lõi</h2>
+        <div class="slide-subtitle">Tiêu chuẩn ISO/IEC/IEEE 24765 và sự khác biệt với việc chạy script thông thường</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Nhóm 06</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div style="background: #EFF6FF; border-left: 6px solid var(--navy-primary); padding: 18px 28px; border-radius: 8px; font-size: 22px; margin-bottom: 30px; line-height: 1.5;">
+        <strong>Định nghĩa:</strong> <em>Test Harness</em> là tập hợp phần mềm, công cụ, stub/driver và môi trường giả lập được xây dựng để <strong>thiết lập, điều khiển, quan sát và dọn dẹp</strong> quá trình thực thi kiểm thử một cách hoàn toàn tự động và có thể tái hiện.
+      </div>
+      <div class="grid-4">
+        <div class="card" style="background: #FFFFFF;">
+          <div style="font-size: 40px; margin-bottom: 10px;">🛠️</div>
+          <h3 style="font-size: 22px; color: var(--navy-dark); margin-bottom: 10px;">1. Thiết lập (Setup)</h3>
+          <p style="font-size: 17px; color: var(--text-muted); line-height: 1.5;">Khởi tạo runtime Node 14, cài dependency, migrate SQLite DB, cấp phát Docker network cô lập.</p>
+        </div>
+        <div class="card" style="background: #FFFFFF;">
+          <div style="font-size: 40px; margin-bottom: 10px;">🎮</div>
+          <h3 style="font-size: 22px; color: var(--navy-dark); margin-bottom: 10px;">2. Điều khiển (Control)</h3>
+          <p style="font-size: 17px; color: var(--text-muted); line-height: 1.5;">Khởi động server nền, chờ smoke probe <code>/api/tags</code> phản hồi, kích hoạt test runner theo thứ tự định sẵn.</p>
+        </div>
+        <div class="card" style="background: #FFFFFF;">
+          <div style="font-size: 40px; margin-bottom: 10px;">👁️</div>
+          <h3 style="font-size: 22px; color: var(--navy-dark); margin-bottom: 10px;">3. Quan sát (Observe)</h3>
+          <p style="font-size: 17px; color: var(--text-muted); line-height: 1.5;">Thu nhận exit code, xuất báo cáo JUnit XML, quay video Cypress, chụp màn hình lỗi và ghi log server.</p>
+        </div>
+        <div class="card" style="background: #FFFFFF;">
+          <div style="font-size: 40px; margin-bottom: 10px;">🧹</div>
+          <h3 style="font-size: 22px; color: var(--navy-dark); margin-bottom: 10px;">4. Dọn dẹp (Teardown)</h3>
+          <p style="font-size: 17px; color: var(--text-muted); line-height: 1.5;">Xóa container, gỡ bỏ mạng ảo tạm thời dựa trên build label, đảm bảo môi trường sạch cả khi test thất bại.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Nguyên lý Test Harness</div>
+      <div class="slide-number">6</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 7: PHÂN BIỆT CÁC THUẬT NGỮ ==================== -->
+  <div class="slide theme-blue" data-slide="7">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Phân biệt các Thuật ngữ Kiểm thử</h2>
+        <div class="slide-subtitle" style="color: rgba(255,255,255,0.8);">Tránh nhầm lẫn giữa Test Suite, Test Framework, Test Harness và CI Pipeline</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Nhóm 06</div>
+      </div>
+    </div>
+    <div class="slide-content" style="justify-content: center;">
+      <table class="custom-table theme-blue-table">
+        <thead>
+          <tr>
+            <th style="width: 20%;">Thuật ngữ</th>
+            <th style="width: 45%;">Định nghĩa chuẩn</th>
+            <th style="width: 35%;">Hiện thực cụ thể trong Dự án</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Test Case</strong></td>
+            <td>Tập hợp điều kiện tiên quyết, dữ liệu đầu vào, hành động và kết quả mong đợi (oracle).</td>
+            <td><code>auth.test.js</code>: Request không có token phải nhận mã HTTP 401 Unauthorized.</td>
+          </tr>
+          <tr>
+            <td><strong>Test Suite</strong></td>
+            <td>Tập hợp các test case liên quan cùng kiểm tra một mô-đun hoặc chức năng.</td>
+            <td><code>tests/unit/lib.test.js</code> (16 cases), <code>tests/api/api.test.js</code> (15 cases).</td>
+          </tr>
+          <tr>
+            <td><strong>Test Framework / Runner</strong></td>
+            <td>Thư viện cung cấp cú pháp viết assertion, cấu trúc test và công cụ thực thi test.</td>
+            <td><strong>Jest</strong> (Unit/Coverage), <strong>SuperTest</strong> (API), <strong>Cypress</strong> (Headless UI).</td>
+          </tr>
+          <tr>
+            <td><strong>Test Harness</strong></td>
+            <td>Toàn bộ hạ tầng bao bọc: chuẩn bị DB, probe kiểm tra, mock, script điều khiển & cleanup.</td>
+            <td><code>jenkins/image_smoke.py</code>, Docker container networks, Allure CLI adapter.</td>
+          </tr>
+          <tr>
+            <td><strong>CI/CD Pipeline</strong></td>
+            <td>Quy trình tự động hóa cấp cao điều phối luồng mã nguồn từ commit đến artifact.</td>
+            <td><code>.github/workflows/ci.yml</code> (11 jobs) và <code>Jenkinsfile</code> (hai chế độ).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Thuật ngữ kiểm thử</div>
+      <div class="slide-number">7</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 8: KIM TỰ THÁP KIỂM THỬ ==================== -->
+  <div class="slide" data-slide="8">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Kim tự tháp Kiểm thử (Test Pyramid) trên RealWorld</h2>
+        <div class="slide-subtitle">Phân bổ 55 test cases theo nguyên tắc: Tầng dưới nhanh & rẻ, tầng trên toàn diện & chân thực</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Nhóm 06</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <!-- Pyramid visual -->
+        <div style="display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 20px;">
+          <!-- E2E -->
+          <div style="background: #F87171; color: #FFF; padding: 22px; border-radius: 14px; text-align: center; margin: 0 90px; box-shadow: 0 4px 15px rgba(239,68,68,0.3);">
+            <div style="font-size: 24px; font-weight: 800;">UI / E2E Testing</div>
+            <div style="font-size: 18px; margin-top: 4px;"><strong>5 Tests (Cypress Headless)</strong> &bull; Chậm nhất, giá trị cao nhất</div>
+          </div>
+          <!-- API -->
+          <div style="background: #FBBF24; color: #1E293B; padding: 22px; border-radius: 14px; text-align: center; margin: 0 45px; box-shadow: 0 4px 15px rgba(245,158,11,0.25);">
+            <div style="font-size: 24px; font-weight: 800;">API / Integration Testing</div>
+            <div style="font-size: 18px; margin-top: 4px;"><strong>15 Tests (SuperTest) + Newman Collection</strong> &bull; Tốc độ trung bình</div>
+          </div>
+          <!-- Unit -->
+          <div style="background: var(--navy-primary); color: #FFF; padding: 24px; border-radius: 14px; text-align: center; margin: 0 0; box-shadow: 0 6px 20px rgba(24,66,182,0.3);">
+            <div style="font-size: 24px; font-weight: 800;">Unit & Component Testing</div>
+            <div style="font-size: 18px; margin-top: 4px;"><strong>31 Tests (Jest) + 4 Mocha Baseline</strong> &bull; Siêu nhanh, phản hồi tức thì</div>
+          </div>
+        </div>
+
+        <!-- Details -->
+        <div class="card" style="justify-content: center;">
+          <h3 style="font-size: 26px; color: var(--navy-dark); margin-bottom: 18px;">Giá trị thực tiễn trong dự án</h3>
+          <ul class="feature-list" style="gap: 18px;">
+            <li class="feature-item">
+              <div class="feature-icon">&check;</div>
+              <div><strong>Unit Tests (Jest):</strong> Chạy độc lập trong vài giây, kiểm tra chặt chẽ logic validate, hashing mật khẩu bcrypt và JWT middleware.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">&check;</div>
+              <div><strong>Integration Tests (SuperTest):</strong> Gửi HTTP request thực qua router Express và Sequelize SQLite mà không cần trình duyệt.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">&check;</div>
+              <div><strong>System/UI Tests (Cypress):</strong> Điều khiển browser Chromium thật, xác minh form login/register và bắt intercept API 422.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Test Pyramid RealWorld</div>
+      <div class="slide-number">8</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 9: SECTION BREAK - TEST HARNESS ==================== -->
+  <div class="slide theme-blue" data-slide="9">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <div class="slide-subtitle" style="color: rgba(255,255,255,0.7); font-size: 26px; font-weight: 700;">PHẦN 02</div>
+        <h2 class="slide-title" style="font-size: 68px; margin-top: 10px;">Hiện thực Test Harness Đa Tầng</h2>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Nhóm 06</div>
+      </div>
+    </div>
+    <div class="slide-content" style="justify-content: center;">
+      <div class="pill-list" style="max-width: 1200px; margin: 0 auto; width: 100%;">
+        <div class="pill-item white-pill">
+          <span class="badge-num">01</span>
+          <span><strong>Tầng Unit Test (Jest):</strong> 31 test cases bao phủ lib.js, auth.js và models.</span>
+        </div>
+        <div class="pill-item white-pill">
+          <span class="badge-num">02</span>
+          <span><strong>Đo lường Coverage:</strong> Đạt 100% Statements, 94.73% Branches trên 2 mô-đun cốt lõi.</span>
+        </div>
+        <div class="pill-item white-pill">
+          <span class="badge-num">03</span>
+          <span><strong>Tầng API Integration:</strong> 15 SuperTest cases kết hợp Newman Postman collection.</span>
+        </div>
+        <div class="pill-item white-pill">
+          <span class="badge-num">04</span>
+          <span><strong>Tầng UI & Bảo mật:</strong> 5 Cypress E2E headless cases, npm audit gate và CodeQL SAST.</span>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Test Harness Implementation</div>
+      <div class="slide-number">9</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 10: JEST UNIT TESTS ==================== -->
+  <div class="slide" data-slide="10">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Tầng Unit Testing với Jest: 31 Test Cases</h2>
+        <div class="slide-subtitle">Tổ chức thành 3 test suites độc lập tại thư mục <code>tests/unit/</code></div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Task C-1</div>
+        <div class="slide-header-badge">Jest Runner</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card">
+          <div class="stat-badge">16</div>
+          <h3 style="font-size: 24px; color: var(--navy-dark); margin-bottom: 12px;">lib.test.js</h3>
+          <p style="font-size: 17px; color: var(--text-muted); margin-bottom: 15px;">Kiểm thử hàm tiện ích dùng chung trong toàn bộ hệ thống:</p>
+          <ul class="feature-list" style="gap: 10px; font-size: 16px;">
+            <li>&bull; Validate số nguyên dương, phân trang limit/offset.</li>
+            <li>&bull; Xử lý mảng tag bài viết và chuẩn hóa chuỗi.</li>
+            <li>&bull; Định dạng mã lỗi validation thành JSON chuẩn Conduit.</li>
+            <li>&bull; Lấy địa chỉ client IP từ Request headers.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="stat-badge">06</div>
+          <h3 style="font-size: 24px; color: var(--navy-dark); margin-bottom: 12px;">auth.test.js</h3>
+          <p style="font-size: 17px; color: var(--text-muted); margin-bottom: 15px;">Kiểm thử Middleware xác thực quyền truy cập:</p>
+          <ul class="feature-list" style="gap: 10px; font-size: 16px;">
+            <li>&bull; <code>auth.required</code>: Chặn request khi thiếu token (HTTP 401).</li>
+            <li>&bull; <code>auth.optional</code>: Cho phép truy cập nặc danh khi không có token.</li>
+            <li>&bull; Parse chính xác token định dạng <code>Token &lt;jwt&gt;</code> và <code>Bearer &lt;jwt&gt;</code>.</li>
+            <li>&bull; Kiểm tra payload giải mã đưa vào <code>req.payload</code>.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="stat-badge">09</div>
+          <h3 style="font-size: 24px; color: var(--navy-dark); margin-bottom: 12px;">models.test.js</h3>
+          <p style="font-size: 17px; color: var(--text-muted); margin-bottom: 15px;">Kiểm thử hành vi nghiệp vụ tầng Model (Sequelize):</p>
+          <ul class="feature-list" style="gap: 10px; font-size: 16px;">
+            <li>&bull; Tự động băm mật khẩu với salt ngẫu nhiên trước khi lưu.</li>
+            <li>&bull; Phương thức <code>validPassword()</code> kiểm tra mật khẩu đúng/sai.</li>
+            <li>&bull; Tạo JWT token có thời hạn 60 ngày chứa user ID.</li>
+            <li>&bull; Sinh slug bài viết tự động từ tiêu đề (title).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Jest Unit Testing</div>
+      <div class="slide-number">10</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 11: CODE COVERAGE ANALYSIS ==================== -->
+  <div class="slide theme-blue" data-slide="11">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Đo lường & Phân tích Code Coverage</h2>
+        <div class="slide-subtitle" style="color: rgba(255,255,255,0.8);">Báo cáo độ bao phủ mã nguồn theo ngưỡng bắt buộc (Quality Gate Threshold &ge; 80%)</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Coverage Report</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div style="display: flex; flex-direction: column; justify-content: center;">
+          <table class="custom-table theme-blue-table" style="font-size: 22px;">
+            <thead>
+              <tr>
+                <th>Tiêu chí (Metric)</th>
+                <th>Kết quả thực tế</th>
+                <th>Quality Gate</th>
+                <th>Đánh giá</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Statements</strong></td>
+                <td style="color: #6EE7B7; font-weight: 800;">100%</td>
+                <td>&ge; 80%</td>
+                <td><span style="color: #6EE7B7;">&check; ĐẠT</span></td>
+              </tr>
+              <tr>
+                <td><strong>Branches</strong></td>
+                <td style="color: #6EE7B7; font-weight: 800;">94.73%</td>
+                <td>&ge; 80%</td>
+                <td><span style="color: #6EE7B7;">&check; ĐẠT</span></td>
+              </tr>
+              <tr>
+                <td><strong>Functions</strong></td>
+                <td style="color: #6EE7B7; font-weight: 800;">100%</td>
+                <td>&ge; 80%</td>
+                <td><span style="color: #6EE7B7;">&check; ĐẠT</span></td>
+              </tr>
+              <tr>
+                <td><strong>Lines</strong></td>
+                <td style="color: #6EE7B7; font-weight: 800;">100%</td>
+                <td>&ge; 80%</td>
+                <td><span style="color: #6EE7B7;">&check; ĐẠT</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card white-card-on-blue" style="justify-content: center;">
+          <h3 style="font-size: 26px; color: var(--navy-dark); margin-bottom: 16px;">Phân tích minh bạch về số liệu</h3>
+          <p style="font-size: 19px; line-height: 1.6; color: #374151; margin-bottom: 14px;">
+            Cấu hình <code>collectCoverageFrom</code> trong <code>jest.config.js</code> được chỉ định có chủ đích cho hai mô-đun mục tiêu: <strong><code>lib.js</code></strong> và <strong><code>auth.js</code></strong>.
+          </p>
+          <div style="background: #F3F4F6; border-radius: 12px; padding: 18px; font-size: 18px; line-height: 1.5; color: #1F2937;">
+            <strong>Bài học thực tế:</strong> Tỷ lệ 100% phản ánh hai mô-đun lõi này được kiểm thử toàn diện mọi nhánh điều kiện; báo cáo không đánh tráo khái niệm rằng 100% toàn bộ codebase RealWorld được bao phủ.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Jest Coverage Analysis</div>
+      <div class="slide-number">11</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 12: SUPERTEST & NEWMAN API ==================== -->
+  <div class="slide" data-slide="12">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Tầng API Integration: SuperTest & Newman</h2>
+        <div class="slide-subtitle">Kiểm chứng toàn diện các endpoint RESTful và chuẩn dữ liệu Conduit</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Task C-2</div>
+        <div class="slide-header-badge">SuperTest + Newman</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="font-size: 26px; color: var(--navy-dark);">SuperTest API Suite</h3>
+            <span style="background: var(--navy-light); color: var(--navy-primary); font-weight: 800; padding: 6px 14px; border-radius: 20px;">15 Test Cases</span>
+          </div>
+          <p style="font-size: 18px; color: var(--text-muted); margin-bottom: 15px;">Gửi HTTP request trực tiếp vào Express App (chạy <code>--runInBand</code>):</p>
+          <ul class="feature-list" style="gap: 12px; font-size: 17px;">
+            <li class="feature-item"><div class="feature-icon">&bull;</div><div><code>GET /api/tags</code>: Trả về danh sách thẻ bài viết và cấu trúc JSON mảng.</div></li>
+            <li class="feature-item"><div class="feature-icon">&bull;</div><div><code>POST /api/users</code>: Đăng ký tài khoản mới và trả về token hợp lệ.</div></li>
+            <li class="feature-item"><div class="feature-icon">&bull;</div><div><code>POST /api/users/login</code>: Đăng nhập thành công và kiểm tra mật khẩu sai.</div></li>
+            <li class="feature-item"><div class="feature-icon">&bull;</div><div><code>POST/GET /api/articles</code>: Tạo bài viết, sinh slug và truy vấn danh sách.</div></li>
+            <li class="feature-item"><div class="feature-icon">&bull;</div><div>Validation Errors: Trả đúng HTTP 422 Unprocessable Entity kèm trường lỗi.</div></li>
+          </ul>
+        </div>
+
+        <div class="card" style="background: #F8FAFD; border-color: var(--navy-border);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="font-size: 26px; color: var(--navy-dark);">Newman Postman Collection</h3>
+            <span style="background: #FEF3C7; color: #B45309; font-weight: 800; padding: 6px 14px; border-radius: 20px;">API Contract</span>
+          </div>
+          <p style="font-size: 18px; color: var(--text-muted); margin-bottom: 15px;">Sử dụng Postman collection chuẩn của dự án RealWorld:</p>
+          <ul class="feature-list" style="gap: 12px; font-size: 17px;">
+            <li class="feature-item"><div class="feature-icon">&bull;</div><div>Workflow CI khởi động server nền tại <code>http://localhost:3000</code>.</div></li>
+            <li class="feature-item"><div class="feature-icon">&bull;</div><div>Chạy script <code>realworld/api/run-api-tests.sh</code> qua Newman CLI.</div></li>
+            <li class="feature-item"><div class="feature-icon">&bull;</div><div>Kiểm tra toàn bộ Contract chuẩn của đặc tả RealWorld Specification.</div></li>
+            <li class="feature-item"><div class="feature-icon">&bull;</div><div>Tự động xuất báo cáo JUnit XML tại <code>test-reports/junit/newman.xml</code>.</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; API Integration Testing</div>
+      <div class="slide-number">12</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 13: CYPRESS UI TESTING ==================== -->
+  <div class="slide" data-slide="13">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Tầng UI & System Testing với Cypress</h2>
+        <div class="slide-subtitle">Thực thi kiểm thử giao diện người dùng ở chế độ Headless bên trong môi trường Jenkins</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Cypress 9.7.0</div>
+        <div class="slide-header-badge">Allure Reporter</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="font-size: 26px; color: var(--navy-dark); margin-bottom: 18px;">2 Test Specs &bull; 5 UI Test Cases</h3>
+          <div class="pill-list">
+            <div class="pill-item" style="padding: 18px 24px; font-size: 19px;">
+              <span class="badge-num">A</span>
+              <div>
+                <strong>public-ui.spec.js (2 cases):</strong>
+                <div style="font-size: 16px; opacity: 0.9; margin-top: 4px;">Tải trang chủ Conduit, kiểm tra tiêu đề, banner và điều hướng đến màn hình đăng nhập.</div>
+              </div>
+            </div>
+            <div class="pill-item" style="padding: 18px 24px; font-size: 19px;">
+              <span class="badge-num">B</span>
+              <div>
+                <strong>account-validation.spec.js (3 cases):</strong>
+                <div style="font-size: 16px; opacity: 0.9; margin-top: 4px;">Validation form: Thiếu mật khẩu khi login, sai thông tin tài khoản và đăng ký thiếu password.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="background: #F8FAFD;">
+          <h3 style="font-size: 26px; color: var(--navy-dark); margin-bottom: 18px;">Cơ chế kiểm soát & Bằng chứng chẩn đoán</h3>
+          <ul class="feature-list" style="gap: 16px; font-size: 18px;">
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div><strong>Kép Oracle (Dual Oracle):</strong> Dùng <code>cy.intercept()</code> để kiểm tra đồng thời HTTP status 422 từ API và thông báo lỗi hiển thị trên DOM.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div><strong>Tự động lưu Video & Screenshot:</strong> Cypress tự động ghi lại toàn bộ video tương tác và chụp screenshot khi gặp assertion fail.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div><strong>Allure Integration:</strong> Tích hợp <code>@shelex/cypress-allure-plugin</code> để xuất kết quả chi tiết ra Allure Dashboard.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Cypress UI Testing</div>
+      <div class="slide-number">13</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 14: QUALITY GATE & BẢO MẬT ==================== -->
+  <div class="slide theme-blue" data-slide="14">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Quality Gate & Kiểm tra Bảo mật Mã nguồn</h2>
+        <div class="slide-subtitle" style="color: rgba(255,255,255,0.8);">Chặn đứng lỗ hổng bảo mật trước khi cho phép đóng gói Docker image</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Security Gates</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card white-card-on-blue">
+          <div style="font-size: 38px; margin-bottom: 10px;">🛡️</div>
+          <h3 style="font-size: 26px; color: var(--navy-dark); margin-bottom: 15px;">Dependency Scan (npm audit)</h3>
+          <ul class="feature-list" style="gap: 14px; font-size: 18px; color: #374151;">
+            <li class="feature-item">
+              <div class="feature-icon" style="background: #FEE2E2; color: #DC2626;">!</div>
+              <div>Quét toàn bộ cây phụ thuộc trong <code>node_modules</code>.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon" style="background: #FEE2E2; color: #DC2626;">!</div>
+              <div><strong>Fail-fast Gate:</strong> Lệnh <code>npm audit --audit-level=high</code> trả exit code 1 nếu phát hiện lỗ hổng mức <em>High</em> hoặc <em>Critical</em>.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon" style="background: #FEE2E2; color: #DC2626;">!</div>
+              <div>Lưu báo cáo chi tiết dạng JSON tại <code>test-reports/security-audit.json</code> để lưu trữ lâu dài.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card white-card-on-blue">
+          <div style="font-size: 38px; margin-bottom: 10px;">🔍</div>
+          <h3 style="font-size: 26px; color: var(--navy-dark); margin-bottom: 15px;">Phân tích Tĩnh CodeQL (SAST)</h3>
+          <ul class="feature-list" style="gap: 14px; font-size: 18px; color: #374151;">
+            <li class="feature-item">
+              <div class="feature-icon" style="background: #DBEAFE; color: #1D4ED8;">&bull;</div>
+              <div>Workflow độc lập <code>.github/workflows/codeql.yml</code> quét mã nguồn JavaScript/TypeScript.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon" style="background: #DBEAFE; color: #1D4ED8;">&bull;</div>
+              <div>Áp dụng hai bộ truy vấn mở rộng: <code>security-extended</code> và <code>security-and-quality</code>.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon" style="background: #DBEAFE; color: #1D4ED8;">&bull;</div>
+              <div>Cấp quyền tối thiểu <code>security-events: write</code> để đẩy cảnh báo lên GitHub Security Alerts.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Security & Quality Gates</div>
+      <div class="slide-number">14</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 15: SECTION BREAK - CI/CD ==================== -->
+  <div class="slide theme-blue" data-slide="15">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <div class="slide-subtitle" style="color: rgba(255,255,255,0.7); font-size: 26px; font-weight: 700;">PHẦN 03</div>
+        <h2 class="slide-title" style="font-size: 68px; margin-top: 10px;">Kiến trúc CI/CD Phối Hợp:<br>GitHub Actions + Jenkins</h2>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Nhóm 06</div>
+      </div>
+    </div>
+    <div class="slide-content" style="justify-content: center;">
+      <div class="pill-list" style="max-width: 1200px; margin: 0 auto; width: 100%;">
+        <div class="pill-item white-pill">
+          <span class="badge-num">01</span>
+          <span><strong>Bản hợp đồng CI:</strong> Quy ước chuẩn hóa tên biến, image tag SHA và đường dẫn báo cáo.</span>
+        </div>
+        <div class="pill-item white-pill">
+          <span class="badge-num">02</span>
+          <span><strong>GitHub Actions CI:</strong> 11 jobs tự động, build Docker image và push lên GitHub Container Registry.</span>
+        </div>
+        <div class="pill-item white-pill">
+          <span class="badge-num">03</span>
+          <span><strong>Jenkins Test Harness:</strong> Custom Docker image, Source Mode & Image Mode kiểm chứng container.</span>
+        </div>
+        <div class="pill-item white-pill">
+          <span class="badge-num">04</span>
+          <span><strong>Traceability Tuyệt đối:</strong> Git Commit SHA &harr; GHCR Image Tag &harr; Jenkins Build ID.</span>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; CI/CD Architecture</div>
+      <div class="slide-number">15</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 16: SYSTEM ARCHITECTURE ==================== -->
+  <div class="slide" data-slide="16">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Kiến trúc Tổng thể Hệ thống</h2>
+        <div class="slide-subtitle">Sự phân công trách nhiệm rõ ràng giữa GitHub Actions (CI) và Jenkins (Harness CD)</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Architecture</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="image-preview">
+        <img src="Software-Testing-CICD-Test-Harness/docs/final-report/images/system-architecture.svg" alt="Kiến trúc tổng thể CI/CD và Test Harness">
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; System Architecture</div>
+      <div class="slide-number">16</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 17: CI INTEGRATION CONTRACT ==================== -->
+  <div class="slide" data-slide="17">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Bản Hợp đồng Tích hợp CI (CI Contract)</h2>
+        <div class="slide-subtitle">Quy định giao diện bàn giao bất biến trong <code>CI_INTEGRATION_CONTRACT.md</code></div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Contract Specification</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div>
+          <h3 style="font-size: 24px; color: var(--navy-dark); margin-bottom: 15px;">4 Tham số Bàn giao Chuẩn hóa</h3>
+          <table class="custom-table" style="font-size: 19px;">
+            <thead>
+              <tr><th>Tham số</th><th>Ý nghĩa</th><th>Ví dụ thực tế</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>SUT_REPO_URL</code></td><td>URL repo SUT</td><td><code>https://github.com/thu2005/realworld.git</code></td></tr>
+              <tr><td><code>SUT_REF</code></td><td>Git branch / commit</td><td><code>next</code> hoặc full 40-char SHA</td></tr>
+              <tr><td><code>IMAGE_REPO</code></td><td>Registry image URL</td><td><code>ghcr.io/thu2005/realworld</code></td></tr>
+              <tr><td><code>IMAGE_TAG</code></td><td>Full 40-char Commit SHA</td><td><code>4f9a9405b2baebc429...</code></td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top: 15px; font-size: 16px; color: #DC2626; font-weight: 600;">
+            * MUST NOT: Tuyệt đối không dùng tag <code>latest</code> để bàn giao vì làm mất tính truy vết.
+          </div>
+        </div>
+
+        <div>
+          <h3 style="font-size: 24px; color: var(--navy-dark); margin-bottom: 15px;">Cấu trúc Đầu ra Bắt buộc (Reports & Artifacts)</h3>
+          <table class="custom-table" style="font-size: 19px;">
+            <thead>
+              <tr><th>Loại kết quả</th><th>Đường dẫn quy định (Relative Path)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>JUnit XML</td><td><code>test-reports/junit/*.xml</code></td></tr>
+              <tr><td>Allure Raw Results</td><td><code>test-reports/allure-results/</code></td></tr>
+              <tr><td>Cypress Screenshots</td><td><code>test-reports/cypress/screenshots/</code></td></tr>
+              <tr><td>Cypress Videos</td><td><code>test-reports/cypress/videos/</code></td></tr>
+              <tr><td>Runtime Logs</td><td><code>test-reports/logs/</code>, <code>server.log</code></td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top: 15px; font-size: 16px; color: var(--navy-primary); font-weight: 600;">
+            * Tất cả công cụ runner phải tuân thủ đúng vị trí xuất báo cáo này để Jenkins tự động lưu trữ.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; CI Integration Contract</div>
+      <div class="slide-number">17</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 18: GITHUB ACTIONS 11-JOB PIPELINE ==================== -->
+  <div class="slide" data-slide="18">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">GitHub Actions: Workflow 11 Jobs Chi tiết</h2>
+        <div class="slide-subtitle">Chuỗi kiểm tra liên tục được kích hoạt tự động trên mỗi sự kiện push / pull request</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">.github/workflows/ci.yml</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="image-preview">
+        <img src="Software-Testing-CICD-Test-Harness/docs/final-report/images/github-actions-workflow.svg" alt="GitHub Actions 11 Jobs Flowchart">
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; GitHub Actions Workflow</div>
+      <div class="slide-number">18</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 19: CẤU TRÚC FILE CI.YML ==================== -->
+  <div class="slide" data-slide="19">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Cấu trúc Trực diện <code>.github/workflows/ci.yml</code></h2>
+        <div class="slide-subtitle">Trích đoạn cấu hình Job Dependency, Docker Build và GHCR Login bảo mật</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Code Inspection</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="code-box">
+<span class="cm"># Định nghĩa các jobs kiểm tra chất lượng song song</span>
+<span class="key">jobs:</span>
+  <span class="key">lint:</span>
+    <span class="key">needs:</span> install
+    <span class="key">runs-on:</span> ubuntu-latest
+    <span class="key">steps:</span>
+      - <span class="key">run:</span> npm run lint
+
+  <span class="key">unit-test:</span>
+    <span class="key">needs:</span> install
+    <span class="key">steps:</span>
+      - <span class="key">run:</span> npm test -- --reporter xunit
+      - <span class="key">run:</span> npm run test:unit <span class="cm"># Jest &gt;= 80%</span>
+
+  <span class="key">docker-build:</span>
+    <span class="key">name:</span> Docker Image Build
+    <span class="hl"><span class="key">needs:</span> [lint, unit-test, api-test, security-scan]</span>
+    <span class="key">runs-on:</span> ubuntu-latest
+    <span class="key">steps:</span>
+      - <span class="key">name:</span> Build Docker image
+        <span class="key">run:</span> |
+          docker build \
+            --tag ${{ env.IMAGE_NAME }}:${{ github.sha }} \
+            --tag ${{ env.IMAGE_NAME }}:latest .
+        </div>
+
+        <div class="code-box">
+      - <span class="key">name:</span> Smoke test built container
+        <span class="key">run:</span> |
+          docker run -d --name sut-container -p 3000:3000 \
+            ${{ env.IMAGE_NAME }}:${{ github.sha }}
+          <span class="cm"># Thử gọi endpoint smoke /api/tags trong 30s</span>
+          for i in $(seq 1 30); do
+            curl -s -f http://localhost:3000/api/tags && exit 0
+            sleep 1
+          done
+          exit 1
+
+  <span class="key">docker-push:</span>
+    <span class="key">needs:</span> docker-build
+    <span class="key">if:</span> github.event_name != 'pull_request'
+    <span class="key">permissions:</span>
+      <span class="key">packages:</span> write
+    <span class="key">steps:</span>
+      - <span class="key">uses:</span> docker/login-action@v3
+        <span class="key">with:</span>
+          <span class="key">registry:</span> ghcr.io
+          <span class="key">username:</span> ${{ github.actor }}
+          <span class="key">password:</span> ${{ secrets.GITHUB_TOKEN }}
+      - <span class="key">run:</span> docker push ${{ env.IMAGE_NAME }}:${{ github.sha }}
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; GitHub Actions YAML Structure</div>
+      <div class="slide-number">19</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 20: HẠ TẦNG JENKINS CONTAINERIZED ==================== -->
+  <div class="slide" data-slide="20">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Hạ tầng Jenkins Tái lập bằng Docker</h2>
+        <div class="slide-subtitle">Đóng gói toàn bộ công cụ kiểm thử vào Custom Jenkins Container độc lập</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">docker-compose.jenkins.yml</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="font-size: 26px; color: var(--navy-dark); margin-bottom: 18px;">Thành phần Custom Jenkins Image</h3>
+          <ul class="feature-list" style="gap: 16px; font-size: 18px;">
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div><strong>Base Image:</strong> <code>jenkins/jenkins:lts-jdk21</code> cung cấp môi trường máy chủ ổn định.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div><strong>Cố định Runtimes:</strong> Cài đặt Node.js 14.21.3, npm 6.14.18 và Python 3 để chạy test script.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div><strong>Docker CLI:</strong> Cho phép Jenkins điều khiển Docker daemon của máy host thông qua Docker Socket.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div><strong>Cypress & Headless Libs:</strong> Cypress 9.7.0, Xvfb, thư viện đồ họa Linux chạy headless browser.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div><strong>Allure Commandline:</strong> Cài đặt Allure CLI qua Groovy init script, phục vụ render báo cáo HTML.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card" style="background: #F8FAFD;">
+          <h3 style="font-size: 26px; color: var(--navy-dark); margin-bottom: 18px;">Kiến trúc Docker Compose Vận hành</h3>
+          <div class="code-box" style="font-size: 16px;">
+<span class="key">services:</span>
+  <span class="key">jenkins:</span>
+    <span class="key">build:</span>
+      <span class="key">context:</span> ./jenkins
+      <span class="key">dockerfile:</span> Dockerfile
+    <span class="key">ports:</span>
+      - <span class="str">"127.0.0.1:18080:8080"</span>
+    <span class="key">volumes:</span>
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    <span class="key">environment:</span>
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+          </div>
+          <div style="margin-top: 14px; font-size: 16px; color: #4B5565;">
+            * Cổng 18080 chỉ mở cục bộ trên <code>127.0.0.1</code>, đảm bảo an toàn tối đa cho máy host.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Jenkins Infrastructure</div>
+      <div class="slide-number">20</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 21: JENKINS PIPELINE MODES ==================== -->
+  <div class="slide theme-blue" data-slide="21">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Jenkins Pipeline: Hai Chế độ Thực thi</h2>
+        <div class="slide-subtitle" style="color: rgba(255,255,255,0.8);">Linh hoạt giữa kiểm tra mã nguồn (Source Mode) và kiểm chứng container (Image Mode)</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Jenkinsfile</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card white-card-on-blue">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="font-size: 26px; color: var(--navy-dark);">1. Source Mode (Baseline)</h3>
+            <span style="background: #E0E7FF; color: var(--navy-primary); font-weight: 700; padding: 4px 12px; border-radius: 12px; font-size: 15px;">RUN_MODE=source</span>
+          </div>
+          <p style="font-size: 18px; color: #4B5565; margin-bottom: 15px;">Kiểm tra trực tiếp repository mã nguồn độc lập:</p>
+          <div class="pill-list" style="gap: 10px;">
+            <div style="background: #F3F4F6; padding: 12px 18px; border-radius: 10px; font-size: 16px; font-family: monospace;">1. Checkout SUT_REPO_URL & SUT_REF</div>
+            <div style="background: #F3F4F6; padding: 12px 18px; border-radius: 10px; font-size: 16px; font-family: monospace;">2. Verify Node 14.21.3 & npm 6.14.18</div>
+            <div style="background: #F3F4F6; padding: 12px 18px; border-radius: 10px; font-size: 16px; font-family: monospace;">3. Install &bull; Lint &bull; Mocha Test</div>
+            <div style="background: #F3F4F6; padding: 12px 18px; border-radius: 10px; font-size: 16px; font-family: monospace;">4. Build Dev Next.js</div>
+          </div>
+        </div>
+
+        <div class="card white-card-on-blue" style="border: 3px solid #3B82F6;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="font-size: 26px; color: var(--navy-dark);">2. Image Mode (Test Harness)</h3>
+            <span style="background: #DBEAFE; color: #1D4ED8; font-weight: 700; padding: 4px 12px; border-radius: 12px; font-size: 15px;">RUN_MODE=image</span>
+          </div>
+          <p style="font-size: 18px; color: #4B5565; margin-bottom: 15px;">Kiểm chứng artifact container từ GitHub Container Registry:</p>
+          <div class="pill-list" style="gap: 10px;">
+            <div style="background: #EFF6FF; padding: 12px 18px; border-radius: 10px; font-size: 16px; font-family: monospace;">1. Validate Commit SHA & Pull GHCR Image</div>
+            <div style="background: #EFF6FF; padding: 12px 18px; border-radius: 10px; font-size: 16px; font-family: monospace;">2. Khởi tạo Isolated Docker Network & Run SUT</div>
+            <div style="background: #EFF6FF; padding: 12px 18px; border-radius: 10px; font-size: 16px; font-family: monospace;">3. Smoke Test GET /api/tags (Timeout 120s)</div>
+            <div style="background: #EFF6FF; padding: 12px 18px; border-radius: 10px; font-size: 16px; font-family: monospace;">4. Connect Agent & Run Cypress Headless UI</div>
+            <div style="background: #EFF6FF; padding: 12px 18px; border-radius: 10px; font-size: 16px; font-family: monospace;">5. Allure / JUnit Publish & Cleanup Resources</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Jenkins Pipeline Modes</div>
+      <div class="slide-number">21</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 22: CẤU TRÚC FILE JENKINSFILE ==================== -->
+  <div class="slide" data-slide="22">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Cấu trúc Trực diện <code>Jenkinsfile</code></h2>
+        <div class="slide-subtitle">Trích đoạn khai báo Parameters, Cypress Headless execution và Allure Post-Action</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Declarative Pipeline</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="code-box">
+<span class="kw">pipeline</span> {
+  <span class="kw">agent</span> any
+  <span class="kw">parameters</span> {
+    <span class="fn">choice</span>(name: <span class="str">'RUN_MODE'</span>, choices: [<span class="str">'source'</span>, <span class="str">'image'</span>])
+    <span class="fn">string</span>(name: <span class="str">'IMAGE_TAG'</span>, defaultValue: <span class="str">''</span>)
+    <span class="fn">string</span>(name: <span class="str">'SMOKE_PATH'</span>, defaultValue: <span class="str">'/api/tags'</span>)
+  }
+  <span class="kw">stages</span> {
+    <span class="kw">stage</span>(<span class="str">'Smoke test'</span>) {
+      <span class="kw">when</span> { expression { params.RUN_MODE == <span class="str">'image'</span> } }
+      <span class="kw">steps</span> { sh <span class="str">'python3 jenkins/image_smoke.py smoke'</span> }
+    }
+    <span class="kw">stage</span>(<span class="str">'Cypress UI tests'</span>) {
+      <span class="kw">when</span> { expression { params.RUN_MODE == <span class="str">'image'</span> } }
+      <span class="kw">steps</span> {
+        sh <span class="str">'''
+          cypress run --project . \
+            --config "baseUrl=$CYPRESS_BASE_URL" \
+            --reporter junit \
+            --reporter-options "mochaFile=test-reports/junit/cypress-[hash].xml" \
+            --env "allure=true,allureResultsPath=test-reports/allure-results"
+        '''</span>
+      }
+    }
+  }
+        </div>
+
+        <div class="code-box">
+  <span class="cm"># Post-actions thu thập bằng chứng ngay cả khi thất bại</span>
+  <span class="kw">post</span> {
+    <span class="kw">always</span> {
+      <span class="kw">script</span> {
+        <span class="kw">try</span> {
+          <span class="cm">// 1. Dọn dẹp an toàn container và ephemeral network</span>
+          sh <span class="str">'python3 jenkins/image_smoke.py finalize'</span>
+        } <span class="kw">finally</span> {
+          <span class="kw">try</span> {
+            <span class="cm">// 2. Tổng hợp báo cáo JUnit XML cho Test Trend</span>
+            <span class="fn">junit</span> testResults: <span class="str">'test-reports/junit/*.xml'</span>,
+                  allowEmptyResults: true
+          } <span class="kw">finally</span> {
+            <span class="kw">try</span> {
+              <span class="cm">// 3. Render Dashboard Allure HTML</span>
+              <span class="fn">allure</span> commandline: <span class="str">'allure'</span>,
+                     results: [[path: <span class="str">'test-reports/allure-results'</span>]]
+            } <span class="kw">finally</span> {
+              <span class="cm">// 4. Lưu toàn bộ Artifacts (video, logs, json)</span>
+              <span class="fn">archiveArtifacts</span> artifacts: <span class="str">'test-reports/**/*'</span>
+            }
+          }
+        }
+      }
+    }
+  }
+}
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Jenkinsfile Structure</div>
+      <div class="slide-number">22</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 23: CONTAINER LIFECYCLE & CLEANUP ==================== -->
+  <div class="slide" data-slide="23">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Vòng đời Container & Dọn dẹp Tài nguyên</h2>
+        <div class="slide-subtitle">Nguyên lý hoạt động của <code>jenkins/image_smoke.py</code> đảm bảo không rò rỉ tài nguyên</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">image_smoke.py</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card">
+          <div style="font-size: 36px; margin-bottom: 10px;">🏷️</div>
+          <h3 style="font-size: 22px; color: var(--navy-dark); margin-bottom: 10px;">1. Tagging & Nhãn sở hữu</h3>
+          <p style="font-size: 17px; color: var(--text-muted); line-height: 1.5;">Mỗi container và bridge network được gắn nhãn định danh riêng theo <code>BUILD_TAG</code> của Jenkins build hiện tại.</p>
+        </div>
+        <div class="card">
+          <div style="font-size: 36px; margin-bottom: 10px;">🌐</div>
+          <h3 style="font-size: 22px; color: var(--navy-dark); margin-bottom: 10px;">2. Cô lập Mạng Nội bộ</h3>
+          <p style="font-size: 17px; color: var(--text-muted); line-height: 1.5;">SUT container không mở port ra máy host; Jenkins container kết nối trực tiếp vào mạng nội bộ qua tên miền container.</p>
+        </div>
+        <div class="card">
+          <div style="font-size: 36px; margin-bottom: 10px;">🧹</div>
+          <h3 style="font-size: 22px; color: var(--navy-dark); margin-bottom: 10px;">3. Dọn dẹp Có Chọn Lọc</h3>
+          <p style="font-size: 17px; color: var(--text-muted); line-height: 1.5;">Không dùng <code>docker system prune</code> bừa bãi; chỉ dừng và xóa đúng container/mạng mang nhãn của build này trong <code>post.always</code>.</p>
+        </div>
+      </div>
+      <div style="margin-top: 25px; background: #FFFFFF; border-radius: 16px; padding: 22px 30px; border: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <div style="font-size: 20px; font-weight: 700; color: var(--navy-dark);">Bằng chứng kiểm chứng sau mỗi build:</div>
+          <div style="font-size: 17px; color: var(--text-muted); margin-top: 4px;"><code>docker ps -a</code> và <code>docker network ls</code> trả về trạng thái sạch sẽ hoàn toàn.</div>
+        </div>
+        <div style="background: #ECFDF5; color: #059669; font-weight: 800; padding: 10px 20px; border-radius: 12px; font-size: 18px;">
+          &check; ZERO RESOURCE LEAK
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Container Lifecycle Management</div>
+      <div class="slide-number">23</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 24: QUẢN LÝ SECRETS ==================== -->
+  <div class="slide theme-blue" data-slide="24">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Quản lý Bí mật & An toàn Thông tin Xác thực</h2>
+        <div class="slide-subtitle" style="color: rgba(255,255,255,0.8);">Tuyệt đối không lưu trữ thông tin nhạy cảm trong mã nguồn hoặc log thực thi</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Security Principles</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card white-card-on-blue">
+          <h3 style="font-size: 24px; color: var(--navy-dark); margin-bottom: 16px;">Phía GitHub Actions</h3>
+          <ul class="feature-list" style="gap: 16px; font-size: 18px; color: #374151;">
+            <li class="feature-item">
+              <div class="feature-icon" style="background: #E0E7FF; color: var(--navy-primary);">&check;</div>
+              <div>Sử dụng <code>GITHUB_TOKEN</code> tự động cấp phát với quyền tối thiểu <code>packages: write</code> chỉ tại job push image.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon" style="background: #E0E7FF; color: var(--navy-primary);">&check;</div>
+              <div>Các bí mật liên lạc Jenkins (<code>JENKINS_URL</code>, <code>JENKINS_TOKEN</code>) lưu trữ trong GitHub Secrets.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card white-card-on-blue">
+          <h3 style="font-size: 24px; color: var(--navy-dark); margin-bottom: 16px;">Phía Jenkins Server</h3>
+          <ul class="feature-list" style="gap: 16px; font-size: 18px; color: #374151;">
+            <li class="feature-item">
+              <div class="feature-icon" style="background: #E0E7FF; color: var(--navy-primary);">&check;</div>
+              <div>Lưu GitHub PAT đọc private registry trong Jenkins Credential Store với ID thống nhất <code>ghcr-credentials</code>.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon" style="background: #E0E7FF; color: var(--navy-primary);">&check;</div>
+              <div>Đưa token vào <code>docker login</code> qua standard input (<code>--password-stdin</code>) và ghi vào <code>DOCKER_CONFIG</code> tạm thời; tự động xóa sạch thư mục auth sau khi pull.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top: 25px; padding: 18px 26px; background: rgba(0,0,0,0.25); border-radius: 14px; font-size: 20px; text-align: center;">
+        <strong>Cam kết kiểm toán:</strong> Không có bất kỳ token, password hay secret nào xuất hiện trong git commit, console output hay ảnh chụp màn hình minh chứng.
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Secret Management</div>
+      <div class="slide-number">24</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 25: SECTION BREAK - THỰC NGHIỆM ==================== -->
+  <div class="slide theme-blue" data-slide="25">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <div class="slide-subtitle" style="color: rgba(255,255,255,0.7); font-size: 26px; font-weight: 700;">PHẦN 04</div>
+        <h2 class="slide-title" style="font-size: 68px; margin-top: 10px;">Thực Nghiệm, Kết Quả & Đánh Giá</h2>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Nhóm 06</div>
+      </div>
+    </div>
+    <div class="slide-content" style="justify-content: center;">
+      <div class="pill-list" style="max-width: 1200px; margin: 0 auto; width: 100%;">
+        <div class="pill-item white-pill">
+          <span class="badge-num">01</span>
+          <span><strong>GitHub Actions:</strong> Bằng chứng 10 checks xanh hoàn toàn trên nhánh <code>next</code>.</span>
+        </div>
+        <div class="pill-item white-pill">
+          <span class="badge-num">02</span>
+          <span><strong>Jenkins Image Mode:</strong> Build #9 pass toàn bộ từ Pull GHCR đến Cypress và Allure.</span>
+        </div>
+        <div class="pill-item white-pill">
+          <span class="badge-num">03</span>
+          <span><strong>Allure Dashboard:</strong> Trực quan hóa kết quả kiểm thử, thời lượng thực thi và test trend.</span>
+        </div>
+        <div class="pill-item white-pill">
+          <span class="badge-num">04</span>
+          <span><strong>Hands-on Exercises:</strong> Bộ 3 bài tập thực hành thiết kế riêng cho sinh viên trên lớp.</span>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Empirical Evaluation</div>
+      <div class="slide-number">25</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 26: KẾT QUẢ GITHUB ACTIONS ==================== -->
+  <div class="slide" data-slide="26">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Kết quả Thực nghiệm: GitHub Actions 10 Checks Pass</h2>
+        <div class="slide-subtitle">Minh chứng thực nghiệm tại merge commit <code>4f9a9405...</code> trên nhánh <code>next</code></div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge" style="background: #ECFDF5; color: #059669; border-color: #A7F3D0;">10 Checks Passed</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="image-preview">
+          <img src="Software-Testing-CICD-Test-Harness/docs/weekly-docs/Week6/PersonD/screenshots/01-github-actions-next-all-checks-passed.png" alt="10 checks passed on GitHub Actions">
+        </div>
+        <div class="card">
+          <h3 style="font-size: 26px; color: var(--navy-dark); margin-bottom: 18px;">Các mốc kiểm tra thành công</h3>
+          <ul class="feature-list" style="gap: 16px; font-size: 18px;">
+            <li class="feature-item"><div class="feature-icon">&check;</div><div><strong>Checkout & Runtime:</strong> Thiết lập chính xác Node.js 14.21.3.</div></li>
+            <li class="feature-item"><div class="feature-icon">&check;</div><div><strong>Code Quality:</strong> Lint ESLint không có cảnh báo vi phạm.</div></li>
+            <li class="feature-item"><div class="feature-icon">&check;</div><div><strong>Unit & API Tests:</strong> Mocha, Jest và Newman đều hoàn thành tốt.</div></li>
+            <li class="feature-item"><div class="feature-icon">&check;</div><div><strong>Docker Containerization:</strong> Build image và smoke test <code>/api/tags</code> thành công.</div></li>
+            <li class="feature-item"><div class="feature-icon">&check;</div><div><strong>GHCR Registry Push:</strong> Image được đẩy lên GHCR với tag full Git SHA.</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; GitHub Actions Empirical Results</div>
+      <div class="slide-number">26</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 27: KẾT QUẢ JENKINS BUILD 9 ==================== -->
+  <div class="slide" data-slide="27">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Kết quả Thực nghiệm: Jenkins Build #9 Thành Công</h2>
+        <div class="slide-subtitle">Quy trình Image Mode hoàn chỉnh: Pull GHCR, Smoke Test, Cypress và Lưu trữ Artifacts</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge" style="background: #ECFDF5; color: #059669; border-color: #A7F3D0;">Build #9 Passed</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="image-preview">
+          <img src="Software-Testing-CICD-Test-Harness/docs/weekly-docs/Week6/PersonD/screenshots/02-jenkins-cypress-stage-view-success.jpeg" alt="Jenkins Stage View Success">
+        </div>
+        <div class="card">
+          <h3 style="font-size: 26px; color: var(--navy-dark); margin-bottom: 18px;">Stage View & Test Trend Đạt Chuẩn</h3>
+          <ul class="feature-list" style="gap: 16px; font-size: 18px;">
+            <li class="feature-item"><div class="feature-icon">&check;</div><div><strong>Stage View Xanh 100%:</strong> Validate input &rarr; Docker info &rarr; Pull &rarr; Run &rarr; Smoke &rarr; Cypress.</div></li>
+            <li class="feature-item"><div class="feature-icon">&check;</div><div><strong>Test Result Trend:</strong> Ghi nhận 6 bài test đạt (1 Container Smoke Test + 5 Cypress UI Tests).</div></li>
+            <li class="feature-item"><div class="feature-icon">&check;</div><div><strong>Artifacts Đầy Đủ:</strong> Lưu trữ JUnit XML, Allure raw data, video MP4, log server và tệp chẩn đoán JSON.</div></li>
+            <li class="feature-item"><div class="feature-icon">&check;</div><div><strong>Truy vết Hoàn hảo:</strong> Image tag trùng khớp 100% với commit SHA từ GitHub Actions.</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Jenkins Build #9 Results</div>
+      <div class="slide-number">27</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 28: ALLURE REPORT DASHBOARD ==================== -->
+  <div class="slide" data-slide="28">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Báo cáo Trực quan Hóa: Allure Report Dashboard</h2>
+        <div class="slide-subtitle">Tổng hợp kết quả kiểm thử giao diện từ Cypress và các bộ test API</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Allure HTML</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="image-preview">
+          <img src="Software-Testing-CICD-Test-Harness/docs/weekly-docs/Week6/PersonD/screenshots/03-allure-report-2-tests-passed.jpeg" alt="Allure Report Dashboard">
+        </div>
+        <div class="card">
+          <h3 style="font-size: 26px; color: var(--navy-dark); margin-bottom: 18px;">Lợi ích của Báo cáo Allure</h3>
+          <ul class="feature-list" style="gap: 16px; font-size: 18px;">
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div><strong>Phân loại theo Test Suite & Behaviors:</strong> Cho phép đội ngũ QA/Dev duyệt lỗi theo từng chức năng nghiệp vụ cụ thể.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div><strong>Đính kèm Bằng chứng Trực quan:</strong> Gắn trực tiếp ảnh chụp màn hình khi fail và log chi tiết vào từng test step.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon">&bull;</div>
+              <div><strong>Theo dõi Xu hướng (History & Retries):</strong> Ghi nhận tỷ lệ vượt qua bài test qua các lần build liên tiếp.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Allure Dashboard</div>
+      <div class="slide-number">28</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 29: HANDS-ON EXERCISES ==================== -->
+  <div class="slide" data-slide="29">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Đóng góp Sư phạm: Bộ 3 Bài tập Hands-on Cho Lớp</h2>
+        <div class="slide-subtitle">Tài liệu thực hành chi tiết tại <code>docs/hands-on-exercises/</code> giúp sinh viên tiếp cận bài bản</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Educational Value</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card">
+          <div style="font-size: 32px; font-weight: 800; color: var(--navy-primary); margin-bottom: 12px;">Bài 01</div>
+          <h3 style="font-size: 22px; color: var(--navy-dark); margin-bottom: 12px;">Jest Unit Test & Coverage</h3>
+          <p style="font-size: 17px; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;">Hướng dẫn sinh viên viết test case cho <code>lib.js</code>, giải quyết các edge case về số nguyên và đạt ngưỡng Coverage &ge; 80%.</p>
+          <div style="font-size: 15px; background: var(--navy-light); color: var(--navy-primary); padding: 8px 12px; border-radius: 8px; font-weight: 600;">File: exercise-1-jest-unit-test.md</div>
+        </div>
+
+        <div class="card">
+          <div style="font-size: 32px; font-weight: 800; color: var(--navy-primary); margin-bottom: 12px;">Bài 02</div>
+          <h3 style="font-size: 22px; color: var(--navy-dark); margin-bottom: 12px;">SuperTest API Testing</h3>
+          <p style="font-size: 17px; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;">Thực hành khởi tạo ứng dụng Express, kiểm thử endpoint đăng nhập, lưu token JWT và gọi các API yêu cầu xác thực.</p>
+          <div style="font-size: 15px; background: var(--navy-light); color: var(--navy-primary); padding: 8px 12px; border-radius: 8px; font-weight: 600;">File: exercise-2-supertest-api.md</div>
+        </div>
+
+        <div class="card">
+          <div style="font-size: 32px; font-weight: 800; color: var(--navy-primary); margin-bottom: 12px;">Bài 03</div>
+          <h3 style="font-size: 22px; color: var(--navy-dark); margin-bottom: 12px;">CI/CD Quality Gate</h3>
+          <p style="font-size: 17px; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;">Xây dựng workflow YAML trên GitHub Actions: tích hợp npm audit gate, kiểm soát branch protection và xuất artifact.</p>
+          <div style="font-size: 15px; background: var(--navy-light); color: var(--navy-primary); padding: 8px 12px; border-radius: 8px; font-weight: 600;">File: exercise-3-cicd-quality-gate.md</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Hands-on Exercises</div>
+      <div class="slide-number">29</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 30: ĐÁNH GIÁ & BÀI HỌC ==================== -->
+  <div class="slide theme-blue" data-slide="30">
+    <div class="slide-header">
+      <div class="slide-title-area">
+        <h2 class="slide-title">Đánh giá Giải pháp & Bài học Kinh nghiệm</h2>
+        <div class="slide-subtitle" style="color: rgba(255,255,255,0.8);">Những kết luận cốt lõi sau quá trình hiện thực hệ thống kiểm thử thực tế</div>
+      </div>
+      <div class="slide-header-badges">
+        <div class="slide-header-badge">Key Takeaways</div>
+      </div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card white-card-on-blue">
+          <h3 style="font-size: 24px; color: var(--navy-dark); margin-bottom: 15px;">Thành công Kỹ thuật Lớn nhất</h3>
+          <ul class="feature-list" style="gap: 15px; font-size: 18px; color: #374151;">
+            <li class="feature-item">
+              <div class="feature-icon" style="background: #E0E7FF; color: var(--navy-primary);">&check;</div>
+              <div><strong>Khả năng Truy vết (Traceability):</strong> Mọi bản build, báo cáo và video đều gắn với full 40-character Git SHA duy nhất.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon" style="background: #E0E7FF; color: var(--navy-primary);">&check;</div>
+              <div><strong>Test Harness Đúng Nghĩa:</strong> Tự động hóa toàn bộ vòng đời khởi tạo, probe, chạy test và dọn sạch môi trường Docker.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon" style="background: #E0E7FF; color: var(--navy-primary);">&check;</div>
+              <div><strong>Handoff Contract Rõ Ràng:</strong> Giúp các thành viên trong nhóm phát triển độc lập mà không bị xung đột tích hợp.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card white-card-on-blue">
+          <h3 style="font-size: 24px; color: var(--navy-dark); margin-bottom: 15px;">Đánh đổi & Hướng Phát triển</h3>
+          <ul class="feature-list" style="gap: 15px; font-size: 18px; color: #374151;">
+            <li class="feature-item">
+              <div class="feature-icon" style="background: #FEF3C7; color: #B45309;">&bull;</div>
+              <div><strong>Đánh đổi:</strong> Chạy Cypress trong Jenkins image giúp gom gọn công cụ nhưng làm dung lượng Docker image khá nặng.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon" style="background: #FEF3C7; color: #B45309;">&bull;</div>
+              <div><strong>Bảo mật Socket:</strong> Gắn Docker socket vào Jenkins thuận tiện cho lab nhưng cần tách biệt agent cô lập trên production.</div>
+            </li>
+            <li class="feature-item">
+              <div class="feature-icon" style="background: #FEF3C7; color: #B45309;">&bull;</div>
+              <div><strong>Tương lai:</strong> Nâng cấp Node.js phiên bản mới, commit <code>package-lock.json</code> và mở rộng E2E test cho luồng đã xác thực.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Nhóm 06 &bull; Lessons Learned</div>
+      <div class="slide-number">30</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 31: THANK YOU ==================== -->
+  <div class="slide" data-slide="31" style="background: #FAF8F5; justify-content: center; align-items: center; padding: 70px;">
+    <div style="width: 100%; max-width: 1300px; background: #FFFFFF; border: 3px solid #1E293B; border-radius: 28px; box-shadow: 12px 16px 0px #1E293B; overflow: hidden; display: flex; flex-direction: column;">
+      <!-- Window Title Bar -->
+      <div style="background: #F1F5F9; border-bottom: 3px solid #1E293B; padding: 18px 28px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; gap: 12px;">
+          <div style="width: 18px; height: 18px; border-radius: 50%; background: #EF4444; border: 2px solid #1E293B;"></div>
+          <div style="width: 18px; height: 18px; border-radius: 50%; background: #F59E0B; border: 2px solid #1E293B;"></div>
+          <div style="width: 18px; height: 18px; border-radius: 50%; background: #10B981; border: 2px solid #1E293B;"></div>
+        </div>
+        <div style="font-family: monospace; font-size: 18px; font-weight: 700; color: #475569;">seminar-presentation.sh — Nhóm 06</div>
+        <div style="font-size: 20px; font-weight: 800; color: #1E293B;">&times;</div>
+      </div>
+
+      <!-- Window Content -->
+      <div style="padding: 70px 50px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <h1 style="font-family: 'Outfit', serif; font-size: 88px; font-weight: 900; color: #111827; margin-bottom: 25px; letter-spacing: -0.03em;">Thank you very much!</h1>
+        <p style="font-size: 28px; color: #4B5565; margin-bottom: 40px; max-width: 850px; line-height: 1.5;">
+          Cảm ơn Thầy Cô và các bạn đã lắng nghe bài báo cáo chuyên đề của Nhóm 06!
+        </p>
+
+        <div style="display: flex; gap: 20px; margin-bottom: 45px;">
+          <div style="background: #F8FAFC; border: 2px solid #CBD5E1; border-radius: 9999px; padding: 12px 28px; font-size: 20px; font-weight: 700; color: #1E293B;">
+            Repository SUT: github.com/thu2005/realworld
+          </div>
+          <div style="background: #F8FAFC; border: 2px solid #CBD5E1; border-radius: 9999px; padding: 12px 28px; font-size: 20px; font-weight: 700; color: #1E293B;">
+            Docs: Software-Testing-CICD-Test-Harness
+          </div>
+        </div>
+
+        <div style="background: #FCA5A5; border: 2px solid #1E293B; border-radius: 9999px; padding: 14px 60px; font-size: 24px; font-weight: 800; color: #1E293B; box-shadow: 4px 6px 0px #1E293B;">
+          Nhóm 06 &bull; Sẵn sàng cho phần Hỏi & Đáp (Q&A)
+        </div>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 30px; right: 60px; font-size: 20px; font-weight: 700; color: var(--navy-primary);">
+      31
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation Controls Overlay -->
+<div id="nav-controls">
+  <button class="nav-btn" id="prev-btn" title="Previous Slide (Left Arrow / PageUp)">&larr;</button>
+  <span id="slide-indicator">1 / 31</span>
+  <button class="nav-btn" id="next-btn" title="Next Slide (Right Arrow / Space / PageDown)">&rarr;</button>
+  <button class="nav-btn" id="fullscreen-btn" title="Toggle Fullscreen (F)">⛶</button>
+  <button class="nav-btn" id="print-btn" title="Print to PDF (Ctrl+P)">🖨️ In PDF</button>
+</div>
+
+<script>
+  let currentSlide = 1;
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  const indicator = document.getElementById('slide-indicator');
+
+  function updateSlide(index) {
+    if (index < 1) index = 1;
+    if (index > totalSlides) index = totalSlides;
+    currentSlide = index;
+
+    slides.forEach((slide, i) => {
+      if (i + 1 === currentSlide) {
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
+    });
+
+    indicator.textContent = `${currentSlide} / ${totalSlides}`;
+  }
+
+  // Keyboard Navigation
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+      e.preventDefault();
+      updateSlide(currentSlide + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault();
+      updateSlide(currentSlide - 1);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      updateSlide(1);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      updateSlide(totalSlides);
+    } else if (e.key === 'f' || e.key === 'F') {
+      e.preventDefault();
+      toggleFullscreen();
+    }
+  });
+
+  document.getElementById('prev-btn').addEventListener('click', () => updateSlide(currentSlide - 1));
+  document.getElementById('next-btn').addEventListener('click', () => updateSlide(currentSlide + 1));
+  document.getElementById('fullscreen-btn').addEventListener('click', toggleFullscreen);
+  document.getElementById('print-btn').addEventListener('click', () => window.print());
+
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  }
+
+  // Auto-scale viewport to 16:9 ratio
+  function resizeSlides() {
+    const container = document.getElementById('deck-container');
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const targetWidth = 1920;
+    const targetHeight = 1080;
+
+    const scale = Math.min(windowWidth / targetWidth, windowHeight / targetHeight);
+    slides.forEach(slide => {
+      slide.style.transform = `scale(${scale})`;
+      slide.style.transformOrigin = 'center center';
+    });
+  }
+
+  window.addEventListener('resize', resizeSlides);
+  resizeSlides();
+</script>
+
+</body>
+</html>
