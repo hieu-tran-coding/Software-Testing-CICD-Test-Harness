@@ -281,7 +281,7 @@ flowchart LR
 ### KIẾN TRÚC HỆ THỐNG
 ## Mô Hình Phối Hợp Hybrid: GitHub Actions & Jenkins
 
-![w:1080 center](Software-Testing-CICD-Test-Harness/docs/final-report/images/system-architecture.svg)
+![w:1080 center](../final-report/images/system-architecture.svg)
 
 * **Tầng 1 (GitHub Actions CI):** Kiểm tra tĩnh, Unit/API test, CodeQL SAST và đóng gói Docker image lên GHCR.
 * **Tầng 2 (Jenkins Test Harness):** Kéo image từ GHCR, chạy isolated network, smoke test và Cypress UI.
@@ -313,7 +313,7 @@ flowchart LR
 ### PHÂN HỆ ĐÁM MÂY
 ## GitHub Actions Pipeline: Đồ Thị Thực Thi 11 Jobs
 
-![w:1080 center](Software-Testing-CICD-Test-Harness/docs/final-report/images/github-actions-workflow.svg)
+![w:1080 center](../final-report/images/github-actions-workflow.svg)
 
 * **Chuỗi thực thi liên hoàn:** `Checkout` → `Setup Node` → `Install` → `Lint` → `Unit-Test` → `API-Test` → `Security-Scan` → `Docker-Build` → `Docker-Push` → `Trigger-Jenkins` → `Allure-Report`.
 
@@ -344,7 +344,7 @@ flowchart LR
 ### HẠ TẦNG TỰ CHỦ
 ## Jenkins Test Harness: Sơ Đồ Luồng Hai Chế Độ Vận Hành
 
-![w:1080 center](Software-Testing-CICD-Test-Harness/docs/final-report/images/jenkins-pipeline-workflow.svg)
+![w:1080 center](../final-report/images/jenkins-pipeline-workflow.svg)
 
 * **Nhánh Nguồn (Source Mode):** Kiểm tra trực tiếp mã thô từ Git repository làm chuẩn đối chứng (Baseline).
 * **Nhánh Ảnh (Image Mode):** Kiểm chứng artifact container đóng gói từ GHCR trong mạng Docker cô lập.
