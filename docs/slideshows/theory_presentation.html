@@ -28,7 +28,7 @@
       background: #ffffff;
       display: flex;
       flex-direction: column;
-      padding: 48px 64px;
+      padding: 38px 64px 30px 64px;
       box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
       border-radius: 8px;
       position: relative;
@@ -39,7 +39,7 @@
     }
     .slide-footer {
       position: absolute;
-      bottom: 24px;
+      bottom: 18px;
       left: 64px;
       right: 64px;
       display: flex;
@@ -63,20 +63,20 @@
       width: 100%;
       border-collapse: collapse;
       background: #f8fafc;
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
     }
     .table-custom th {
       background: #0f172a;
       color: #ffffff;
-      padding: 12px 20px;
+      padding: 11px 18px;
       text-align: left;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
     }
     .table-custom td {
-      padding: 12px 20px;
-      font-size: 15px;
+      padding: 11px 18px;
+      font-size: 14px;
       color: #334155;
       border-bottom: 1px solid #e2e8f0;
       line-height: 1.5;
@@ -91,11 +91,67 @@
       font-size: 14px;
       font-weight: 600;
     }
+    .diagram-frame {
+      width: 100%;
+      flex-grow: 1;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .diagram-frame img {
+      max-width: 100%;
+      max-height: 500px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+    .btn-video {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ef4444;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .btn-video:hover {
+      background: #dc2626;
+    }
+    .qr-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 2px 4px rgb(0 0 0 / 0.04);
+    }
+    .qr-img {
+      width: 96px;
+      height: 96px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      padding: 4px;
+    }
   </style>
 </head>
 <body>
 
-  <!-- SLIDE 1: Title -->
+  <!-- SLIDE 01: Title -->
   <div class="slide-container" id="slide1" style="background:#090d16; justify-content:center; align-items:flex-start;">
     <p contenteditable="true" style="font-size:18px; font-weight:700; color:#38bdf8; text-transform:uppercase; letter-spacing:0.12em; margin:0 0 16px 0;">
       Seminar Kiểm thử Phần mềm • Đại học Khoa học Tự nhiên, ĐHQG-HCM
@@ -109,7 +165,7 @@
     <div style="width:100%; border-top:1px solid #1e293b; padding-top:24px; display:flex; justify-content:space-between; align-items:flex-start;">
       <div>
         <p style="font-size:16px; color:#f8fafc; margin:0 0 12px 0; font-weight:600;">Nhóm 01 • Lớp 23KTPM3</p>
-        <ul style="font-size:14px; color:#94a3b8; margin:0; line-height:1.6; list-style:none; padding:0; display:grid; grid-template-columns: 1fr 1fr; gap:x-8px;">
+        <ul style="font-size:14px; color:#94a3b8; margin:0; line-height:1.6; list-style:none; padding:0; display:grid; grid-template-columns: 1fr 1fr; gap:8px 32px;">
           <li><b>Trần Trung Hiếu:</b> Điều phối, tài liệu</li>
           <li><b>Dương Trọng Hòa:</b> GitHub Actions, CodeQL, Docker</li>
           <li><b>Nguyễn Lê Hữu Điền:</b> Unit/API test, Coverage</li>
@@ -121,27 +177,31 @@
         <p style="font-size:14px; color:#94a3b8; margin:0;">Tháng 10 năm 2026</p>
       </div>
     </div>
+    <div class="slide-footer" style="color:#64748b;">
+      <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
+      <span>01 / 20</span>
+    </div>
   </div>
 
-  <!-- SLIDE 2: Tổng quan CI/CD -->
+  <!-- SLIDE 02: Ba Mức Độ Tự Động Hóa -->
   <div class="slide-container" id="slide2">
-    <div style="margin:0 0 24px 0;">
+    <div style="margin:0 0 20px 0;">
       <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 6px 0;">Nền Tảng Tự Động Hóa</p>
       <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">Ba Mức Độ Tự Động Hóa Trong Phát Triển</h2>
     </div>
-    <div style="flex-grow:1; display:flex; gap:24px; align-items:stretch; margin-top: 16px;">
+    <div style="flex-grow:1; display:flex; gap:24px; align-items:stretch; margin-top: 12px;">
       <div style="flex:1; background:#f8fafc; border-top:6px solid #0284c7; padding:24px; border-radius:8px; box-shadow:0 4px 6px -1px rgb(0 0 0 / 0.05);">
         <h3 style="font-size:22px; margin:0 0 16px 0;">Continuous Integration (CI)</h3>
-        <ul style="list-style-position: inside; color:#475569; font-size:16px; line-height:1.6; display:flex; flex-direction:column; gap:8px;">
+        <ul style="list-style-position: inside; color:#475569; font-size:15px; line-height:1.6; display:flex; flex-direction:column; gap:8px;">
           <li>Tích hợp thay đổi vào nhánh dùng chung thường xuyên.</li>
           <li>Tự động Build và Test (Lint, Unit, API) ngay lập tức.</li>
-          <li>Phát hiện sớm lỗi biên dịch và conflict.</li>
+          <li>Phát hiện sớm lỗi biên dịch và xung đột.</li>
           <li><b>Đề tài áp dụng:</b> GitHub Actions chặn mã lỗi gộp vào nhánh chính bằng Quality Gates.</li>
         </ul>
       </div>
       <div style="flex:1; background:#f8fafc; border-top:6px solid #38bdf8; padding:24px; border-radius:8px; box-shadow:0 4px 6px -1px rgb(0 0 0 / 0.05);">
         <h3 style="font-size:22px; margin:0 0 16px 0;">Continuous Delivery (CD)</h3>
-        <ul style="list-style-position: inside; color:#475569; font-size:16px; line-height:1.6; display:flex; flex-direction:column; gap:8px;">
+        <ul style="list-style-position: inside; color:#475569; font-size:15px; line-height:1.6; display:flex; flex-direction:column; gap:8px;">
           <li>Duy trì phần mềm ở trạng thái luôn sẵn sàng phát hành.</li>
           <li>Tự động đóng gói Artifact (Docker Image).</li>
           <li><b>Cần phê duyệt thủ công</b> mới lên production.</li>
@@ -150,7 +210,7 @@
       </div>
       <div style="flex:1; background:#f8fafc; border-top:6px solid #0f172a; padding:24px; border-radius:8px; box-shadow:0 4px 6px -1px rgb(0 0 0 / 0.05);">
         <h3 style="font-size:22px; margin:0 0 16px 0;">Continuous Deployment</h3>
-        <ul style="list-style-position: inside; color:#475569; font-size:16px; line-height:1.6; display:flex; flex-direction:column; gap:8px;">
+        <ul style="list-style-position: inside; color:#475569; font-size:15px; line-height:1.6; display:flex; flex-direction:column; gap:8px;">
           <li>Tự động hóa hoàn toàn đến tận môi trường Production.</li>
           <li>Không cần phê duyệt thủ công.</li>
           <li>Yêu cầu bộ test cực kỳ đáng tin cậy.</li>
@@ -160,13 +220,13 @@
     </div>
     <div class="slide-footer">
       <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
-      <span>02</span>
+      <span>02 / 20</span>
     </div>
   </div>
 
-  <!-- SLIDE MỚI: Phân Tích CI/CD & Pipeline -->
-  <div class="slide-container" id="slide_theory_cicd">
-    <div style="margin:0 0 24px 0;">
+  <!-- SLIDE 03: Pipeline & Quality Gates & Fail-Fast -->
+  <div class="slide-container" id="slide3">
+    <div style="margin:0 0 20px 0;">
       <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 6px 0;">Phân Tích Lý Thuyết CI/CD</p>
       <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">Pipeline, Quality Gates & Nguyên Tắc Fail-Fast</h2>
     </div>
@@ -184,7 +244,7 @@
         </p>
       </div>
     </div>
-    <div style="background:#fffbeb; padding:20px; border-radius:12px; border-left:6px solid #f59e0b; margin-top:24px;">
+    <div style="background:#fffbeb; padding:20px; border-radius:12px; border-left:6px solid #f59e0b; margin-top:20px;">
       <h3 style="font-size:18px; margin-bottom:8px; color:#b45309;"><i class="fa-solid fa-bolt" style="margin-right:8px;"></i>Nguyên tắc Fail-Fast trong thiết kế</h3>
       <p style="font-size:15px; color:#78350f; line-height:1.6; margin:0;">
         Cho phép <b>dừng sớm</b> toàn bộ Pipeline ngay khi một điều kiện bắt buộc thất bại (ví dụ: lỗi cú pháp Lint). Điều này giúp tiết kiệm tài nguyên máy chủ CI, đưa ra phản hồi tức thì cho Developer để sửa lỗi (Fix-forward) thay vì phải đợi hàng chục phút để biết kết quả cuối cùng.
@@ -192,13 +252,13 @@
     </div>
     <div class="slide-footer">
       <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
-      <span>02b</span>
+      <span>03 / 20</span>
     </div>
   </div>
 
-  <!-- SLIDE MỚI: 11 Bước Tiêu Chuẩn -->
-  <div class="slide-container" id="slide_theory_11steps">
-    <div style="margin:0 0 24px 0;">
+  <!-- SLIDE 04: Quy Trình 11 Bước Tiêu Chuẩn -->
+  <div class="slide-container" id="slide4">
+    <div style="margin:0 0 20px 0;">
       <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 6px 0;">Phân Tích Lý Thuyết CI/CD</p>
       <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">Quy Trình 11 Bước Tiêu Chuẩn Của Một Pipeline Phân Phối</h2>
     </div>
@@ -239,17 +299,17 @@
     </div>
     <div class="slide-footer">
       <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
-      <span>02c</span>
+      <span>04 / 20</span>
     </div>
   </div>
 
-  <!-- SLIDE MỚI: Xử lý sự cố -->
-  <div class="slide-container" id="slide_theory_resilience">
-    <div style="margin:0 0 24px 0;">
+  <!-- SLIDE 05: Tính Kháng Lỗi (Resilience) -->
+  <div class="slide-container" id="slide5">
+    <div style="margin:0 0 16px 0;">
       <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 6px 0;">Phân Tích Lý Thuyết CI/CD</p>
-      <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">Tính Kháng Lỗi (Resilience): Kịch Bản Xử Lý Sự Cố</h2>
+      <h2 contenteditable="true" style="font-size:30px; font-weight:700; color:#0f172a; margin:0;">Tính Kháng Lỗi (Resilience): Kịch Bản Xử Lý Sự Cố</h2>
     </div>
-    <p style="font-size:16px; color:#475569; margin-bottom: 20px;">
+    <p style="font-size:15px; color:#475569; margin-bottom: 14px;">
       Pipeline không chỉ để tự động hóa lúc suôn sẻ (Happy Path), mà quan trọng hơn là cơ chế bảo vệ hệ thống khi xảy ra lỗi.
     </p>
     <div style="flex-grow:1; display:flex; flex-direction:column;">
@@ -287,55 +347,55 @@
     </div>
     <div class="slide-footer">
       <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
-      <span>02d</span>
+      <span>05 / 20</span>
     </div>
   </div>
 
-  <!-- SLIDE 3: Test Harness Định nghĩa -->
-  <div class="slide-container" id="slide3">
-    <div style="margin:0 0 24px 0;">
+  <!-- SLIDE 06: Test Harness Định Nghĩa -->
+  <div class="slide-container" id="slide6">
+    <div style="margin:0 0 20px 0;">
       <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 6px 0;">Kiểm Thử Chuyên Sâu</p>
       <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">Test Harness (Theo ISO/IEC/IEEE 24765)</h2>
     </div>
-    <div style="background:#fffbeb; border-left:6px solid #f59e0b; padding:24px; font-size:20px; font-style:italic; margin-bottom: 24px; border-radius:0 8px 8px 0;">
+    <div style="background:#fffbeb; border-left:6px solid #f59e0b; padding:20px; font-size:19px; font-style:italic; margin-bottom: 20px; border-radius:0 8px 8px 0;">
       "Tập hợp các công cụ, thư viện, dữ liệu kiểm thử và cấu hình được xây dựng để tự động hóa việc chuẩn bị, điều khiển, quan sát và dọn dẹp quá trình thực thi kiểm thử một cách nhất quán."
     </div>
-    <h3 style="font-size:24px; margin-bottom:16px;">4 Trách Nhiệm Cốt Lõi Trong Đề Tài:</h3>
-    <div style="display:flex; gap:24px;">
-      <div style="flex:1; background:#f8fafc; padding:24px; border-radius:12px; text-align:center;">
-        <i class="fa-solid fa-gear" style="font-size:32px; color:#0284c7; margin-bottom:16px;"></i>
-        <h4 style="font-size:18px; margin:0 0 8px 0;">1. Thiết lập</h4>
-        <p style="font-size:14px; color:#475569;">Cố định Node.js 14.21.3, cài dependency (không có lockfile), khởi tạo network Docker tạm.</p>
+    <h3 style="font-size:22px; margin-bottom:14px;">4 Trách Nhiệm Cốt Lõi Trong Đề Tài:</h3>
+    <div style="display:flex; gap:20px;">
+      <div style="flex:1; background:#f8fafc; padding:20px; border-radius:12px; text-align:center;">
+        <i class="fa-solid fa-gear" style="font-size:28px; color:#0284c7; margin-bottom:12px;"></i>
+        <h4 style="font-size:17px; margin:0 0 6px 0;">1. Thiết lập</h4>
+        <p style="font-size:13px; color:#475569;">Cố định Node.js 14.21.3, cài dependency (không có lockfile), khởi tạo network Docker tạm.</p>
       </div>
-      <div style="flex:1; background:#f8fafc; padding:24px; border-radius:12px; text-align:center;">
-        <i class="fa-solid fa-play" style="font-size:32px; color:#0284c7; margin-bottom:16px;"></i>
-        <h4 style="font-size:18px; margin:0 0 8px 0;">2. Điều khiển</h4>
-        <p style="font-size:14px; color:#475569;">Khởi động SUT RealWorld, chờ API `/api/tags` phản hồi HTTP 200, kích hoạt Cypress runner.</p>
+      <div style="flex:1; background:#f8fafc; padding:20px; border-radius:12px; text-align:center;">
+        <i class="fa-solid fa-play" style="font-size:28px; color:#0284c7; margin-bottom:12px;"></i>
+        <h4 style="font-size:17px; margin:0 0 6px 0;">2. Điều khiển</h4>
+        <p style="font-size:13px; color:#475569;">Khởi động SUT RealWorld, chờ API `/api/tags` phản hồi HTTP 200, kích hoạt Cypress runner.</p>
       </div>
-      <div style="flex:1; background:#f8fafc; padding:24px; border-radius:12px; text-align:center;">
-        <i class="fa-solid fa-eye" style="font-size:32px; color:#0284c7; margin-bottom:16px;"></i>
-        <h4 style="font-size:18px; margin:0 0 8px 0;">3. Quan sát</h4>
-        <p style="font-size:14px; color:#475569;">Ghi exit code, thu thập log container, chụp ảnh/quay video màn hình từ Cypress headless.</p>
+      <div style="flex:1; background:#f8fafc; padding:20px; border-radius:12px; text-align:center;">
+        <i class="fa-solid fa-eye" style="font-size:28px; color:#0284c7; margin-bottom:12px;"></i>
+        <h4 style="font-size:17px; margin:0 0 6px 0;">3. Quan sát</h4>
+        <p style="font-size:13px; color:#475569;">Ghi exit code, thu thập log container, chụp ảnh/quay video màn hình từ Cypress headless.</p>
       </div>
-      <div style="flex:1; background:#f8fafc; padding:24px; border-radius:12px; text-align:center;">
-        <i class="fa-solid fa-broom" style="font-size:32px; color:#0284c7; margin-bottom:16px;"></i>
-        <h4 style="font-size:18px; margin:0 0 8px 0;">4. Dọn dẹp</h4>
-        <p style="font-size:14px; color:#475569;">Xuất báo cáo JUnit/Allure, dọn tài nguyên Docker chính xác theo build label (Zero Leak).</p>
+      <div style="flex:1; background:#f8fafc; padding:20px; border-radius:12px; text-align:center;">
+        <i class="fa-solid fa-broom" style="font-size:28px; color:#0284c7; margin-bottom:12px;"></i>
+        <h4 style="font-size:17px; margin:0 0 6px 0;">4. Dọn dẹp</h4>
+        <p style="font-size:13px; color:#475569;">Xuất báo cáo JUnit/Allure, dọn tài nguyên Docker chính xác theo build label (Zero Leak).</p>
       </div>
     </div>
     <div class="slide-footer">
       <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
-      <span>03</span>
+      <span>06 / 20</span>
     </div>
   </div>
 
-  <!-- SLIDE MỚI: Phân biệt thuật ngữ -->
-  <div class="slide-container" id="slide_theory_terminology">
-    <div style="margin:0 0 24px 0;">
+  <!-- SLIDE 07: Phân Biệt Thuật Ngữ Kiểm Thử -->
+  <div class="slide-container" id="slide7">
+    <div style="margin:0 0 16px 0;">
       <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 6px 0;">Nền Tảng Lý Thuyết</p>
-      <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">Phân Biệt Các Thuật Ngữ Kiểm Thử Chuyên Sâu</h2>
+      <h2 contenteditable="true" style="font-size:30px; font-weight:700; color:#0f172a; margin:0;">Phân Biệt Các Thuật Ngữ Kiểm Thử Chuyên Sâu</h2>
     </div>
-    <p style="font-size:16px; color:#475569; margin-bottom: 20px;">
+    <p style="font-size:15px; color:#475569; margin-bottom: 16px;">
       Tránh nhầm lẫn giữa công cụ viết mã kiểm thử và hệ thống thực thi bao quanh nó.
     </p>
     <div style="flex-grow:1; display:flex; flex-direction:column;">
@@ -373,111 +433,103 @@
     </div>
     <div class="slide-footer">
       <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
-      <span>03b</span>
+      <span>07 / 20</span>
     </div>
   </div>
 
-  <!-- SLIDE MỚI: Tính chất bắt buộc của Test Harness -->
-  <div class="slide-container" id="slide_theory_harness_principles">
-    <div style="margin:0 0 24px 0;">
+  <!-- SLIDE 08: Tính Chất Cốt Lõi Test Harness -->
+  <div class="slide-container" id="slide8">
+    <div style="margin:0 0 16px 0;">
       <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 6px 0;">Phân Tích Lý Thuyết</p>
-      <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">Các Tính Chất Cốt Lõi Của Một Test Harness Kiến Trúc Tốt</h2>
+      <h2 contenteditable="true" style="font-size:30px; font-weight:700; color:#0f172a; margin:0;">Các Tính Chất Cốt Lõi Của Một Test Harness Kiến Trúc Tốt</h2>
     </div>
-    <div style="display:flex; flex-direction:column; gap:20px; flex-grow:1;">
-      
-      <div style="display:flex; gap:20px; align-items:center; background:#f8fafc; padding:20px; border-radius:12px; border-left:6px solid #3b82f6;">
-        <div style="font-size:36px; color:#3b82f6; width:60px; text-align:center;"><i class="fa-solid fa-box-archive"></i></div>
+    <div style="display:flex; flex-direction:column; gap:16px; flex-grow:1;">
+      <div style="display:flex; gap:18px; align-items:center; background:#f8fafc; padding:16px; border-radius:10px; border-left:6px solid #3b82f6;">
+        <div style="font-size:32px; color:#3b82f6; width:50px; text-align:center;"><i class="fa-solid fa-box-archive"></i></div>
         <div>
-          <h3 style="font-size:18px; margin:0 0 6px 0; color:#0f172a;">1. Khả Năng Tái Lập (Reproducibility) & Tính Cô Lập (Isolation)</h3>
-          <p style="font-size:14px; color:#475569; margin:0; line-height:1.5;">
+          <h3 style="font-size:17px; margin:0 0 4px 0; color:#0f172a;">1. Khả Năng Tái Lập (Reproducibility) & Tính Cô Lập (Isolation)</h3>
+          <p style="font-size:13.5px; color:#475569; margin:0; line-height:1.5;">
             Một ca kiểm thử tự động chỉ có giá trị khi nó trả về kết quả giống nhau ở mọi lần chạy trên cùng một bộ mã nguồn. Harness phải cung cấp <b>môi trường cô lập</b> (như Docker Network riêng), không bị nhiễu bởi các tiến trình khác trên Host để loại trừ hiện tượng <i>Flaky Tests</i> (kiểm thử lúc đúng lúc sai).
           </p>
         </div>
       </div>
-
-      <div style="display:flex; gap:20px; align-items:center; background:#f8fafc; padding:20px; border-radius:12px; border-left:6px solid #8b5cf6;">
-        <div style="font-size:36px; color:#8b5cf6; width:60px; text-align:center;"><i class="fa-solid fa-link"></i></div>
+      <div style="display:flex; gap:18px; align-items:center; background:#f8fafc; padding:16px; border-radius:10px; border-left:6px solid #8b5cf6;">
+        <div style="font-size:32px; color:#8b5cf6; width:50px; text-align:center;"><i class="fa-solid fa-link"></i></div>
         <div>
-          <h3 style="font-size:18px; margin:0 0 6px 0; color:#0f172a;">2. Khả Năng Truy Vết (Traceability)</h3>
-          <p style="font-size:14px; color:#475569; margin:0; line-height:1.5;">
+          <h3 style="font-size:17px; margin:0 0 4px 0; color:#0f172a;">2. Khả Năng Truy Vết (Traceability)</h3>
+          <p style="font-size:13.5px; color:#475569; margin:0; line-height:1.5;">
             Mọi sản phẩm đầu ra (Test Report, Log, Screenshot, Video, Docker Image) phải được liên kết chặt chẽ với nguyên nhân sinh ra nó. Đề tài dùng <b>Full 40-character Git SHA</b> làm khóa truy vết duy nhất, cho phép đối chiếu source revision, image, Jenkins build và report.
           </p>
         </div>
       </div>
-
-      <div style="display:flex; gap:20px; align-items:center; background:#f8fafc; padding:20px; border-radius:12px; border-left:6px solid #10b981;">
-        <div style="font-size:36px; color:#10b981; width:60px; text-align:center;"><i class="fa-solid fa-scale-balanced"></i></div>
+      <div style="display:flex; gap:18px; align-items:center; background:#f8fafc; padding:16px; border-radius:10px; border-left:6px solid #10b981;">
+        <div style="font-size:32px; color:#10b981; width:50px; text-align:center;"><i class="fa-solid fa-scale-balanced"></i></div>
         <div>
-          <h3 style="font-size:18px; margin:0 0 6px 0; color:#0f172a;">3. Tôn Trọng Oracle Kiểm Thử</h3>
-          <p style="font-size:14px; color:#475569; margin:0; line-height:1.5;">
+          <h3 style="font-size:17px; margin:0 0 4px 0; color:#0f172a;">3. Tôn Trọng Oracle Kiểm Thử</h3>
+          <p style="font-size:13.5px; color:#475569; margin:0; line-height:1.5;">
             Harness cung cấp công cụ thu thập chứng cứ, nhưng <b>không thay thế việc lựa chọn đúng Test Oracle</b> (cơ chế quyết định Pass/Fail). Đề tài kết hợp nhiều Oracle: HTTP Status (API), DOM State/URL (Cypress), và Exit Code (Hệ điều hành) để Quality Gate ra quyết định chính xác.
           </p>
         </div>
       </div>
-
     </div>
     <div class="slide-footer">
       <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
-      <span>03c</span>
+      <span>08 / 20</span>
     </div>
   </div>
 
-  <!-- SLIDE MỚI: Shift-Left / Shift-Right -->
-  <div class="slide-container" id="slide_theory_shift_left_right">
-    <div style="margin:0 0 24px 0;">
+  <!-- SLIDE 09: Shift-Left & Shift-Right -->
+  <div class="slide-container" id="slide9">
+    <div style="margin:0 0 16px 0;">
       <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 6px 0;">Chiến Lược Kiểm Thử</p>
-      <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">Xu Hướng Mở Rộng: Shift-Left & Shift-Right</h2>
+      <h2 contenteditable="true" style="font-size:30px; font-weight:700; color:#0f172a; margin:0;">Xu Hướng Mở Rộng: Shift-Left & Shift-Right</h2>
     </div>
-    
-    <div style="display:flex; gap:24px; flex-grow:1; margin-bottom: 20px;">
-      <div style="flex:1; background:#f8fafc; padding:24px; border-radius:12px; border-top:6px solid #3b82f6; display:flex; flex-direction:column; box-shadow:0 2px 4px rgb(0 0 0 / 0.05);">
-        <div style="font-size:24px; color:#3b82f6; margin-bottom:12px;"><i class="fa-solid fa-angles-left"></i> <b>Shift-Left Testing</b></div>
-        <p style="font-size:15px; color:#475569; line-height:1.6; margin-bottom:16px;">
+    <div style="display:flex; gap:24px; flex-grow:1; margin-bottom: 16px;">
+      <div style="flex:1; background:#f8fafc; padding:20px; border-radius:12px; border-top:6px solid #3b82f6; display:flex; flex-direction:column; box-shadow:0 2px 4px rgb(0 0 0 / 0.05);">
+        <div style="font-size:22px; color:#3b82f6; margin-bottom:10px;"><i class="fa-solid fa-angles-left"></i> <b>Shift-Left Testing</b></div>
+        <p style="font-size:14px; color:#475569; line-height:1.6; margin-bottom:12px;">
           Đẩy các bài kiểm thử <b>về giai đoạn sớm nhất có thể</b> trong vòng đời phát triển, ngay trên máy của Developer để tiết kiệm chi phí sửa lỗi.
         </p>
-        <ul style="list-style-position: inside; color:#334155; font-size:14px; line-height:1.6; display:flex; flex-direction:column; gap:8px;">
+        <ul style="list-style-position: inside; color:#334155; font-size:13.5px; line-height:1.6; display:flex; flex-direction:column; gap:6px;">
           <li><b>Git Hooks (husky):</b> Tự động chạy Lint/Unit Test chặn các commit rác ngay lập tức.</li>
           <li><b>PR Pipelines:</b> Pipeline rút gọn chạy siêu tốc (&lt; 10 phút) để feedback tự động qua comment GitHub.</li>
         </ul>
       </div>
-
-      <div style="flex:1; background:#f8fafc; padding:24px; border-radius:12px; border-top:6px solid #8b5cf6; display:flex; flex-direction:column; box-shadow:0 2px 4px rgb(0 0 0 / 0.05);">
-        <div style="font-size:24px; color:#8b5cf6; margin-bottom:12px;"><b>Shift-Right Testing</b> <i class="fa-solid fa-angles-right"></i></div>
-        <p style="font-size:15px; color:#475569; line-height:1.6; margin-bottom:16px;">
+      <div style="flex:1; background:#f8fafc; padding:20px; border-radius:12px; border-top:6px solid #8b5cf6; display:flex; flex-direction:column; box-shadow:0 2px 4px rgb(0 0 0 / 0.05);">
+        <div style="font-size:22px; color:#8b5cf6; margin-bottom:10px;"><b>Shift-Right Testing</b> <i class="fa-solid fa-angles-right"></i></div>
+        <p style="font-size:14px; color:#475569; line-height:1.6; margin-bottom:12px;">
           Thực hiện kiểm thử và giám sát trực tiếp <b>trên môi trường Production</b>, tận dụng dữ liệu và hành vi thật của người dùng.
         </p>
-        <ul style="list-style-position: inside; color:#334155; font-size:14px; line-height:1.6; display:flex; flex-direction:column; gap:8px;">
+        <ul style="list-style-position: inside; color:#334155; font-size:13.5px; line-height:1.6; display:flex; flex-direction:column; gap:6px;">
           <li><b>Canary Deployment:</b> Cập nhật bản mới cho nhóm nhỏ user (5%), nếu ổn định mới mở rộng.</li>
           <li><b>Synthetic Monitoring:</b> Triển khai Bot mô phỏng kịch bản luồng user để đo tính khả dụng 24/7.</li>
         </ul>
       </div>
     </div>
-
-    <div style="background:#fffbeb; padding:16px 20px; border-radius:12px; border-left:6px solid #f59e0b; display:flex; gap:16px; align-items:center;">
-      <i class="fa-solid fa-bug-slash" style="font-size:28px; color:#b45309;"></i>
+    <div style="background:#fffbeb; padding:14px 18px; border-radius:10px; border-left:6px solid #f59e0b; display:flex; gap:16px; align-items:center;">
+      <i class="fa-solid fa-bug-slash" style="font-size:26px; color:#b45309;"></i>
       <div>
-        <h4 style="font-size:16px; color:#92400e; margin:0 0 4px 0;">Chiến lược xử lý "Flaky Tests" (Kiểm thử thiếu ổn định)</h4>
-        <p style="font-size:14px; color:#78350f; margin:0; line-height:1.5;">Test lúc đúng lúc sai gây nghẽn Pipeline. Cách khắc phục: <b>(1)</b> Cấu hình Auto-retry 2-3 lần cho E2E; <b>(2)</b> Cách ly (Quarantine) test hỏng để sửa sau; <b>(3)</b> Xóa bỏ <code>sleep(giây)</code> cứng, thay bằng chờ chủ động (Wait/Polling HTTP Status).</p>
+        <h4 style="font-size:15px; color:#92400e; margin:0 0 2px 0;">Chiến lược xử lý "Flaky Tests" (Kiểm thử thiếu ổn định)</h4>
+        <p style="font-size:13.5px; color:#78350f; margin:0; line-height:1.5;">Test lúc đúng lúc sai gây nghẽn Pipeline. Cách khắc phục: <b>(1)</b> Cấu hình Auto-retry 2-3 lần cho E2E; <b>(2)</b> Cách ly (Quarantine) test hỏng để sửa sau; <b>(3)</b> Xóa bỏ <code>sleep(giây)</code> cứng, thay bằng chờ chủ động (Wait/Polling HTTP Status).</p>
       </div>
     </div>
-
     <div class="slide-footer">
       <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
-      <span>03d</span>
+      <span>09 / 20</span>
     </div>
   </div>
 
-  <!-- SLIDE 4: Đối Tượng SUT & Công Cụ -->
-  <div class="slide-container" id="slide4">
-    <div style="margin:0 0 24px 0;">
+  <!-- SLIDE 10: SUT RealWorld Conduit & Bộ Công Cụ Test -->
+  <div class="slide-container" id="slide10">
+    <div style="margin:0 0 16px 0;">
       <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 6px 0;">Đối Tượng Nghiên Cứu</p>
-      <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">SUT RealWorld Conduit & Bộ Công Cụ Test</h2>
+      <h2 contenteditable="true" style="font-size:30px; font-weight:700; color:#0f172a; margin:0;">SUT RealWorld Conduit & Bộ Công Cụ Test</h2>
     </div>
     <div style="display:flex; gap:24px; flex-grow:1;">
-      <div style="flex:1; background:#f8fafc; border-left:4px solid #0f172a; padding:24px; border-radius:8px;">
-        <h3 style="font-size:20px; margin-bottom:16px;">Hệ Thống SUT (System Under Test)</h3>
-        <p style="font-size:15px; color:#475569; margin-bottom:12px;"><b>RealWorld Conduit:</b> Ứng dụng mạng xã hội dạng blog monolithic.</p>
-        <ul style="font-size:15px; color:#334155; line-height:1.6; margin-left:20px;">
+      <div style="flex:1; background:#f8fafc; border-left:4px solid #0f172a; padding:20px; border-radius:8px;">
+        <h3 style="font-size:19px; margin-bottom:14px;">Hệ Thống SUT (System Under Test)</h3>
+        <p style="font-size:14px; color:#475569; margin-bottom:10px;"><b>RealWorld Conduit:</b> Ứng dụng mạng xã hội dạng blog monolithic.</p>
+        <ul style="font-size:14px; color:#334155; line-height:1.6; margin-left:18px;">
           <li><b>Frontend:</b> Next.js, React</li>
           <li><b>Backend API:</b> Node.js, Express</li>
           <li><b>Database:</b> Sequelize, SQLite (chế độ development)</li>
@@ -519,199 +571,270 @@
     </div>
     <div class="slide-footer">
       <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
-      <span>04</span>
+      <span>10 / 20</span>
     </div>
   </div>
 
-  <!-- SLIDE 5: Test Pyramid -->
-  <div class="slide-container" id="slide5">
-    <div style="margin:0 0 24px 0;">
+  <!-- SLIDE 11: Test Pyramid -->
+  <div class="slide-container" id="slide11">
+    <div style="margin:0 0 16px 0;">
       <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 6px 0;">Chiến Lược Phân Bổ</p>
-      <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">Test Pyramid 55+ Ca Kiểm Thử Của Dự Án</h2>
+      <h2 contenteditable="true" style="font-size:30px; font-weight:700; color:#0f172a; margin:0;">Test Pyramid 55+ Ca Kiểm Thử Của Dự Án</h2>
     </div>
-    <div style="display:flex; align-items:center; gap:48px; flex-grow:1;">
+    <div style="display:flex; align-items:center; gap:40px; flex-grow:1;">
       <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:8px;">
-        <div style="width:35%; background:#f59e0b; color:#fff; padding:16px; text-align:center; font-weight:700; font-size:18px; clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);">
+        <div style="width:40%; background:#f59e0b; color:#fff; padding:14px; text-align:center; font-weight:700; font-size:16px; clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);">
           UI / E2E<br>(5 Test Cases)
         </div>
-        <div style="width:70%; background:#0ea5e9; color:#fff; padding:20px; text-align:center; font-weight:700; font-size:18px; clip-path: polygon(5% 0, 95% 0, 100% 100%, 0 100%);">
+        <div style="width:75%; background:#0ea5e9; color:#fff; padding:18px; text-align:center; font-weight:700; font-size:17px; clip-path: polygon(5% 0, 95% 0, 100% 100%, 0 100%);">
           API / Integration<br>(15 Cases + Newman)
         </div>
-        <div style="width:100%; background:#0f172a; color:#fff; padding:24px; text-align:center; font-weight:700; font-size:18px; clip-path: polygon(2% 0, 98% 0, 100% 100%, 0 100%);">
+        <div style="width:100%; background:#0f172a; color:#fff; padding:22px; text-align:center; font-weight:700; font-size:17px; clip-path: polygon(2% 0, 98% 0, 100% 100%, 0 100%);">
           Unit Testing<br>(31 Jest + 4 Mocha Cases)
         </div>
       </div>
-      <div style="flex:1.2; display:flex; flex-direction:column; gap:16px;">
-        <div style="background:#f8fafc; padding:16px 20px; border-radius:8px; border-left:4px solid #f59e0b;">
-          <h4 style="font-size:16px; margin:0 0 6px 0;">System / UI Tests (Cypress)</h4>
-          <p style="font-size:14px; color:#475569; margin:0;">5 ca trong 2 spec (<code>public-ui</code>, <code>account-validation</code>). Kiểm tra điều hướng trang chủ, form đăng nhập, và validation lỗi 422.</p>
+      <div style="flex:1.2; display:flex; flex-direction:column; gap:12px;">
+        <div style="background:#f8fafc; padding:14px 18px; border-radius:8px; border-left:4px solid #f59e0b;">
+          <h4 style="font-size:15px; margin:0 0 4px 0;">System / UI Tests (Cypress)</h4>
+          <p style="font-size:13.5px; color:#475569; margin:0;">5 ca trong 2 spec (<code>public-ui</code>, <code>account-validation</code>). Kiểm tra điều hướng trang chủ, form đăng nhập, và validation lỗi 422.</p>
         </div>
-        <div style="background:#f8fafc; padding:16px 20px; border-radius:8px; border-left:4px solid #0ea5e9;">
-          <h4 style="font-size:16px; margin:0 0 6px 0;">API Integration Tests (SuperTest)</h4>
-          <p style="font-size:14px; color:#475569; margin:0;">15 ca kiểm tra trực tiếp Endpoint Express. Kiểm tra Auth JWT, bài viết, comment, tag, profile, trả về JSON chính xác và mã lỗi. Kèm Newman chạy Contract Postman.</p>
+        <div style="background:#f8fafc; padding:14px 18px; border-radius:8px; border-left:4px solid #0ea5e9;">
+          <h4 style="font-size:15px; margin:0 0 4px 0;">API Integration Tests (SuperTest)</h4>
+          <p style="font-size:13.5px; color:#475569; margin:0;">15 ca kiểm tra trực tiếp Endpoint Express. Kiểm tra Auth JWT, bài viết, comment, tag, profile, trả về JSON chính xác và mã lỗi. Kèm Newman chạy Contract Postman.</p>
         </div>
-        <div style="background:#f8fafc; padding:16px 20px; border-radius:8px; border-left:4px solid #0f172a;">
-          <h4 style="font-size:16px; margin:0 0 6px 0;">Unit / Component Tests (Jest)</h4>
-          <p style="font-size:14px; color:#475569; margin:0;">31 ca cô lập (16 lib, 6 auth, 9 models). Validate logic băm mật khẩu, IP client, JWT. Đạt Coverage cục bộ (lib.js & auth.js) > 80% Threshold.</p>
+        <div style="background:#f8fafc; padding:14px 18px; border-radius:8px; border-left:4px solid #0f172a;">
+          <h4 style="font-size:15px; margin:0 0 4px 0;">Unit / Component Tests (Jest)</h4>
+          <p style="font-size:13.5px; color:#475569; margin:0;">31 ca cô lập (16 lib, 6 auth, 9 models). Validate logic băm mật khẩu, IP client, JWT. Đạt Coverage cục bộ (lib.js & auth.js) > 80% Threshold.</p>
         </div>
       </div>
     </div>
     <div class="slide-footer">
       <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
-      <span>05</span>
+      <span>11 / 20</span>
     </div>
   </div>
 
-  <!-- SLIDE 6: Kiến Trúc Phối Hợp & CI Contract -->
-  <div class="slide-container" id="slide6">
-    <div style="margin:0 0 24px 0;">
-      <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 6px 0;">Mô Hình Lai (Hybrid)</p>
-      <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">Kiến Trúc GitHub Actions + Jenkins & CI Contract</h2>
+  <!-- SLIDE 12: Sơ Đồ Kiến Trúc Hệ Thống (DEDICATED FULL SLIDE) -->
+  <div class="slide-container" id="slide12">
+    <div style="margin:0 0 12px 0;">
+      <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 4px 0;">Kiến Trúc Hệ Thống</p>
+      <h2 contenteditable="true" style="font-size:28px; font-weight:700; color:#0f172a; margin:0;">Mô Hình Phối Hợp Hybrid: GitHub Actions & Jenkins</h2>
     </div>
     
-    <div style="display:flex; justify-content:space-between; align-items:center; background:#f1f5f9; padding:24px; border-radius:12px; margin-bottom:24px;">
-      <div style="text-align:center; width:30%;">
-        <h4 style="font-size:18px; margin-bottom:8px;">1. GitHub Actions (CI)</h4>
-        <p style="font-size:14px; color:#475569;">11 Jobs + CodeQL SAST. Lint, Unit, API, đóng gói Docker Image.</p>
-      </div>
-      <i class="fa-solid fa-arrow-right" style="font-size:24px; color:#0284c7;"></i>
-      <div style="text-align:center; width:20%;">
-        <h4 style="font-size:18px; margin-bottom:8px;">2. GHCR</h4>
-        <p style="font-size:14px; color:#475569;">Lưu trữ Private Image gắn tag bằng Full Git SHA.</p>
-      </div>
-      <i class="fa-solid fa-arrow-right" style="font-size:24px; color:#0284c7;"></i>
-      <div style="text-align:center; width:30%;">
-        <h4 style="font-size:18px; margin-bottom:8px;">3. Jenkins (Harness)</h4>
-        <p style="font-size:14px; color:#475569;">Custom Image nội bộ, pull SUT image, chạy mạng cô lập, UI test, Allure.</p>
-      </div>
+    <!-- Sơ đồ kiến trúc toàn màn hình rộng rãi -->
+    <div class="diagram-frame">
+      <img src="Software-Testing-CICD-Test-Harness/docs/final-report/images/system-architecture.svg" alt="Hình 3: Kiến trúc CI/CD và Test Harness của đề tài" />
     </div>
 
-    <h3 style="font-size:20px; margin-bottom:12px;">Bản Hợp Đồng Tích Hợp (CI Contract) Bất Biến</h3>
-    <table class="table-custom">
+    <div style="background:#f8fafc; padding:10px 16px; border-radius:8px; border-left:4px solid #0284c7; font-size:13px; color:#475569; display:flex; justify-content:space-between; align-items:center;">
+      <span><b>Luồng Tích Hợp:</b> Developer Push Commit &rarr; GitHub Actions (CI & Test) &rarr; GHCR Registry &rarr; Jenkins Test Harness (Isolated Smoke & Cypress UI) &rarr; Allure Reports.</span>
+      <span class="badge" style="background:#e0f2fe; color:#0369a1;">Hình 3 (Báo Cáo)</span>
+    </div>
+
+    <div class="slide-footer">
+      <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
+      <span>12 / 20</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 13: Bản Hợp Đồng CI Contract (DEDICATED SLIDE) -->
+  <div class="slide-container" id="slide13">
+    <div style="margin:0 0 20px 0;">
+      <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 6px 0;">Giao Thức Bàn Giao</p>
+      <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">Bản Hợp Đồng Tích Hợp (CI Contract) Bất Biến</h2>
+    </div>
+
+    <div style="background:#f0fdf4; border-left:6px solid #16a34a; padding:18px 22px; border-radius:8px; margin-bottom:20px;">
+      <h4 style="font-size:17px; color:#166534; margin:0 0 4px 0;"><i class="fa-solid fa-file-contract" style="margin-right:8px;"></i>Nguyên Tắc Bàn Giao Độc Lập</h4>
+      <p style="font-size:14.5px; color:#15803d; margin:0; line-height:1.5;">
+        Định nghĩa giao tiếp chuẩn mực giữa 2 hệ thống CI và Test Harness. Cho phép đội ngũ phát triển mở rộng từng phân hệ độc lập mà không phá vỡ quy trình chung.
+      </p>
+    </div>
+
+    <table class="table-custom" style="margin-bottom:24px;">
       <thead>
         <tr>
-          <th>Tham Số Bàn Giao</th>
-          <th>Ý Nghĩa & Yêu Cầu</th>
-          <th>Ví Dụ Thực Tế Của Nhóm</th>
+          <th style="width:28%;">Tham Số Bàn Giao</th>
+          <th style="width:42%;">Ý Nghĩa Kỹ Thuật & Yêu Cầu</th>
+          <th style="width:30%;">Giá Trị Thực Tế Của Nhóm</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><code>SUT_REPO_URL</code> & <code>SUT_REF</code></td>
-          <td>Nguồn SUT, Branch hoặc Commit SHA truy vết</td>
-          <td>github.com/thu2005/realworld (Branch: next)</td>
+          <td><code>SUT_REPO_URL</code></td>
+          <td>Đường dẫn kho lưu trữ mã nguồn SUT dùng để đối chiếu</td>
+          <td><code>https://github.com/thu2005/realworld.git</code></td>
+        </tr>
+        <tr>
+          <td><code>SUT_REF</code></td>
+          <td>Tên nhánh hoặc mã Commit SHA cần kiểm chứng</td>
+          <td><code>next</code> hoặc Full Git SHA</td>
         </tr>
         <tr>
           <td><code>IMAGE_TAG</code></td>
-          <td>Tag Docker Image theo Full Commit SHA</td>
-          <td>4f9a9405b2baeb... <i>(Tuyệt đối bỏ tag <code>latest</code>)</i></td>
+          <td>Định danh Docker Image tuyệt đối bàn giao sang Harness</td>
+          <td>Full 40-character SHA <i>(Tuyệt đối cấm tag <code>latest</code>)</i></td>
         </tr>
         <tr>
           <td><code>SMOKE_PATH</code></td>
-          <td>Endpoint để kiểm tra container readiness</td>
-          <td><code>/api/tags</code> (Chờ HTTP 200 trước Cypress)</td>
+          <td>Endpoint kiểm tra độ sẵn sàng (Readiness Probe)</td>
+          <td><code>/api/tags</code> <i>(Chờ HTTP 200 trước khi chạy Cypress)</i></td>
         </tr>
       </tbody>
     </table>
+
+    <div style="background:#fef3c7; padding:12px 18px; border-radius:8px; border-left:4px solid #f59e0b; font-size:13.5px; color:#92400e;">
+      <b>Quy chuẩn lưu trữ Artifact:</b> Toàn bộ báo cáo thô được gom về <code>test-reports/junit/*.xml</code> và <code>test-reports/allure-results/</code> để phục vụ tổng hợp đa tầng.
+    </div>
+
     <div class="slide-footer">
       <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
-      <span>06</span>
+      <span>13 / 20</span>
     </div>
   </div>
 
-  <!-- SLIDE 7: GitHub Actions -->
-  <div class="slide-container" id="slide7">
-    <div style="margin:0 0 24px 0;">
+  <!-- SLIDE 14: Đồ Thị Thực Thi 11 Jobs (DEDICATED FULL SLIDE) -->
+  <div class="slide-container" id="slide14">
+    <div style="margin:0 0 12px 0;">
+      <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 4px 0;">Phân Hệ Đám Mây</p>
+      <h2 contenteditable="true" style="font-size:28px; font-weight:700; color:#0f172a; margin:0;">GitHub Actions Pipeline: Đồ Thị Thực Thi 11 Jobs</h2>
+    </div>
+
+    <!-- Đồ thị 11 jobs toàn màn hình rộng rãi -->
+    <div class="diagram-frame">
+      <img src="Software-Testing-CICD-Test-Harness/docs/final-report/images/github-actions-workflow.svg" alt="Hình 4: Đồ thị thực thi GitHub Actions của đề tài" />
+    </div>
+
+    <div style="background:#f8fafc; padding:10px 16px; border-radius:8px; border-left:4px solid #0284c7; font-size:13px; color:#475569; display:flex; justify-content:space-between; align-items:center;">
+      <span><b>11 Jobs Phối Hợp:</b> Checkout &rarr; Setup &rarr; Install &rarr; Lint &rarr; Unit-Test &rarr; API-Test &rarr; Security-Scan &rarr; Docker-Build &rarr; Docker-Push &rarr; Trigger-Jenkins &rarr; Allure-Report.</span>
+      <span class="badge" style="background:#e0f2fe; color:#0369a1;">Hình 4 (Báo Cáo)</span>
+    </div>
+
+    <div class="slide-footer">
+      <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
+      <span>14 / 20</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 15: Bốn Cổng Kiểm Soát Chất Lượng (Quality Gates) -->
+  <div class="slide-container" id="slide15">
+    <div style="margin:0 0 20px 0;">
       <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 6px 0;">Phân Hệ Đám Mây</p>
-      <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">GitHub Actions Pipeline: 11 Jobs & SAST</h2>
+      <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">Bốn Cổng Kiểm Soát Chất Lượng (Quality Gates)</h2>
     </div>
-    <div style="display:flex; gap:32px; flex-grow:1;">
-      <div style="flex:1;">
-        <h3 style="font-size:18px; margin-bottom:12px;">Workflow Chuẩn (ci.yml)</h3>
-        <div class="code-block" style="font-size:12px; padding:12px;">
-name: CI Pipeline
-on: [push, pull_request, workflow_dispatch]
-jobs:
-  unit-test:
-    needs: install
-    steps: [ run: npm run test:unit ]
-  api-test:
-    needs: install
-    steps: [ run: npm run test:api ]
-  security-scan:
-    needs: install
-    steps: [ run: npm audit --audit-level=high ]
-  docker-build:
-    needs: [lint, unit-test, api-test, security-scan]
-    steps: [ run: docker build -t $IMAGE:${{ github.sha }} ]
-        </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:18px; flex-grow:1; margin-bottom:16px;">
+      <div style="background:#f8fafc; padding:18px; border-radius:10px; border-left:6px solid #10b981; box-shadow:0 2px 4px rgb(0 0 0 / 0.04);">
+        <h4 style="font-size:17px; margin:0 0 8px 0; color:#0f172a;"><i class="fa-solid fa-square-check" style="color:#10b981; margin-right:8px;"></i>Gate 1: Unit Test & Coverage</h4>
+        <p style="font-size:14px; color:#475569; margin:0; line-height:1.5;">
+          Toàn bộ 38 ca Jest phải vượt qua. Độ bao phủ mã cục bộ (<code>lib.js</code>, <code>auth.js</code>) bắt buộc đạt <b>&ge; 80%</b>. Đẩy artifact <code>jest-unit.xml</code> lên CI summary.
+        </p>
       </div>
-      <div style="flex:1.2; display:flex; flex-direction:column; gap:12px;">
-        <h3 style="font-size:18px; margin-bottom:0;">Các Cổng Kiểm Soát Chất Lượng (Quality Gates)</h3>
-        <div style="background:#f8fafc; padding:12px; border-radius:6px; border-left:4px solid #10b981; font-size:14px;">
-          <b>Gate 1: Coverage Summary</b> - Jest Pass, Coverage nội bộ &ge; 80%. Đẩy Artifact <code>jest-unit.xml</code>.
-        </div>
-        <div style="background:#f8fafc; padding:12px; border-radius:6px; border-left:4px solid #10b981; font-size:14px;">
-          <b>Gate 2: API Integrity</b> - SuperTest & Newman trả HTTP chuẩn. Đẩy Artifact <code>jest-api.xml</code>.
-        </div>
-        <div style="background:#f8fafc; padding:12px; border-radius:6px; border-left:4px solid #10b981; font-size:14px;">
-          <b>Gate 3: Dependency Security</b> - Pipeline Fail-Fast nếu quét NPM Audit dính mức <i>High/Critical</i>.
-        </div>
-        <div style="background:#f8fafc; padding:12px; border-radius:6px; border-left:4px solid #10b981; font-size:14px;">
-          <b>Gate 4: CodeQL SAST Analysis</b> - Chạy workflow riêng (<code>security-extended</code>, <code>security-and-quality</code>) phân tích tĩnh JS/TS.
-        </div>
-        <div style="background:#fef3c7; padding:12px; border-radius:6px; color:#b45309; font-weight:600; text-align:center; font-size:14px;">
-          Job "Trigger Jenkins" (Python Script) chỉ chạy khi Image Push GHCR thành công.
-        </div>
+
+      <div style="background:#f8fafc; padding:18px; border-radius:10px; border-left:6px solid #0284c7; box-shadow:0 2px 4px rgb(0 0 0 / 0.04);">
+        <h4 style="font-size:17px; margin:0 0 8px 0; color:#0f172a;"><i class="fa-solid fa-network-wired" style="color:#0284c7; margin-right:8px;"></i>Gate 2: API Integrity & Contract</h4>
+        <p style="font-size:14px; color:#475569; margin:0; line-height:1.5;">
+          15 ca SuperTest và Newman Postman collection xác thực API thành công, kiểm tra status code và schema JSON. Đẩy artifact <code>jest-api.xml</code>.
+        </p>
+      </div>
+
+      <div style="background:#f8fafc; padding:18px; border-radius:10px; border-left:6px solid #f59e0b; box-shadow:0 2px 4px rgb(0 0 0 / 0.04);">
+        <h4 style="font-size:17px; margin:0 0 8px 0; color:#0f172a;"><i class="fa-solid fa-shield-virus" style="color:#f59e0b; margin-right:8px;"></i>Gate 3: Dependency Security Audit</h4>
+        <p style="font-size:14px; color:#475569; margin:0; line-height:1.5;">
+          Thực thi <code>npm audit</code> kiểm toán bảo mật chuỗi cung ứng phụ thuộc, phát hiện và phân loại lỗ hổng theo 5 cấp độ nghiêm trọng.
+        </p>
+      </div>
+
+      <div style="background:#f8fafc; padding:18px; border-radius:10px; border-left:6px solid #8b5cf6; box-shadow:0 2px 4px rgb(0 0 0 / 0.04);">
+        <h4 style="font-size:17px; margin:0 0 8px 0; color:#0f172a;"><i class="fa-solid fa-magnifying-glass-chart" style="color:#8b5cf6; margin-right:8px;"></i>Gate 4: CodeQL SAST Analysis</h4>
+        <p style="font-size:14px; color:#475569; margin:0; line-height:1.5;">
+          Workflow phân tích mã tĩnh độc lập với 2 bộ truy vấn <code>security-extended</code> và <code>security-and-quality</code>, gửi kết quả về GitHub Code Scanning.
+        </p>
       </div>
     </div>
+
+    <div style="background:#fef3c7; padding:14px 20px; border-radius:8px; border-left:6px solid #f59e0b; font-size:14px; color:#92400e; display:flex; align-items:center; gap:12px;">
+      <i class="fa-solid fa-paper-plane" style="font-size:20px;"></i>
+      <span><b>Cơ Chế Bàn Giao Tự Động:</b> Job <code>trigger-jenkins</code> (Python Script) chỉ được phép chạy khi Docker image đã được biên dịch và đẩy thành công lên GHCR.</span>
+    </div>
+
     <div class="slide-footer">
       <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
-      <span>07</span>
+      <span>15 / 20</span>
     </div>
   </div>
 
-  <!-- SLIDE 8: Jenkins (Source vs Image) -->
-  <div class="slide-container" id="slide8">
-    <div style="margin:0 0 24px 0;">
+  <!-- SLIDE 16: Sơ Đồ Hai Chế Độ Jenkins (DEDICATED FULL SLIDE) -->
+  <div class="slide-container" id="slide16">
+    <div style="margin:0 0 12px 0;">
+      <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 4px 0;">Hạ Tầng Tự Chủ</p>
+      <h2 contenteditable="true" style="font-size:28px; font-weight:700; color:#0f172a; margin:0;">Jenkins Test Harness: Sơ Đồ Luồng Hai Chế Độ Vận Hành</h2>
+    </div>
+
+    <!-- Sơ đồ 2 chế độ Jenkins toàn màn hình rộng rãi -->
+    <div class="diagram-frame">
+      <img src="Software-Testing-CICD-Test-Harness/docs/final-report/images/jenkins-pipeline-workflow.svg" alt="Hình 5: Hai chế độ thực thi của Jenkins Pipeline" />
+    </div>
+
+    <div style="background:#f8fafc; padding:10px 16px; border-radius:8px; border-left:4px solid #0284c7; font-size:13px; color:#475569; display:flex; justify-content:space-between; align-items:center;">
+      <span><b>Phân Nhánh Pipeline:</b> Nhánh Nguồn (Source Mode) kiểm tra mã thô &nbsp;|&nbsp; Nhánh Ảnh (Image Mode) kiểm chứng artifact container trong mạng cô lập.</span>
+      <span class="badge" style="background:#e0f2fe; color:#0369a1;">Hình 5 (Báo Cáo)</span>
+    </div>
+
+    <div class="slide-footer">
+      <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
+      <span>16 / 20</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 17: Chi Tiết Hai Chế Độ & Zero Leak (DEDICATED SLIDE) -->
+  <div class="slide-container" id="slide17">
+    <div style="margin:0 0 20px 0;">
       <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 6px 0;">Hạ Tầng Tự Chủ</p>
-      <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">Jenkins Harness: Custom Image & Hai Chế Độ</h2>
+      <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">Chi Tiết Hai Chế Độ & Cơ Chế Zero Resource Leak</h2>
     </div>
-    <div style="display:flex; gap:24px; flex-grow:1;">
-      <div style="flex:1; background:#f8fafc; padding:20px; border-radius:12px; border-left:6px solid #0f172a;">
-        <h3 style="font-size:20px; margin-bottom:12px;">Source Mode <code>(RUN_MODE=source)</code></h3>
-        <ul style="list-style-position: inside; font-size:14px; line-height:1.6; color:#334155; display:flex; flex-direction:column; gap:8px;">
-          <li>Baseline kiểm tra trực tiếp mã nguồn.</li>
-          <li>Checkout theo SUT_REF. Install dependency thô.</li>
-          <li>Thực thi Lint, Mocha Tests và Build Next.js nội bộ Jenkins.</li>
+
+    <div style="display:flex; gap:20px; flex-grow:1; margin-bottom:16px;">
+      <div style="flex:1; background:#f8fafc; padding:20px 22px; border-radius:10px; border-left:6px solid #0f172a; box-shadow:0 2px 4px rgb(0 0 0 / 0.04);">
+        <h4 style="font-size:18px; margin:0 0 10px 0; color:#0f172a;"><i class="fa-solid fa-code" style="margin-right:8px;"></i>Source Mode (<code>RUN_MODE=source</code>)</h4>
+        <ul style="list-style-position: inside; font-size:14px; line-height:1.6; color:#475569; display:flex; flex-direction:column; gap:8px;">
+          <li>Môi trường đối chứng (Baseline Check) trực tiếp trên source Git.</li>
+          <li>Checkout theo <code>SUT_REF</code>, cài đặt dependency thô trên agent.</li>
+          <li>Thực thi Lint, Mocha Tests và biên dịch Next.js trong workspace.</li>
+          <li>Giúp xác nhận mã nguồn có thể lint/test độc lập ngoài Docker.</li>
         </ul>
       </div>
-      <div style="flex:1.2; background:#f8fafc; padding:20px; border-radius:12px; border-left:6px solid #0284c7;">
-        <h3 style="font-size:20px; margin-bottom:12px;">Image Mode <code>(RUN_MODE=image)</code></h3>
-        <ul style="list-style-position: inside; font-size:14px; line-height:1.6; color:#334155; display:flex; flex-direction:column; gap:8px;">
-          <li>Authenticate & Pull Image bằng Credential <code>ghcr-credentials</code> bảo mật.</li>
-          <li>Tạo container trong mạng riêng ảo, độc lập port host.</li>
-          <li>Chạy script <code>image_smoke.py</code> kiểm tra readiness.</li>
-          <li>Chạy Cypress UI bằng trình duyệt Headless tích hợp.</li>
+
+      <div style="flex:1.2; background:#f8fafc; padding:20px 22px; border-radius:10px; border-left:6px solid #0284c7; box-shadow:0 2px 4px rgb(0 0 0 / 0.04);">
+        <h4 style="font-size:18px; margin:0 0 10px 0; color:#0f172a;"><i class="fa-brands fa-docker" style="color:#0284c7; margin-right:8px;"></i>Image Mode (<code>RUN_MODE=image</code>)</h4>
+        <ul style="list-style-position: inside; font-size:14px; line-height:1.6; color:#475569; display:flex; flex-direction:column; gap:8px;">
+          <li>Kéo Docker Image từ GHCR qua Secret <code>ghcr-credentials</code> an toàn.</li>
+          <li>Tạo container trong mạng riêng ảo nội bộ, không cần mở port ra host.</li>
+          <li>Script <code>image_smoke.py</code> thăm dò readiness qua <code>/api/tags</code>.</li>
+          <li>Thực thi 5 ca Cypress Headless UI và xuất bản Allure Report HTML.</li>
         </ul>
       </div>
     </div>
-    <div style="background:#dcfce7; padding:16px; border-radius:12px; margin-top:16px; display:flex; align-items:flex-start; gap:16px;">
-      <i class="fa-solid fa-shield-halved" style="font-size:28px; color:#16a34a; margin-top:4px;"></i>
+
+    <div style="background:#dcfce7; padding:16px 22px; border-radius:10px; border-left:6px solid #16a34a; display:flex; align-items:center; gap:18px;">
+      <i class="fa-solid fa-shield-halved" style="font-size:32px; color:#16a34a;"></i>
       <div>
-        <h4 style="font-size:16px; color:#166534; margin:0 0 4px 0;">Jenkins Custom Node & Zero Resource Leak</h4>
-        <p style="font-size:14px; color:#15803d; margin:0; line-height:1.5;">Jenkins chạy trên Docker compose với Custom Image nhúng sẵn Node 14, Docker CLI, Python 3, Cypress 9.7 và Allure.<br>Sau mỗi Build, block <code>post.always</code> đảm bảo dọn sạch các mạng con và container SUT có nhãn sở hữu tương ứng, không dùng <code>prune</code> toàn cục gây lỗi chéo.</p>
+        <h4 style="font-size:16px; color:#166534; margin:0 0 4px 0;">Cơ Chế Custom Agent & Dọn Dẹp Zero Resource Leak</h4>
+        <p style="font-size:13.5px; color:#15803d; margin:0; line-height:1.5;">
+          Custom Jenkins Image nhúng sẵn Node 14, Docker CLI, Python 3, Cypress 9.7 và Allure. Khối <code>post.always</code> đảm bảo dọn dẹp chính xác container và mạng theo nhãn sở hữu của phiên build (kể cả khi test thất bại), tuyệt đối không dùng <code>prune</code> gây xung đột các job song song.
+        </p>
       </div>
     </div>
+
     <div class="slide-footer">
       <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
-      <span>08</span>
+      <span>17 / 20</span>
     </div>
   </div>
 
-  <!-- SLIDE 9: Kết quả thực nghiệm -->
-  <div class="slide-container" id="slide9">
-    <div style="margin:0 0 24px 0;">
+  <!-- SLIDE 18: Kết Quả Thực Nghiệm Của Nhóm 01 -->
+  <div class="slide-container" id="slide18">
+    <div style="margin:0 0 20px 0;">
       <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 6px 0;">Thực Tiễn Triển Khai</p>
       <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">Kết Quả Thực Nghiệm Của Nhóm 01</h2>
     </div>
@@ -736,83 +859,120 @@ jobs:
     </div>
     <div class="slide-footer">
       <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
-      <span>09</span>
+      <span>18 / 20</span>
     </div>
   </div>
 
-  <!-- SLIDE 10: Video Demo -->
-  <div class="slide-container" id="slide10">
-    <div style="margin:0 0 24px 0;">
-      <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 6px 0;">Sản Phẩm Trực Quan</p>
-      <h2 contenteditable="true" style="font-size:32px; font-weight:700; color:#0f172a; margin:0;">Demo Hành Vi & Phân Tích Kỹ Thuật</h2>
+  <!-- SLIDE 19: Demo Thực Nghiệm & Mã QR Quét Video (BỔ SUNG QR CODE) -->
+  <div class="slide-container" id="slide19">
+    <div style="margin:0 0 16px 0;">
+      <p contenteditable="true" style="font-size:14px; font-weight:700; color:#0284c7; text-transform:uppercase; margin:0 0 4px 0;">Sản Phẩm Trực Quan</p>
+      <h2 contenteditable="true" style="font-size:30px; font-weight:700; color:#0f172a; margin:0;">Demo Hành Vi & Mã QR Quét Xem Trực Tiếp</h2>
     </div>
     
-    <div style="display:flex; flex-direction:column; gap:20px; flex-grow:1; justify-content:center;">
-      <div style="background:#f8fafc; border-left:6px solid #f59e0b; padding:20px; border-radius:8px; display:flex; gap:24px; align-items:center; box-shadow:0 4px 6px -1px rgb(0 0 0 / 0.05);">
-        <i class="fa-brands fa-youtube" style="font-size:40px; color:#ef4444;"></i>
-        <div>
-          <h3 style="font-size:18px; margin:0 0 6px 0; color:#0f172a;">Video 1: Cơ sở lý thuyết và kiến trúc tổng thể</h3>
-          <p style="font-size:14px; color:#475569; margin:0; line-height:1.5;">Trình bày CI/CD, CD Deployment, vai trò ISO 24765 của Test Harness, và cơ chế thiết kế CI Contract bất biến truyền SUT_REF / IMAGE_TAG giữa GitHub và Jenkins.</p>
+    <div style="display:flex; flex-direction:column; gap:14px; flex-grow:1; justify-content:center;">
+      <!-- Card Video 1 -->
+      <div class="qr-card" style="border-left:6px solid #f59e0b;">
+        <div style="display:flex; gap:16px; align-items:center; flex:1;">
+          <i class="fa-brands fa-google-drive" style="font-size:34px; color:#f59e0b;"></i>
+          <div>
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
+              <h3 style="font-size:16.5px; margin:0; color:#0f172a;">Video 1: Cơ sở lý thuyết và kiến trúc tổng thể</h3>
+              <a href="https://drive.google.com/file/d/13pjwDisbNMdks_shLDick7uwYZ4-8C1q/view?usp=sharing" target="_blank" class="btn-video" style="background:#f59e0b;">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở Link
+              </a>
+            </div>
+            <p style="font-size:13px; color:#475569; margin:0; line-height:1.45;">Trình bày CI/CD, chuẩn ISO 24765 của Test Harness, và cơ chế thiết kế CI Contract bất biến truyền SUT_REF / IMAGE_TAG giữa GitHub và Jenkins.</p>
+          </div>
+        </div>
+        <div style="text-align:center;">
+          <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fdrive.google.com%2Ffile%2Fd%2F13pjwDisbNMdks_shLDick7uwYZ4-8C1q%2Fview%3Fusp%3Dsharing" alt="QR Code Video 1" />
+          <p style="font-size:11px; color:#64748b; margin:2px 0 0 0; font-weight:600;">Quét xem ngay</p>
         </div>
       </div>
       
-      <div style="background:#f8fafc; border-left:6px solid #0284c7; padding:20px; border-radius:8px; display:flex; gap:24px; align-items:center; box-shadow:0 4px 6px -1px rgb(0 0 0 / 0.05);">
-        <i class="fa-brands fa-youtube" style="font-size:40px; color:#ef4444;"></i>
-        <div>
-          <h3 style="font-size:18px; margin:0 0 6px 0; color:#0f172a;">Video 2: Thực nghiệm GitHub Actions CI Pipeline</h3>
-          <p style="font-size:14px; color:#475569; margin:0; line-height:1.5;">Phân tích 11 Job của `ci.yml`, CodeQL `codeql.yml`, quy trình quét NPM Audit chặn lỗi High/Critical, biên dịch Docker, đẩy ảnh lên GHCR với Full SHA.</p>
+      <!-- Card Video 2 -->
+      <div class="qr-card" style="border-left:6px solid #0284c7;">
+        <div style="display:flex; gap:16px; align-items:center; flex:1;">
+          <i class="fa-brands fa-github" style="font-size:34px; color:#0284c7;"></i>
+          <div>
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
+              <h3 style="font-size:16.5px; margin:0; color:#0f172a;">Video 2: Thực nghiệm GitHub Actions CI Pipeline</h3>
+              <a href="https://drive.google.com/file/d/1OO2DmSEiVwyk-Jcb2RpwqcTHhs9janmp/view?usp=sharing" target="_blank" class="btn-video" style="background:#0284c7;">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở Link
+              </a>
+            </div>
+            <p style="font-size:13px; color:#475569; margin:0; line-height:1.45;">Phân tích 11 Job của `ci.yml`, CodeQL `codeql.yml`, quy trình quét NPM Audit chặn lỗi High/Critical, đóng gói Docker Image và push lên GHCR bằng SHA.</p>
+          </div>
+        </div>
+        <div style="text-align:center;">
+          <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fdrive.google.com%2Ffile%2Fd%2F1OO2DmSEiVwyk-Jcb2RpwqcTHhs9janmp%2Fview%3Fusp%3Dsharing" alt="QR Code Video 2" />
+          <p style="font-size:11px; color:#64748b; margin:2px 0 0 0; font-weight:600;">Quét xem ngay</p>
         </div>
       </div>
       
-      <div style="background:#f8fafc; border-left:6px solid #10b981; padding:20px; border-radius:8px; display:flex; gap:24px; align-items:center; box-shadow:0 4px 6px -1px rgb(0 0 0 / 0.05);">
-        <i class="fa-brands fa-youtube" style="font-size:40px; color:#ef4444;"></i>
-        <div>
-          <h3 style="font-size:18px; margin:0 0 6px 0; color:#0f172a;">Video 3: Thực nghiệm Jenkins Test Harness</h3>
-          <p style="font-size:14px; color:#475569; margin:0; line-height:1.5;">Demo Image Mode qua tham số, kéo image GHCR private an toàn, kích hoạt SUT trong mạng cô lập, chạy smoke test, 5 Cypress tests, tạo Allure và dọn dẹp.</p>
+      <!-- Card Video 3 -->
+      <div class="qr-card" style="border-left:6px solid #10b981;">
+        <div style="display:flex; gap:16px; align-items:center; flex:1;">
+          <i class="fa-brands fa-jenkins" style="font-size:34px; color:#10b981;"></i>
+          <div>
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
+              <h3 style="font-size:16.5px; margin:0; color:#0f172a;">Video 3: Thực nghiệm Jenkins Test Harness</h3>
+              <a href="https://drive.google.com/drive/folders/1sEgVaQWbD3vBH5v1CqjRAnmRobgyLsJD?usp=sharing" target="_blank" class="btn-video" style="background:#10b981;">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở Link
+              </a>
+            </div>
+            <p style="font-size:13px; color:#475569; margin:0; line-height:1.45;">Demo Image Mode qua tham số, kéo image GHCR private an toàn, kích hoạt SUT trong mạng cô lập, chạy smoke test, 5 Cypress tests, tạo Allure và dọn dẹp.</p>
+          </div>
+        </div>
+        <div style="text-align:center;">
+          <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fdrive.google.com%2Fdrive%2Ffolders%2F1sEgVaQWbD3vBH5v1CqjRAnmRobgyLsJD%3Fusp%3Dsharing" alt="QR Code Video 3" />
+          <p style="font-size:11px; color:#64748b; margin:2px 0 0 0; font-weight:600;">Quét xem ngay</p>
         </div>
       </div>
     </div>
+    
     <div class="slide-footer">
       <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
-      <span>10</span>
+      <span>19 / 20</span>
     </div>
   </div>
 
-  <!-- SLIDE 11: Đánh Giá & Bài Học Kinh Nghiệm -->
-  <div class="slide-container" id="slide11" style="background:#090d16; justify-content:center;">
-    <p contenteditable="true" style="font-size:16px; font-weight:700; color:#38bdf8; text-transform:uppercase; letter-spacing:0.12em; margin:0 0 16px 0;">
+  <!-- SLIDE 20: Đánh Giá & Bài Học Kinh Nghiệm -->
+  <div class="slide-container" id="slide20" style="background:#090d16; justify-content:center;">
+    <p contenteditable="true" style="font-size:15px; font-weight:700; color:#38bdf8; text-transform:uppercase; letter-spacing:0.12em; margin:0 0 12px 0;">
       Kết Luận & Định Hướng
     </p>
-    <h1 contenteditable="true" style="font-size:40px; font-weight:700; color:#f8fafc; margin:0 0 32px 0;">
+    <h1 contenteditable="true" style="font-size:38px; font-weight:700; color:#f8fafc; margin:0 0 28px 0;">
       Đánh Đổi Thiết Kế, Khó Khăn & Hướng Phát Triển
     </h1>
     
     <div style="display:flex; gap:24px; flex-grow:1;">
-      <div style="flex:1; background:#1e293b; padding:24px; border-radius:12px; border-left:4px solid #10b981;">
-        <h3 style="font-size:20px; color:#f8fafc; margin-bottom:12px;">Đánh Đổi & Thành Công</h3>
-        <ul style="color:#cbd5e1; font-size:15px; line-height:1.6; margin-left:20px;">
-          <li style="margin-bottom:10px;"><b>Thành công Truy Vết:</b> Single Source of Truth thông qua Git SHA cho Image thay vì dùng <code>latest</code>.</li>
-          <li style="margin-bottom:10px;"><b>Đánh Đổi Image Jenkins:</b> Image khá lớn do cài Cypress (Electron/Browsers), nhưng đổi lại không bị dependency hell khi build node riêng.</li>
+      <div style="flex:1; background:#1e293b; padding:22px; border-radius:12px; border-left:4px solid #10b981;">
+        <h3 style="font-size:19px; color:#f8fafc; margin-bottom:10px;">Đánh Đổi & Thành Công</h3>
+        <ul style="color:#cbd5e1; font-size:14px; line-height:1.6; margin-left:18px;">
+          <li style="margin-bottom:8px;"><b>Thành công Truy Vết:</b> Single Source of Truth thông qua Git SHA cho Image thay vì dùng <code>latest</code>.</li>
+          <li style="margin-bottom:8px;"><b>Đánh Đổi Image Jenkins:</b> Image khá lớn do cài Cypress (Electron/Browsers), nhưng đổi lại không bị dependency hell khi build node riêng.</li>
           <li><b>Bảo Mật Docker:</b> Việc map Docker socket <code>/var/run/docker.sock</code> tiện lợi cho Seminar, nhưng cần kiến trúc Jenkins Agent bảo vệ trên Production thật.</li>
         </ul>
       </div>
 
-      <div style="flex:1; background:#1e293b; padding:24px; border-radius:12px; border-left:4px solid #f59e0b;">
-        <h3 style="font-size:20px; color:#f8fafc; margin-bottom:12px;">Khó Khăn & Kế Hoạch Tương Lai</h3>
-        <ul style="color:#cbd5e1; font-size:15px; line-height:1.6; margin-left:20px;">
-          <li style="margin-bottom:10px;"><b>Vấn đề Legacy:</b> Ứng dụng dính chặt với Node 14 và không có <code>package-lock.json</code> khiến bản dựng thiếu tất định. Sắp tới cần cố định Lockfile.</li>
-          <li style="margin-bottom:10px;"><b>Mở rộng Coverage:</b> Mục tiêu tiến tới quét toàn bộ các file Model/Route thay vì giới hạn ở cục bộ.</li>
+      <div style="flex:1; background:#1e293b; padding:22px; border-radius:12px; border-left:4px solid #f59e0b;">
+        <h3 style="font-size:19px; color:#f8fafc; margin-bottom:10px;">Khó Khăn & Kế Hoạch Tương Lai</h3>
+        <ul style="color:#cbd5e1; font-size:14px; line-height:1.6; margin-left:18px;">
+          <li style="margin-bottom:8px;"><b>Vấn đề Legacy:</b> Ứng dụng dính chặt với Node 14 và không có <code>package-lock.json</code> khiến bản dựng thiếu tất định. Sắp tới cần cố định Lockfile.</li>
+          <li style="margin-bottom:8px;"><b>Mở rộng Coverage:</b> Mục tiêu tiến tới quét toàn bộ các file Model/Route thay vì giới hạn ở cục bộ.</li>
           <li><b>Mở rộng luồng UI:</b> Bổ sung E2E test cho luồng Authentication (đăng nhập thành công, thao tác bài viết, đăng xuất).</li>
         </ul>
       </div>
     </div>
     
-    <div style="text-align:center; margin-top:32px;">
-      <p style="font-size:22px; color:#38bdf8; font-weight:600;">Cảm ơn Thầy Cô và các bạn đã theo dõi bài báo cáo của Nhóm 01!</p>
+    <div style="text-align:center; margin-top:24px;">
+      <p style="font-size:20px; color:#38bdf8; font-weight:600;">Cảm ơn Thầy Cô và các bạn đã theo dõi bài báo cáo của Nhóm 01!</p>
     </div>
     <div class="slide-footer" style="color:#475569;">
       <span>Nhóm 01 | Báo Cáo Seminar KTPM</span>
-      <span>11</span>
+      <span>20 / 20</span>
     </div>
   </div>
 

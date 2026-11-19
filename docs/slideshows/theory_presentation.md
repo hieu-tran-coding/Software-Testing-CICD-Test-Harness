@@ -1,7 +1,7 @@
 ---
 marp: true
 theme: default
-paginate: true
+paginate: false
 header: "Seminar Kiểm thử Phần mềm • Đại học Khoa học Tự nhiên, ĐHQG-HCM"
 footer: "Nhóm 01 | Báo Cáo Seminar KTPM"
 style: |
@@ -9,7 +9,7 @@ style: |
     font-family: 'Plus Jakarta Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #0f172a;
     background-color: #ffffff;
-    padding: 40px 60px;
+    padding: 36px 56px;
   }
   h1, h2, h3 {
     font-family: 'Space Grotesk', sans-serif;
@@ -47,10 +47,10 @@ style: |
   }
 ---
 
-<!-- SLIDE 1: Title -->
+<!-- SLIDE 01: Title -->
 <!-- _class: title-slide -->
 <!-- _header: "" -->
-<!-- _footer: "Nhóm 01 • Lớp 23KTPM3 | 01" -->
+<!-- _footer: "Nhóm 01 • Lớp 23KTPM3 • 01 / 20" -->
 
 ### SEMINAR KIỂM THỬ PHẦN MỀM • ĐẠI HỌC KHOA HỌC TỰ NHIÊN, ĐHQG-HCM
 
@@ -69,8 +69,8 @@ style: |
 
 ---
 
-<!-- SLIDE 2: Nền tảng tự động hóa -->
-<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 02" -->
+<!-- SLIDE 02: Ba Mức Độ Tự Động Hóa -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 02 / 20" -->
 
 ### NỀN TẢNG TỰ ĐỘNG HÓA
 ## Ba Mức Độ Tự Động Hóa Trong Phát Triển Phần Mềm
@@ -83,8 +83,8 @@ style: |
 
 ---
 
-<!-- SLIDE 2b: Phân Tích CI/CD & Pipeline -->
-<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 02b" -->
+<!-- SLIDE 03: Pipeline & Quality Gates & Fail-Fast -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 03 / 20" -->
 
 ### PHÂN TÍCH LÝ THUYẾT CI/CD
 ## Pipeline, Quality Gates & Nguyên Tắc Fail-Fast
@@ -92,7 +92,7 @@ style: |
 ### 1. Khái niệm Pipeline
 * Pipeline là sự **mô hình hóa quy trình phân phối phần mềm** thành các bước tuần tự hoặc có quan hệ phụ thuộc lẫn nhau.
 * Chuyển đổi mã nguồn thô thành một sản phẩm có thể triển khai qua chuỗi:  
-  $$\text{Chuẩn bị (Source/Dependencies)} \longrightarrow \text{Kiểm tra (Quality/Security)} \longrightarrow \text{Đóng gói (Packaging/Artifact)}$$
+  **Chuẩn bị (Source/Dependencies) → Kiểm tra (Quality/Security) → Đóng gói (Packaging/Artifact)**
 
 ### 2. Quality Gate (Cổng Chất Lượng)
 * Là **điều kiện bắt buộc phải thỏa mãn** trước khi artifact được chuyển sang giai đoạn kế tiếp.
@@ -104,8 +104,8 @@ style: |
 
 ---
 
-<!-- SLIDE 2c: 11 Bước Tiêu Chuẩn -->
-<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 02c" -->
+<!-- SLIDE 04: Quy Trình 11 Bước Tiêu Chuẩn -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 04 / 20" -->
 
 ### PHÂN TÍCH LÝ THUYẾT CI/CD
 ## Quy Trình 11 Bước Tiêu Chuẩn Của Một Pipeline Phân Phối
@@ -130,14 +130,14 @@ flowchart LR
   end
 ```
 
-* **Giai đoạn CI (Bước 1 – 6):** Build $\rightarrow$ Lint/SAST $\rightarrow$ Unit Test $\rightarrow$ Integration Test $\rightarrow$ Security Scan $\rightarrow$ Quality Gate. Đảm bảo code an toàn và đạt chuẩn trước khi merge.
-* **Giai đoạn CD (Bước 7 – 10):** Deploy Staging $\rightarrow$ Smoke/E2E Test $\rightarrow$ Manual Approval $\rightarrow$ Deploy Production. Triển khai phần mềm lên môi trường thực nghiệm và phát hành.
+* **Giai đoạn CI (Bước 1 – 6):** Build → Lint/SAST → Unit Test → Integration Test → Security Scan → Quality Gate. Đảm bảo code an toàn và đạt chuẩn trước khi merge.
+* **Giai đoạn CD (Bước 7 – 10):** Deploy Staging → Smoke/E2E Test → Manual Approval → Deploy Production. Triển khai phần mềm lên môi trường thực nghiệm và phát hành.
 * **Giai đoạn Vận Hành (Bước 11):** Giám sát runtime logs, APM metrics và phát cảnh báo sự cố 24/7.
 
 ---
 
-<!-- SLIDE 2d: Xử lý sự cố -->
-<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 02d" -->
+<!-- SLIDE 05: Tính Kháng Lỗi (Resilience) -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 05 / 20" -->
 
 ### PHÂN TÍCH LÝ THUYẾT CI/CD
 ## Tính Kháng Lỗi (Resilience): Kịch Bản Xử Lý Sự Cố
@@ -153,8 +153,8 @@ flowchart LR
 
 ---
 
-<!-- SLIDE 3: Test Harness Định nghĩa -->
-<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 03" -->
+<!-- SLIDE 06: Test Harness Định Nghĩa -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 06 / 20" -->
 
 ### KIỂM THỬ CHUYÊN SÂU
 ## Test Harness (Theo Chuẩn ISO/IEC/IEEE 24765)
@@ -173,8 +173,8 @@ flowchart LR
 
 ---
 
-<!-- SLIDE 3b: Phân biệt thuật ngữ -->
-<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 03b" -->
+<!-- SLIDE 07: Phân Biệt Thuật Ngữ Kiểm Thử -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 07 / 20" -->
 
 ### NỀN TẢNG LÝ THUYẾT
 ## Phân Biệt Các Thuật Ngữ Kiểm Thử Chuyên Sâu
@@ -188,8 +188,8 @@ flowchart LR
 
 ---
 
-<!-- SLIDE 3c: Tính chất bắt buộc của Test Harness -->
-<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 03c" -->
+<!-- SLIDE 08: Tính Chất Cốt Lõi Test Harness -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 08 / 20" -->
 
 ### PHÂN TÍCH LÝ THUYẾT
 ## Các Tính Chất Cốt Lõi Của Một Test Harness Kiến Trúc Tốt
@@ -199,25 +199,25 @@ flowchart LR
   * Harness bắt buộc phải cung cấp môi trường khép kín (như mạng Docker cô lập riêng theo Job), tránh xung đột cổng hay tài nguyên dùng chung, loại bỏ triệt để hiện tượng **Flaky Tests** (kiểm thử chập chờn).
 * **2. Khả Năng Truy Vết (Traceability)**  
   * Tất cả các sản phẩm sinh ra (Test Report, Log, Screenshot, Video, Docker Image) phải gắn chặt với nguyên nhân sinh ra nó.
-  * Đề tài sử dụng **Full 40-character Git SHA** làm khóa định danh duy nhất xuyên suốt giữa Git Commit $\longleftrightarrow$ Docker Tag $\longleftrightarrow$ Jenkins Build $\longleftrightarrow$ Allure Report.
+  * Đề tài sử dụng **Full 40-character Git SHA** làm khóa định danh duy nhất xuyên suốt giữa Git Commit ↔ Docker Tag ↔ Jenkins Build ↔ Allure Report.
 * **3. Tôn Trọng Test Oracle (Cơ Chế Phán Quyết)**  
   * Test Harness có vai trò thu thập chứng cứ và điều phối nhưng không thay thế việc lựa chọn Test Oracle chính xác.
   * Đề tài kết hợp đa tầng Oracle: Mã trạng thái HTTP (API SuperTest), Trạng thái DOM & URL (Cypress UI), và Mã thoát Exit Code hệ điều hành.
 
 ---
 
-<!-- SLIDE 3d: Shift-Left / Shift-Right -->
-<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 03d" -->
+<!-- SLIDE 09: Shift-Left & Shift-Right -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 09 / 20" -->
 
 ### CHIẾN LƯỢC KIỂM THỬ
 ## Xu Hướng Mở Rộng: Shift-Left & Shift-Right Testing
 
-### $\longleftarrow$ Shift-Left Testing (Đẩy Sớm Về Phía Trước)
+### ← Shift-Left Testing (Đẩy Sớm Về Phía Trước)
 * Chuyển các hoạt động kiểm thử về các pha sớm nhất của quy trình phát triển, thực thi ngay trên máy Developer nhằm giảm thiểu chi phí phát hiện lỗi.
 * **Git Pre-commit Hooks (Husky):** Tự động format, lint và chạy nhanh Unit test chặn commit hỏng ngay trên máy trạm.
 * **Fast PR Pipelines:** Luồng CI tinh gọn phản hồi tự động kết quả kiểm thử trong vòng dưới 10 phút.
 
-### Shift-Right Testing (Đẩy Sau Sang Phía Vận Hành) $\longrightarrow$
+### Shift-Right Testing (Đẩy Sau Sang Phía Vận Hành) →
 * Mở rộng kiểm thử và giám sát trực tiếp trên môi trường Production với lưu lượng người dùng thật.
 * **Canary Deployment:** Phát hành phiên bản mới cho nhóm nhỏ người dùng (5%) trước khi cập nhật toàn diện.
 * **Synthetic Monitoring:** Định kỳ kích hoạt Bot kiểm thử các luồng then chốt 24/7 để đo lường độ khả dụng thực tế.
@@ -226,8 +226,8 @@ flowchart LR
 
 ---
 
-<!-- SLIDE 4: Đối Tượng SUT & Công Cụ -->
-<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 04" -->
+<!-- SLIDE 10: Đối Tượng SUT & Công Cụ -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 10 / 20" -->
 
 ### ĐỐI TƯỢNG NGHIÊN CỨU
 ## Hệ Thống SUT RealWorld Conduit & Bộ Công Cụ Kiểm Thử
@@ -248,8 +248,8 @@ flowchart LR
 
 ---
 
-<!-- SLIDE 5: Test Pyramid -->
-<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 05" -->
+<!-- SLIDE 11: Test Pyramid -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 11 / 20" -->
 
 ### CHIẾN LƯỢC PHÂN BỔ
 ## Kim Tự Tháp Kiểm Thử (Test Pyramid) – 55+ Ca Test Của Dự Án
@@ -275,88 +275,102 @@ flowchart LR
 
 ---
 
-<!-- SLIDE 6: Kiến Trúc Phối Hợp & CI Contract -->
-<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 06" -->
+<!-- SLIDE 12: Sơ Đồ Kiến Trúc Hệ Thống (DEDICATED FULL SLIDE) -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 12 / 20" -->
 
-### MÔ HÌNH LAI (HYBRID ARCHITECTURE)
-## Kiến Trúc Phối Hợp GitHub Actions + Jenkins & CI Contract
+### KIẾN TRÚC HỆ THỐNG
+## Mô Hình Phối Hợp Hybrid: GitHub Actions & Jenkins
 
-```mermaid
-flowchart LR
-  GA["1. GitHub Actions (CI)<br>• 11 Jobs + CodeQL SAST<br>• Lint, Unit, API Test<br>• Build Docker Image"] 
-  -->|"Push Image (Tag = Git SHA)"| GHCR[("2. GitHub Container Registry<br>(Private GHCR)")]
-  GHCR 
-  -->|"Trigger with CI Contract"| JK["3. Jenkins Test Harness<br>• Pull Image an toàn<br>• Chạy mạng cô lập riêng<br>• Smoke & Cypress UI Test<br>• Render Allure Report"]
-```
+![w:1080 center](Software-Testing-CICD-Test-Harness/docs/final-report/images/system-architecture.svg)
 
-### Bản Hợp Đồng Tích Hợp (CI Contract) Bất Biến Giữa Hai Phân Hệ
-
-| Tham Số Bàn Giao | Ý Nghĩa Kỹ Thuật & Yêu Cầu | Giá Trị Thực Tế Dự Án |
-| :--- | :--- | :--- |
-| `SUT_REPO_URL` | Đường dẫn kho chứa mã nguồn SUT dùng để đối chiếu | `https://github.com/thu2005/realworld` |
-| `SUT_REF` | Tên nhánh hoặc mã Commit SHA cần kiểm thử | `next` hoặc Full Git SHA |
-| `IMAGE_TAG` | Mã định danh Docker Image tuyệt đối bàn giao sang Harness | `4f9a9405b2baeb...` *(Không dùng `latest`)* |
-| `SMOKE_PATH` | Endpoint kiểm tra độ sẵn sàng (*Readiness Check*) của SUT | `/api/tags` *(Chờ HTTP 200 trước khi chạy UI)* |
+* **Tầng 1 (GitHub Actions CI):** Kiểm tra tĩnh, Unit/API test, CodeQL SAST và đóng gói Docker image lên GHCR.
+* **Tầng 2 (Jenkins Test Harness):** Kéo image từ GHCR, chạy isolated network, smoke test và Cypress UI.
 
 ---
 
-<!-- SLIDE 7: GitHub Actions -->
-<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 07" -->
+<!-- SLIDE 13: Bản Hợp Đồng CI Contract (DEDICATED SLIDE) -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 13 / 20" -->
+
+### GIAO THỨC BÀN GIAO
+## Bản Hợp Đồng Tích Hợp (CI Contract) Bất Biến
+
+*Định nghĩa giao tiếp chuẩn mực giữa 2 hệ thống CI và Test Harness, đảm bảo tính truy vết tuyệt đối:*
+
+| Tham Số Bàn Giao | Ý Nghĩa Kỹ Thuật & Yêu Cầu | Giá Trị Thực Tế Của Nhóm |
+| :--- | :--- | :--- |
+| `SUT_REPO_URL` | Kho mã nguồn SUT dùng để đối chiếu | `https://github.com/thu2005/realworld.git` |
+| `SUT_REF` | Nhánh hoặc commit SHA kiểm chứng | `next` hoặc Full Git SHA |
+| `IMAGE_TAG` | Định danh Docker Image tuyệt đối bàn giao | Full 40-character Git SHA *(Tuyệt đối cấm tag `latest`)* |
+| `SMOKE_PATH` | Endpoint kiểm tra độ sẵn sàng (Readiness) | `/api/tags` *(Chờ HTTP 200 trước khi chạy Cypress)* |
+
+* **Quy chuẩn Artifacts:** Toàn bộ báo cáo thô gom về `test-reports/junit/*.xml` và `test-reports/allure-results/`.
+
+---
+
+<!-- SLIDE 14: Đồ Thị Thực Thi 11 Jobs (DEDICATED FULL SLIDE) -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 14 / 20" -->
 
 ### PHÂN HỆ ĐÁM MÂY
-## GitHub Actions Pipeline: 11 Jobs Độc Lập & Quality Gates
+## GitHub Actions Pipeline: Đồ Thị Thực Thi 11 Jobs
 
-```yaml
-# Trích đoạn cấu hình luồng ci.yml
-name: CI Pipeline
-on: [push, pull_request, workflow_dispatch]
-jobs:
-  unit-test:
-    needs: install
-    steps: [ run: npm run test:unit ]
-  api-test:
-    needs: install
-    steps: [ run: npm run test:api ]
-  security-scan:
-    needs: install
-    steps: [ run: npm audit --audit-level=high ]
-  docker-build:
-    needs: [lint, unit-test, api-test, security-scan]
-    steps: [ run: docker build -t $IMAGE:${{ github.sha }} . ]
-```
+![w:1080 center](Software-Testing-CICD-Test-Harness/docs/final-report/images/github-actions-workflow.svg)
 
-### 4 Cổng Kiểm Soát Chất Lượng (Quality Gates) Bắt Buộc
-1. **Gate 1 - Unit Test & Coverage:** Toàn bộ test Jest phải Passed; Coverage cục bộ (`lib.js`, `auth.js`) đạt $\ge 80\%$. Đẩy artifact `jest-unit.xml`.
-2. **Gate 2 - API Integrity:** SuperTest và Newman xác thực API thành công, lưu artifact `jest-api.xml`.
-3. **Gate 3 - Dependency Audit:** Tự động dừng khẩn cấp (*Fail-Fast*) nếu tồn tại lỗ hổng cấp *High* hoặc *Critical*.
-4. **Gate 4 - CodeQL SAST Analysis:** Quét bảo mật phân tích tĩnh toàn diện, phát hiện lỗi tiêm mã và bảo mật web.
+* **Chuỗi thực thi liên hoàn:** `Checkout` → `Setup Node` → `Install` → `Lint` → `Unit-Test` → `API-Test` → `Security-Scan` → `Docker-Build` → `Docker-Push` → `Trigger-Jenkins` → `Allure-Report`.
 
 ---
 
-<!-- SLIDE 8: Jenkins (Source vs Image) -->
-<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 08" -->
+<!-- SLIDE 15: Bốn Cổng Kiểm Soát Chất Lượng (Quality Gates) -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 15 / 20" -->
+
+### PHÂN HỆ ĐÁM MÂY
+## Bốn Cổng Kiểm Soát Chất Lượng (Quality Gates)
+
+1. **Gate 1 - Unit Test & Coverage Threshold:**  
+   Toàn bộ 38 ca Jest phải vượt qua. Độ bao phủ mã cục bộ (`lib.js`, `auth.js`) bắt buộc đạt **≥ 80%**. Đẩy artifact `jest-unit.xml`.
+2. **Gate 2 - API Integrity & Contract:**  
+   15 ca SuperTest và Newman Postman collection xác thực API thành công, kiểm tra status code và schema JSON. Đẩy artifact `jest-api.xml`.
+3. **Gate 3 - Dependency Security Audit:**  
+   Thực thi `npm audit` kiểm toán bảo mật chuỗi cung ứng phụ thuộc, phát hiện và phân loại lỗ hổng theo 5 cấp độ nghiêm trọng.
+4. **Gate 4 - CodeQL SAST Analysis:**  
+   Workflow phân tích mã tĩnh độc lập với 2 bộ truy vấn `security-extended` và `security-and-quality`.
+
+* **Cơ chế bàn giao:** Job `trigger-jenkins` (Python Script) chỉ chạy khi Docker image đã được đẩy lên GHCR thành công.
+
+---
+
+<!-- SLIDE 16: Sơ Đồ Hai Chế Độ Jenkins (DEDICATED FULL SLIDE) -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 16 / 20" -->
 
 ### HẠ TẦNG TỰ CHỦ
-## Jenkins Test Harness: Custom Node & Hai Chế Độ Vận Hành
+## Jenkins Test Harness: Sơ Đồ Luồng Hai Chế Độ Vận Hành
 
-### Chế Độ Nguồn: Source Mode (`RUN_MODE=source`)
-* Đóng vai trò môi trường đối chứng (*Baseline Check*) trực tiếp trên mã nguồn.
-* Checkout kho mã theo `SUT_REF`, cài đặt dependency thô trên agent.
-* Chạy Lint, Unit Test cũ (Mocha) và biên dịch Next.js ngay trong workspace.
+![w:1080 center](Software-Testing-CICD-Test-Harness/docs/final-report/images/jenkins-pipeline-workflow.svg)
 
-### Chế Độ Ảnh: Image Mode (`RUN_MODE=image`)
-* Mô phỏng chính xác môi trường phát hành: Kéo Docker Image đã đóng gói sẵn từ GHCR qua Secret `ghcr-credentials`.
-* Khởi động container trong mạng ảo riêng biệt độc lập cổng Host.
-* Thực thi script `image_smoke.py` thăm dò tính sẵn sàng qua `/api/tags`.
-* Chạy trọn vẹn 5 ca Cypress Headless UI và thu thập log/artifacts.
-
-> **Cơ chế Custom Agent & Zero Resource Leak:**  
-> Jenkins Master/Agent được tùy biến đóng gói sẵn Node 14, Docker CLI, Python 3, Cypress 9.7 và Allure CLI. Khối `post.always` dọn dẹp chính xác tài nguyên có gắn label của phiên build, không gọi `docker system prune` gây ảnh hưởng job chạy song song.
+* **Nhánh Nguồn (Source Mode):** Kiểm tra trực tiếp mã thô từ Git repository làm chuẩn đối chứng (Baseline).
+* **Nhánh Ảnh (Image Mode):** Kiểm chứng artifact container đóng gói từ GHCR trong mạng Docker cô lập.
 
 ---
 
-<!-- SLIDE 9: Kết quả thực nghiệm -->
-<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 09" -->
+<!-- SLIDE 17: Chi Tiết Hai Chế Độ & Zero Leak (DEDICATED SLIDE) -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 17 / 20" -->
+
+### HẠ TẦNG TỰ CHỦ
+## Chi Tiết Hai Chế Độ & Cơ Chế Zero Resource Leak
+
+### So Sánh Hai Chế Độ:
+* **Source Mode (`RUN_MODE=source`):**  
+  Checkout theo `SUT_REF`, cài đặt dependency thô trên agent. Chạy Lint, Mocha Tests và build Next.js trong workspace.
+* **Image Mode (`RUN_MODE=image`):**  
+  Kéo Docker Image từ GHCR qua Secret `ghcr-credentials`. Tạo container trong mạng riêng ảo, chạy script `image_smoke.py` kiểm tra `/api/tags`, gọi Cypress headless và xuất bản Allure Report HTML.
+
+### Cơ Chế Custom Agent & Dọn Dẹp Zero Resource Leak:
+* Custom Jenkins Image nhúng sẵn Node 14, Docker CLI, Python 3, Cypress 9.7 và Allure.
+* Khối `post.always` dọn dẹp chính xác container và mạng theo nhãn sở hữu build, tuyệt đối không dùng `prune` gây xung đột job khác.
+
+---
+
+<!-- SLIDE 18: Kết Quả Thực Nghiệm Của Nhóm 01 -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 18 / 20" -->
 
 ### THỰC TIỄN TRIỂN KHAI
 ## Kết Quả Thực Nghiệm Của Đề Tài (Nhóm 01)
@@ -369,52 +383,39 @@ jobs:
 
 ---
 
-<!-- SLIDE 10: Video Demo -->
-<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 10" -->
+<!-- SLIDE 19: Demo Thực Nghiệm & Mã QR Quét Video -->
+<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 19 / 20" -->
 
 ### SẢN PHẨM TRỰC QUAN
-## Chuỗi Video Demo Hành Vi & Phân Tích Kỹ Thuật
+## Chuỗi Video Demo Hành Vi & Mã QR Quét Xem Trực Tiếp
 
-* **Video 1: Cơ Sở Lý Thuyết & Kiến Trúc Tổng Thể**  
-  * Trình bày cơ sở lý thuyết CI/CD, chuẩn ISO/IEC/IEEE 24765 về Test Harness.
-  * Phân tích kiến trúc phối hợp Hybrid và hợp đồng tích hợp CI Contract bất biến (`SUT_REF`, `IMAGE_TAG`, `SMOKE_PATH`).
-* **Video 2: Thực Nghiệm Phân Hệ GitHub Actions CI Pipeline**  
-  * Trực tiếp kiểm chứng 11 Jobs trong `ci.yml` và quy trình CodeQL `codeql.yml`.
-  * Demo cơ chế Quality Gate kiểm toán bảo mật `npm audit` chặn lỗi High/Critical, đóng gói Docker Image và push lên GHCR.
-* **Video 3: Thực Nghiệm Phân Hệ Jenkins Test Harness**  
-  * Thực nghiệm Image Mode điều khiển bằng tham số, kéo ảnh từ Private Registry.
-  * Khởi tạo mạng ảo cô lập, kích hoạt Smoke Test thăm dò HTTP 200, chạy Cypress UI Headless, tạo Allure Report và kích hoạt cơ chế dọn dẹp Zero Resource Leak.
+| Video & Nội Dung Kỹ Thuật | Mã QR Mobile Quét Nhanh |
+| :--- | :---: |
+| **[Video 1: Cơ Sở Lý Thuyết & Kiến Trúc Tổng Thể](https://drive.google.com/file/d/13pjwDisbNMdks_shLDick7uwYZ4-8C1q/view?usp=sharing)**<br>• Trình bày lý thuyết CI/CD, chuẩn ISO/IEC/IEEE 24765 về Test Harness.<br>• Phân tích CI Contract bất biến (`SUT_REF`, `IMAGE_TAG`, `SMOKE_PATH`). | ![w:90](https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fdrive.google.com%2Ffile%2Fd%2F13pjwDisbNMdks_shLDick7uwYZ4-8C1q%2Fview%3Fusp%3Dsharing)<br>*Quét xem ngay* |
+| **[Video 2: Thực Nghiệm Phân Hệ GitHub Actions CI Pipeline](https://drive.google.com/file/d/1OO2DmSEiVwyk-Jcb2RpwqcTHhs9janmp/view?usp=sharing)**<br>• Kiểm chứng 11 Jobs trong `ci.yml` và CodeQL `codeql.yml`.<br>• Demo Quality Gate `npm audit` chặn lỗi High/Critical, đẩy Image lên GHCR. | ![w:90](https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fdrive.google.com%2Ffile%2Fd%2F1OO2DmSEiVwyk-Jcb2RpwqcTHhs9janmp%2Fview%3Fusp%3Dsharing)<br>*Quét xem ngay* |
+| **[Video 3: Thực Nghiệm Phân Hệ Jenkins Test Harness](https://drive.google.com/drive/folders/1sEgVaQWbD3vBH5v1CqjRAnmRobgyLsJD?usp=sharing)**<br>• Kéo ảnh private từ GHCR, cô lập mạng ảo, kích hoạt Smoke Test `/api/tags`.<br>• Thực thi 5 Cypress tests, tạo báo cáo Allure và dọn sạch Zero Resource Leak. | ![w:90](https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fdrive.google.com%2Fdrive%2Ffolders%2F1sEgVaQWbD3vBH5v1CqjRAnmRobgyLsJD%3Fusp%3Dsharing)<br>*Quét xem ngay* |
 
 ---
 
-<!-- SLIDE 11: Đánh Giá & Bài Học Kinh Nghiệm -->
+<!-- SLIDE 20: Đánh Giá & Bài Học Kinh Nghiệm -->
 <!-- _class: title-slide -->
 <!-- _header: "" -->
-<!-- _footer: "Nhóm 01 | Báo Cáo Seminar KTPM • 11" -->
+<!-- _footer: "Nhóm 01 • Lớp 23KTPM3 • 20 / 20" -->
 
 ### KẾT LUẬN & ĐỊNH HƯỚNG
 # Đánh Đổi Thiết Kế, Khó Khăn & Hướng Phát Triển
 
-### Đánh Đổi Thiết Kế & Thành Công
-* **Tính Bất Biến & Truy Vết:** Loại bỏ hoàn toàn tag `latest`, chuyển sang sử dụng Full 40-character Git SHA làm Single Source of Truth cho toàn bộ artifact.
-* **Dung Lượng Image vs Tính Độc Lập:** Chấp nhận image Jenkins Agent có dung lượng lớn do tích hợp Cypress/Browsers để triệt tiêu hoàn toàn sự cố xung đột môi trường ("Dependency Hell").
-* **An Toàn Container:** Sử dụng Docker socket `/var/run/docker.sock` đáp ứng mô hình Seminar gọn nhẹ; trên thực tế cần chuyển sang Kubernetes dind/ephemeral agents.
+### 1. Đánh Đổi Thiết Kế & Thành Công
+* **Tính Bất Biến & Truy Vết:** Sử dụng Full 40-character Git SHA cho Docker Image thay vì `latest`, bảo đảm Single Source of Truth tuyệt đối.
+* **Dung Lượng Image vs Tính Độc Lập:** Chấp nhận Jenkins Agent nặng (Cypress + Browsers) để loại bỏ rủi ro xung đột môi trường ("Dependency Hell").
+* **An Toàn Container:** Sử dụng Docker socket `/var/run/docker.sock` phù hợp cho Seminar; đề xuất Kubernetes agents cho Production.
 
-### Khó Khăn & Kế Hoạch Tương Lai
-* **Mã Nguồn Cũ (Legacy):** Dự án gốc gắn liền Node 14 và thiếu `package-lock.json` dẫn đến tính bất định; nhóm đã khắc phục bằng cách cố định phiên bản runner và image.
-* **Mở Rộng Test Suite:** Tiếp tục gia tăng độ bao phủ mã sang toàn bộ các routes/models còn lại và bổ sung ca E2E cho luồng khởi tạo/quản lý bài viết blog sau khi đăng nhập.
+### 2. Khó Khăn & Kế Hoạch Tương Lai
+* **Mã Nguồn Cũ (Legacy):** Ràng buộc Node 14 và thiếu `package-lock.json` gây bất định; nhóm đã giải quyết bằng cách cố định runner & container.
+* **Mở Rộng Test Suite:** Nâng cao độ bao phủ sang toàn bộ các routes/models còn lại và bổ sung ca E2E cho luồng tạo/quản lý bài viết sau đăng nhập.
 
----
+<br>
 
-<!-- SLIDE 12: Lời Cảm Ơn -->
-<!-- _class: title-slide -->
-<!-- _header: "" -->
-<!-- _footer: "Nhóm 01 • Lớp 23KTPM3" -->
-
-<br><br><br>
-
-# Xin Chân Thành Cảm Ơn Thầy Cô Và Các Bạn Đã Theo Dõi!
-
-**Nhóm 01 • Lớp 23KTPM3**  
-Seminar Môn Học: Kiểm Thử Phần Mềm  
-*Trường Đại học Khoa học Tự nhiên, ĐHQG-HCM*
+<div style="text-align: center; color: #38bdf8; font-size: 20px; font-weight: bold;">
+Xin Chân Thành Cảm Ơn Thầy Cô Và Các Bạn Đã Theo Dõi!
+</div>
